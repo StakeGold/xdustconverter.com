@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
+import ActionOrConnect from 'components/ActionOrConnect';
 import { TokenRow } from './components';
 import { ConvertLayout } from './components/ConvertLayout';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 
 const ConvertPage = () => {
+  const { address } = useGetAccount();
+  const isLoggedIn = Boolean(address);
+
   const { tokens: accountTokens, isLoading, error } = useGetAccountTokens();
 
   const [checkedState, setCheckedState] = useState<boolean[]>([]);
@@ -50,26 +55,85 @@ const ConvertPage = () => {
     setCheckedState(updatedCheckedState);
   };
 
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    const tokens = accountTokens.filter((_token, index) => checkedState[index]);
+    console.log(tokens);
+    // TODO
+  };
+
   return (
     <div>
-      <label>
-        <input
-          type='checkbox'
-          checked={selectedAll}
-          onChange={handleSelectAll}
-        />
-        <div>Select All</div>
-      </label>
-      {accountTokens.map((token, index) => (
-        <label key={token.identifier}>
-          <input
-            type='checkbox'
-            checked={checkedState[index]}
-            onChange={() => handleOnChange(index)}
-          />
-          <TokenRow token={token} />
-        </label>
-      ))}
+      <div className='token-table'>
+        <table>
+          <thead>
+            <tr>
+              <th scope='col' className='mr-1'>
+                {isLoggedIn && (
+                  <input
+                    type='checkbox'
+                    checked={selectedAll}
+                    onChange={handleSelectAll}
+                  />
+                )}
+              </th>
+              <th scope='col' role='button' onClick={handleSelectAll}>
+                Token
+              </th>
+              <th scope='col' className='text-right'>
+                Price
+              </th>
+              <th scope='col' className='text-right'>
+                Balance
+              </th>
+              <th scope='col' className='text-right pr-2'>
+                Value USDC
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {accountTokens.map((token, index) => (
+              <tr
+                key={token.identifier}
+                className='token-table-row mb-4'
+                role='button'
+                onClick={() => handleOnChange(index)}
+              >
+                <th scope='row'>
+                  {isLoggedIn && (
+                    <input
+                      type='checkbox'
+                      checked={checkedState[index]}
+                      // eslint-disable-next-line @typescript-eslint/no-empty-function
+                      onChange={() => {}}
+                    />
+                  )}
+                </th>
+                <TokenRow token={token} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className='card card-info my-spacer'>
+        <div className='d-flex justify-content-between flex-wrap mb-2'>
+          <div className='text-secondary mr-2'>Total USDC converted</div>
+          <span className='text-main'>0 USDC</span>
+        </div>
+        <div className='d-flex justify-content-between flex-wrap mb-2'>
+          <div className='text-secondary mr-2'>Protocol fee</div>
+          <span className='text-main'>10%</span>
+        </div>
+      </div>
+      <ActionOrConnect>
+        <button
+          className='btn btn-primary btn-connect'
+          onClick={(e) => handleSubmit(e)}
+        >
+          Convert small amounts
+        </button>
+      </ActionOrConnect>
     </div>
   );
 };

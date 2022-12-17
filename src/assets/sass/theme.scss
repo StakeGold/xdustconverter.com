@@ -1,15 +1,15 @@
 /* Bootstrap overrides
 -------------------------------------------------- */
 
-$body: #000;
+$body: #18191a;
 $headings-font-weight: 300 !important;
-$primary: #1b46c2;
+$primary: #ffc629;
 $light: #fafafa;
 $card-border-radius: 0.75rem;
 $card-inner-border-radius: subtract($card-border-radius, 1px);
 
 $headings-font-weight: 300 !important;
-$a: #1392ff;
+$a: #ffc629;
 
 /* Do not move the imports from here.
 Override Bootstrap variables only above.
@@ -21,185 +21,165 @@ Override Bootstrap variables only above.
 
 @import '~bootstrap/scss/reboot';
 
-.custom-classname.btn-primary {
-  background-color: green;
-}
 /* Base
 -------------------------------------------------- */
 html {
   min-height: 100%;
-  font-size: 14px;
+  font-size: 16px;
+}
+
+body {
+  background-color: $body;
 }
 
 .wrapper {
   min-height: 100vh;
 }
 
-.opacity-6 {
-  opacity: 0.6;
+.text-main {
+  color: #ffffff !important;
+  fill: #ffffff !important;
 }
 
-.dapp-icon {
-  padding: 5px;
-  border-radius: 50%;
-  background-color: $light;
-  width: 65px;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-
-  &.icon-medium {
-    width: 80px;
-    height: 80px;
-  }
+.text-secondary {
+  color: #9ba5b4;
+  fill: #9ba5b4;
 }
 
-/* Navbar
+input {
+  accent-color: $primary;
+}
+
+.dapp-core-component__main__text-primary {
+  color: $primary !important ;
+}
+
+/* Scrollbar
 -------------------------------------------------- */
-.elrond-logo {
-  width: 85px;
-  height: 25px;
+::-webkit-scrollbar {
+  width: 5px;
+  margin: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #18191a;
+  border-radius: 10px;
 }
 
-.dapp-name {
-  line-height: 1;
-  border-left: 1px solid $gray-400;
-  padding-left: 3px;
-  margin-left: 4px;
-}
-
-/* Dashboard
+/* Converter Layout
 -------------------------------------------------- */
-.action-btn {
+.card {
+  color: #9ba5b4;
+  background-color: #242526;
+  box-shadow: 0 0.6rem 1rem 0 rgb(0 0 0 / 6%);
+  border: none;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: $white;
-  margin: 0 7px;
+  min-width: 0;
+  padding: 2rem;
+  border-radius: 0.75rem;
+}
 
-  button {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    background-color: $white;
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
 
+  span {
+    font-size: 0;
+    visibility: hidden;
+  }
+
+  img {
+    height: 3rem;
+    width: auto;
+  }
+}
+
+.page-description {
+  color: #9ba5b4;
+  font-size: 1rem;
+}
+
+.my-spacer {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Converter
+-------------------------------------------------- */
+.btn-connect {
+  color: #000 !important;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.45rem;
+}
+
+.card-info {
+  background-color: #18191a;
+  padding: 1.5rem;
+}
+
+.token-table {
+  width: 100%;
+  height: 600px;
+  margin: 0;
+  overflow: auto;
+
+  table {
+    border-spacing: 0 1rem;
+    border-collapse: separate;
+    width: 100%;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #242526;
+  }
+
+  .token-table-row {
     &:hover {
-      opacity: 0.9;
+      opacity: 75%;
     }
+  }
+
+  tbody {
+    max-height: 400px;
   }
 }
 
-.transactions {
-  .transaction-icon {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-  }
-
-  &.table {
-    .transaction-hash .trim {
-      @include media-breakpoint-down(xl) {
-        max-width: none;
-      }
-      @include media-breakpoint-down(lg) {
-        max-width: 26rem;
-      }
-      @include media-breakpoint-down(md) {
-        max-width: 12rem;
-      }
-      @include media-breakpoint-down(sm) {
-        max-width: 8rem;
-      }
-    }
-
-    td,
-    tr {
-      padding: 0.65rem;
-    }
-
-    td {
-      white-space: nowrap;
-      vertical-align: middle;
-    }
-
-    tr:last-of-type {
-      td {
-        border-bottom: 1px solid #dee2e6;
-      }
-    }
-  }
-}
-
-/* Actions
+/* Welcome
 -------------------------------------------------- */
+.welcome-card {
+  font-size: 16px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-.not-allwed {
-  cursor: not-allowed;
-}
+  h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.2;
+    flex-grow: 1;
 
-/* Loader, Transaction success/Fail
--------------------------------------------------- */
-.page-state {
-  .lds-ellipsis {
-    display: inline-block;
-    position: relative;
-    width: 64px;
-    height: 64px;
-  }
-  .lds-ellipsis div {
-    position: absolute;
-    top: 27px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  .bg-blue .lds-ellipsis div {
-    background: rgba(255, 255, 255, 0.4);
-  }
-  .lds-ellipsis div:nth-child(1) {
-    left: 6px;
-    animation: lds-ellipsis1 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(2) {
-    left: 6px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(3) {
-    left: 26px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(4) {
-    left: 45px;
-    animation: lds-ellipsis3 0.6s infinite;
-  }
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
+    a {
+      margin: 0 !important;
+      color: #fff;
+      text-decoration: none;
     }
   }
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(19px, 0);
-    }
+
+  .btn-logout {
+    width: 35px;
+    height: 35px;
+    padding: 0;
   }
 }
 
@@ -207,17 +187,20 @@ html {
 -------------------------------------------------- */
 footer {
   div {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
+    margin: 0;
+    padding-top: 48px;
+    padding-bottom: 24px;
+    font-size: 0.9rem;
     display: inline-block;
     font-weight: 400;
     line-height: 1.155rem;
 
     a {
-      color: $black;
+      color: #9ba5b4;
 
       &:hover {
-        color: $black;
+        color: #fff;
+        text-decoration: none;
       }
 
       #heart {
@@ -225,9 +208,16 @@ footer {
         width: 16px;
 
         path {
-          fill: #ffc629;
+          fill: $primary;
         }
       }
+    }
+
+    .app-version {
+      color: #9ba5b4;
+      opacity: 60%;
+      margin-top: 10px;
+      display: block;
     }
   }
 }

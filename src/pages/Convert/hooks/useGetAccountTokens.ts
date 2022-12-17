@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks/useGetNetworkConfig';
 import { AxiosError } from 'axios';
-import { getWhitelistedAccountTokens } from 'apiCalls';
+import {
+  getWhitelistedAccountTokens,
+  getWhitelistedDashboardTokens
+} from 'apiCalls';
 import { AccountToken } from 'types';
 
 export const useGetAccountTokens = () => {
@@ -10,6 +13,7 @@ export const useGetAccountTokens = () => {
     network: { apiAddress }
   } = useGetNetworkConfig();
   const { address } = useGetAccount();
+  const isLoggedIn = Boolean(address);
 
   const [tokens, setTokens] = useState<AccountToken[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +23,12 @@ export const useGetAccountTokens = () => {
     try {
       setIsLoading(true);
 
-      const allTokens = await getWhitelistedAccountTokens(apiAddress, address);
+      let allTokens: AccountToken[] = [];
+      if (isLoggedIn) {
+        allTokens = await getWhitelistedAccountTokens(apiAddress, address);
+      } else {
+        allTokens = await getWhitelistedDashboardTokens(apiAddress);
+      }
 
       setTokens(allTokens);
     } catch (err) {
@@ -32,7 +41,7 @@ export const useGetAccountTokens = () => {
 
   useEffect(() => {
     fetchAccountTokens();
-  }, []);
+  }, [isLoggedIn]);
 
   return { tokens, isLoading, error };
 };
