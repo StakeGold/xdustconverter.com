@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './../dashboard.module.scss';
+import styles from './../convert.module.scss';
 import { Actions } from './Actions';
 import { TopInfo } from './TopInfo';
 
-export const DashboardLayout = ({ children }: React.PropsWithChildren) => {
+export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <div className='container py-4'>
       <div className='row'>

@@ -5,7 +5,6 @@ import { faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { dAppName } from 'config';
 import { routeNames } from 'routes';
 import { ReactComponent as ElrondLogo } from './../../../assets/img/elrond.svg';
 
@@ -13,7 +12,7 @@ export const Navbar = () => {
   const isLoggedIn = useGetIsLoggedIn();
 
   const handleLogout = () => {
-    logout(`${window.location.origin}/unlock`);
+    logout(window.location.origin);
   };
 
   return (
@@ -21,17 +20,17 @@ export const Navbar = () => {
       <div className='container-fluid'>
         <Link
           className='d-flex align-items-center navbar-brand mr-0'
-          to={isLoggedIn ? routeNames.dashboard : routeNames.home}
+          to={isLoggedIn ? routeNames.convert : routeNames.home}
         >
           <ElrondLogo className='elrond-logo' />
-          <span className='dapp-name text-muted'>{dAppName}</span>
+          <span className='dapp-name text-muted'>xdustconverter</span>
         </Link>
 
         <Nav className='ml-auto'>
           {isLoggedIn && (
             <>
               <NavItem>
-                <Link to={routeNames.statistics} className='nav-link'>
+                <Link to={routeNames.convert} className='nav-link'>
                   <FontAwesomeIcon
                     icon={faChartSimple}
                     className='text-muted'

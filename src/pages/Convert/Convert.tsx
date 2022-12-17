@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
-import { getTransactions } from '@elrondnetwork/dapp-core/apiCalls';
-
 import {
   useGetAccount,
   useGetActiveTransactionsStatus,
   useGetNetworkConfig
 } from '@elrondnetwork/dapp-core/hooks';
-
 import { ServerTransactionType } from '@elrondnetwork/dapp-core/types';
 import {
   TransactionsTable,
@@ -16,16 +12,17 @@ import {
 } from '@elrondnetwork/dapp-core/UI';
 import { faBan, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { AxiosError } from 'axios';
+import { apiTimeout, contractAddress } from 'config';
+import { ConvertLayout } from './components/ConvertLayout';
 
-import { apiTimeout, contractAddress, transactionSize } from 'config';
-import { DashboardLayout } from './components';
-
-const DashboardPage = () => {
+const ConvertPage = () => {
   const {
     network: { apiAddress }
   } = useGetNetworkConfig();
   const { address } = useGetAccount();
   const { success, fail } = useGetActiveTransactionsStatus();
+
+  console.log(apiAddress, address);
 
   const [transactions, setTransactions] = useState<ServerTransactionType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,14 +31,7 @@ const DashboardPage = () => {
   const fetchTransactions = async () => {
     try {
       setIsLoading(true);
-      const { data } = await getTransactions({
-        apiAddress,
-        sender: address,
-        receiver: contractAddress,
-        condition: 'must',
-        transactionSize,
-        apiTimeout
-      });
+      const data: ServerTransactionType[] = [];
       setTransactions(data);
     } catch (err) {
       const { message } = err as AxiosError;
@@ -91,8 +81,8 @@ const DashboardPage = () => {
   return <TransactionsTable transactions={transactions} />;
 };
 
-export const Dashboard = () => (
-  <DashboardLayout>
-    <DashboardPage />
-  </DashboardLayout>
+export const Convert = () => (
+  <ConvertLayout>
+    <ConvertPage />
+  </ConvertLayout>
 );
