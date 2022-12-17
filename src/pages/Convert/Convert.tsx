@@ -64,26 +64,33 @@ const ConvertPage = () => {
       <table className='token-table'>
         <thead>
           <tr>
-            <th scope='col'>
+            <th scope='col' className='mr-1'>
               <input
                 type='checkbox'
                 checked={selectedAll}
                 onChange={handleSelectAll}
               />
             </th>
-            <th scope='col' onClick={handleSelectAll}>
+            <th scope='col' role='button' onClick={handleSelectAll}>
               Token
             </th>
-            <th scope='col'>Price</th>
-            <th scope='col'>Balance</th>
-            <th scope='col'>Value USDC</th>
+            <th scope='col' className='text-right'>
+              Price
+            </th>
+            <th scope='col' className='text-right'>
+              Balance
+            </th>
+            <th scope='col' className='text-right'>
+              Value USDC
+            </th>
           </tr>
         </thead>
         <tbody>
           {accountTokens.map((token, index) => (
             <tr
               key={token.identifier}
-              className='mb-4'
+              className='token-table-row mb-4'
+              role='button'
               onClick={() => handleOnChange(index)}
             >
               <th scope='row'>

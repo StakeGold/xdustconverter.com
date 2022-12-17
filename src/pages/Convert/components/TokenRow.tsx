@@ -21,10 +21,10 @@ export const TokenRow = ({ token }: TokenRowProps) => {
           className='mr-2'
         />
         {token.ticker}{' '}
-        <span className='text-secondary'>{token.identifier}</span>
+        <small className='text-secondary'>{token.identifier}</small>
       </td>
-      <td>$ {tokenPrice}</td>
-      <td>
+      <td className='text-right'>$ {tokenPrice}</td>
+      <td className='text-right'>
         <FormatAmount
           value={token.balance}
           decimals={token.decimals}
@@ -32,7 +32,7 @@ export const TokenRow = ({ token }: TokenRowProps) => {
           digits={8}
         />
       </td>
-      <td>$ {tokenValueUsd}</td>
+      <td className='text-right'>$ {tokenValueUsd}</td>
     </>
   );
 };
