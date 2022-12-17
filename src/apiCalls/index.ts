@@ -1,1 +1,2 @@
-export * from './getAllAccountTokens';
+export * from './getWhitelistedAccountTokens';
+export * from './getWhitelistedTokens';

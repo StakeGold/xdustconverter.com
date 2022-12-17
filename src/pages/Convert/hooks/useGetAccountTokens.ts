@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks/useGetNetworkConfig';
 import { AxiosError } from 'axios';
-import { getAllAccountTokens } from 'apiCalls';
+import { getWhitelistedAccountTokens } from 'apiCalls';
 import { AccountToken } from 'types';
 
 export const useGetAccountTokens = () => {
@@ -19,14 +19,15 @@ export const useGetAccountTokens = () => {
     try {
       setIsLoading(true);
 
-      const allTokens = await getAllAccountTokens(apiAddress, address);
+      const allTokens = await getWhitelistedAccountTokens(apiAddress, address);
 
       setTokens(allTokens);
     } catch (err) {
       const { message } = err as AxiosError;
       setError(message);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
