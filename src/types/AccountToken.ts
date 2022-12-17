@@ -4,5 +4,9 @@ export interface AccountToken {
   ticker: string;
   decimals: number;
   balance: string;
+  price: number;
   valueUsd: number;
+  assets: {
+    svgUrl: string;
+  };
 }
