@@ -53,6 +53,9 @@ const ConvertPage = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+
+    const tokens = accountTokens.filter((_token, index) => checkedState[index]);
+    console.log(tokens);
     // TODO
   };
 
