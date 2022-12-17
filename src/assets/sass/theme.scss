@@ -50,6 +50,10 @@ input {
   accent-color: $primary;
 }
 
+.dapp-core-component__main__text-primary {
+  color: $primary !important ;
+}
+
 /* Converter Layout
 -------------------------------------------------- */
 .card {
