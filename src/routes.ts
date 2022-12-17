@@ -1,12 +1,10 @@
 import { RouteType } from '@elrondnetwork/dapp-core/types';
 import { withPageTitle } from './components/PageTitle';
 
-import { Convert, Home } from './pages';
+import { Convert } from './pages';
 
 export const routeNames = {
-  home: '/',
-  convert: '/convert',
-  unlock: '/unlock'
+  home: '/'
 };
 
 interface RouteWithTitleType extends RouteType {
@@ -16,11 +14,6 @@ interface RouteWithTitleType extends RouteType {
 export const routes: RouteWithTitleType[] = [
   {
     path: routeNames.home,
-    title: 'Home',
-    component: Home
-  },
-  {
-    path: routeNames.convert,
     title: 'Convert',
     component: Convert,
     authenticatedRoute: true

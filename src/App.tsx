@@ -9,9 +9,7 @@ import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
 import UpdateNotification from 'components/UpdateNotification';
 import { apiTimeout, environment, walletConnectV2ProjectId } from 'config';
-import { PageNotFound, Unlock } from 'pages';
-import { routeNames } from 'routes';
-import { routes } from 'routes';
+import { Convert } from 'pages';
 
 export const App = () => {
   return (
@@ -31,15 +29,7 @@ export const App = () => {
             <NotificationModal />
             <SignTransactionsModals className='custom-class-for-modals' />
             <Routes>
-              <Route path={routeNames.unlock} element={<Unlock />} />
-              {routes.map((route, index) => (
-                <Route
-                  path={route.path}
-                  key={'route-key-' + index}
-                  element={<route.component />}
-                />
-              ))}
-              <Route path='*' element={<PageNotFound />} />
+              <Route path='*' element={<Convert />} />
             </Routes>
           </Layout>
         </DappProvider>
