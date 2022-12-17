@@ -63,24 +63,44 @@ const ConvertPage = () => {
 
   return (
     <div>
-      <label>
-        <input
-          type='checkbox'
-          checked={selectedAll}
-          onChange={handleSelectAll}
-        />
-        <div>Select All</div>
-      </label>
-      {accountTokens.map((token, index) => (
-        <label key={token.identifier}>
-          <input
-            type='checkbox'
-            checked={checkedState[index]}
-            onChange={() => handleOnChange(index)}
-          />
-          <TokenRow token={token} />
-        </label>
-      ))}
+      <table className='token-table'>
+        <thead>
+          <tr>
+            <th scope='col'>
+              <input
+                type='checkbox'
+                checked={selectedAll}
+                onChange={handleSelectAll}
+              />
+            </th>
+            <th scope='col' onClick={handleSelectAll}>
+              Token
+            </th>
+            <th scope='col'>Price</th>
+            <th scope='col'>Balance</th>
+            <th scope='col'>Value USDC</th>
+          </tr>
+        </thead>
+        <tbody>
+          {accountTokens.map((token, index) => (
+            <tr
+              key={token.identifier}
+              className='mb-4'
+              onClick={() => handleOnChange(index)}
+            >
+              <th scope='row'>
+                <input
+                  type='checkbox'
+                  checked={checkedState[index]}
+                  // eslint-disable-next-line @typescript-eslint/no-empty-function
+                  onChange={() => {}}
+                />
+              </th>
+              <TokenRow token={token} />
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <div className='card card-info my-spacer'>
         <div className='d-flex justify-content-between flex-wrap mb-2'>
           <div className='text-secondary mr-2'>Total USDC converted</div>
