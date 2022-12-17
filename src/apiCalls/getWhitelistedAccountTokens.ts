@@ -7,10 +7,15 @@ export const getWhitelistedAccountTokens = async (
   apiAddress: string,
   accountAddress: string
 ): Promise<AccountToken[]> => {
+  // TODO remove random address
+  accountAddress =
+    'erd15pfa69860rx8klgg37zg9lh7kn2ud62e6zlp4ndcq2es6zjvny8qzpvf4p';
+
+  const maxUSDValue = 0.5; // TODO;
   const tokenIdentifiers = await getWhitelistedTokens();
   const tokenIdentifierChunks = sliceIntoChunks(tokenIdentifiers, 25);
 
-  const tokens = await Promise.all(
+  const tokensRaw = await Promise.all(
     tokenIdentifierChunks.map(async (identifiers) => {
       const { data } = await axios.get(
         `${apiAddress}/accounts/${accountAddress}/tokens`,
@@ -25,5 +30,9 @@ export const getWhitelistedAccountTokens = async (
     })
   );
 
-  return tokens.flat();
+  const tokens = tokensRaw
+    .flat()
+    .filter((token) => token.valueUsd <= maxUSDValue);
+
+  return tokens;
 };

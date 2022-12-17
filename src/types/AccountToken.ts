@@ -4,4 +4,5 @@ export interface AccountToken {
   ticker: string;
   decimals: number;
   balance: string;
+  valueUsd: number;
 }

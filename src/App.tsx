@@ -1,16 +1,14 @@
 import React from 'react';
-import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
 import {
   TransactionsToastList,
   SignTransactionsModals,
   NotificationModal
 } from '@elrondnetwork/dapp-core/UI';
 import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
-
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
 import UpdateNotification from 'components/UpdateNotification';
-import { apiTimeout, walletConnectV2ProjectId } from 'config';
+import { apiTimeout, environment, walletConnectV2ProjectId } from 'config';
 import { PageNotFound, Unlock } from 'pages';
 import { routeNames } from 'routes';
 import { routes } from 'routes';
@@ -21,7 +19,7 @@ export const App = () => {
       <UpdateNotification />
       <Router>
         <DappProvider
-          environment={EnvironmentsEnum.devnet}
+          environment={environment}
           customNetworkConfig={{
             name: 'customConfig',
             apiTimeout,
