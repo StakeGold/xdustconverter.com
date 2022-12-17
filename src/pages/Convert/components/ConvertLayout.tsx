@@ -1,18 +1,8 @@
 import React from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { ExplorerLink } from '@elrondnetwork/dapp-core/UI';
-import { logout } from '@elrondnetwork/dapp-core/utils';
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from 'assets/img/xdustconverter.png';
+import { Welcome } from 'components/Welcome';
 
 export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
-  const { address } = useGetAccount();
-
-  const handleLogout = () => {
-    logout(window.location.origin);
-  };
-
   return (
     <div className='container'>
       <div className='row'>
@@ -28,18 +18,7 @@ export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
       </div>
       <div className='row'>
         <div className='col-12 col-md-10 col-lg-8 mx-auto'>
-          <div className='card welcome-card mb-4'>
-            <h3>
-              Welcome, <br />
-              <ExplorerLink page={`/accounts/${address}`} text={address} />!
-            </h3>
-            <button
-              className='btn btn-secondary btn-logout'
-              onClick={handleLogout}
-            >
-              <FontAwesomeIcon icon={faPowerOff} />
-            </button>
-          </div>
+          <Welcome />
           <div className='card'>{children}</div>
         </div>
       </div>
