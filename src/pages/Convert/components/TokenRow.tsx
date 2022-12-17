@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormatAmount } from '@elrondnetwork/dapp-core/UI';
+import BigNumber from 'bignumber.js';
 import { AccountToken } from 'types';
 
 export interface TokenRowProps {
@@ -7,24 +8,33 @@ export interface TokenRowProps {
 }
 
 export const TokenRow = ({ token }: TokenRowProps) => {
+  const tokenPrice = new BigNumber(token.price).decimalPlaces(4).toFixed();
+  const tokenValueUsd = new BigNumber(token.valueUsd)
+    .decimalPlaces(8)
+    .toFixed();
+
   return (
-    <div>
-      <div>
-        <img src={token.assets.svgUrl} width={50} height={50} />
-      </div>
-      <div>{token.ticker}</div>
-      <div>name: {token.name}</div>
-      <div>price: {token.price}</div>
-      <div>valueUsd: {token.valueUsd}</div>
-      <div>
-        balance:{' '}
+    <>
+      <td>
+        <img
+          src={token.assets.svgUrl}
+          width={35}
+          height={35}
+          className='mr-2'
+        />
+        {token.ticker}{' '}
+        <small className='text-secondary'>{token.identifier}</small>
+      </td>
+      <td className='text-right'>$ {tokenPrice}</td>
+      <td className='text-right'>
         <FormatAmount
           value={token.balance}
           decimals={token.decimals}
           showLabel={false}
-          digits={token.decimals}
+          digits={8}
         />
-      </div>
-    </div>
+      </td>
+      <td className='text-right pr-2'>$ {tokenValueUsd}</td>
+    </>
   );
 };

@@ -6,7 +6,7 @@ export const Footer = () => {
   const buildVersion = useGetVersion();
 
   return (
-    <footer className='text-center mt-2 mb-3'>
+    <footer className='footer text-center'>
       <div>
         <a
           {...{
@@ -15,9 +15,9 @@ export const Footer = () => {
           className='d-flex align-items-center'
           href='https://stakegold.com'
         >
-          Made with <HeartIcon className='mx-1' /> by StakeGold.
+          Made with <HeartIcon className='mx-1' /> by StakeGold team.
         </a>
-        <small>Build {buildVersion ?? '-'}</small>
+        <small className='app-version'>Build {buildVersion ?? '-'}</small>
       </div>
     </footer>
   );
