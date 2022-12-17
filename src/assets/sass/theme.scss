@@ -46,6 +46,10 @@ body {
   fill: #9ba5b4;
 }
 
+input {
+  accent-color: $primary;
+}
+
 /* Converter Layout
 -------------------------------------------------- */
 .card {
