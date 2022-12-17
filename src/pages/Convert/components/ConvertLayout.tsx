@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
+import { ExplorerLink } from '@elrondnetwork/dapp-core/UI';
 import { logout } from '@elrondnetwork/dapp-core/utils';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,7 +31,7 @@ export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
           <div className='card welcome-card mb-4'>
             <h3>
               Welcome, <br />
-              <span>{address}</span>!
+              <ExplorerLink page={`/accounts/${address}`} text={address} />!
             </h3>
             <button
               className='btn btn-secondary btn-logout'
