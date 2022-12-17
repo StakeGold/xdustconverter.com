@@ -25,10 +25,10 @@ const ActionOrConnect = ({ children }: ActionOrConnectProps) => {
         <>{children}</>
       ) : (
         <a
-          className='btn btn-primary'
+          className='btn btn-primary btn-connect'
           onClick={(event) => handleShowModal(event)}
         >
-          <FontAwesomeIcon icon={faZap} />
+          <FontAwesomeIcon icon={faZap} className='mx-2' />
           Connect
         </a>
       )}

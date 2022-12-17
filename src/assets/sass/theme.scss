@@ -36,9 +36,20 @@ body {
   min-height: 100vh;
 }
 
-/* Convert Layout
+.text-main {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.text-secondary {
+  color: #9ba5b4;
+  fill: #9ba5b4;
+}
+
+/* Converter Layout
 -------------------------------------------------- */
 .card {
+  color: #9ba5b4;
   background-color: #242526;
   box-shadow: 0 0.6rem 1rem 0 rgb(0 0 0 / 6%);
   border: none;
@@ -65,6 +76,22 @@ body {
 .my-spacer {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
+}
+
+/* Converter
+-------------------------------------------------- */
+.btn-connect {
+  color: #000 !important;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.45rem;
+}
+
+.card-info {
+  background-color: #18191a;
+  padding: 1.5rem;
 }
 
 /* Footer

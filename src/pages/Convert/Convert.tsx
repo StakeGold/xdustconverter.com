@@ -81,9 +81,29 @@ const ConvertPage = () => {
           <TokenRow token={token} />
         </label>
       ))}
+      <div className='card card-info my-spacer'>
+        <div className='d-flex justify-content-between flex-wrap mb-2'>
+          <div className='text-secondary mr-2'>Total USDC converted</div>
+          <span className='text-main'>1000 USDC</span>
+        </div>
+        <div className='d-flex justify-content-between flex-wrap mb-2'>
+          <div className='text-secondary mr-2'>Protocol fee</div>
+          <span className='text-main'>10%</span>
+        </div>
+      </div>
       <ActionOrConnect>
-        <button onClick={(e) => handleSubmit(e)}>Convert</button>
-        <button onClick={handleLogout}>Log out</button>
+        <button
+          className='btn btn-primary btn-connect'
+          onClick={(e) => handleSubmit(e)}
+        >
+          Convert small amounts
+        </button>
+        <button
+          className='btn btn-secondary btn-connect mt-2'
+          onClick={handleLogout}
+        >
+          Disconnect
+        </button>
       </ActionOrConnect>
     </div>
   );
