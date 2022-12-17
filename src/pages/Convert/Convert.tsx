@@ -1,56 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import {
-  useGetAccount,
-  useGetActiveTransactionsStatus,
-  useGetNetworkConfig
-} from '@elrondnetwork/dapp-core/hooks';
-import { ServerTransactionType } from '@elrondnetwork/dapp-core/types';
-import {
-  TransactionsTable,
-  Loader,
-  PageState
-} from '@elrondnetwork/dapp-core/UI';
-import { faBan, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { AxiosError } from 'axios';
-import { apiTimeout, contractAddress } from 'config';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
+import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { TokenRow } from './components';
 import { ConvertLayout } from './components/ConvertLayout';
+import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 
 const ConvertPage = () => {
-  const {
-    network: { apiAddress }
-  } = useGetNetworkConfig();
-  const { address } = useGetAccount();
-  const { success, fail } = useGetActiveTransactionsStatus();
+  const { tokens: accountTokens, isLoading, error } = useGetAccountTokens();
 
-  console.log(apiAddress, address);
-
-  const [transactions, setTransactions] = useState<ServerTransactionType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string>();
-
-  const fetchTransactions = async () => {
-    try {
-      setIsLoading(true);
-      const data: ServerTransactionType[] = [];
-      setTransactions(data);
-    } catch (err) {
-      const { message } = err as AxiosError;
-      setError(message);
-    }
-    setIsLoading(false);
-  };
+  const [checkedState, setCheckedState] = useState<boolean[]>([]);
 
   useEffect(() => {
-    if (success || fail) {
-      fetchTransactions();
-    }
-  }, [success, fail]);
+    setCheckedState(new Array(accountTokens.length).fill(false));
+  }, [accountTokens]);
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
+  const selectedAll = useMemo<boolean>(() => {
+    return checkedState.reduce((result, value) => result && value, true);
+  }, [checkedState]);
 
   if (isLoading) {
+    return <Loader />;
+  }
+
+  if (accountTokens.length !== checkedState.length) {
     return <Loader />;
   }
 
@@ -66,19 +38,40 @@ const ConvertPage = () => {
     );
   }
 
-  if (transactions.length === 0) {
-    return (
-      <div className='my-5'>
-        <PageState
-          icon={faExchangeAlt}
-          className='text-muted'
-          title='No Transactions'
-        />
-      </div>
+  const handleOnChange = (position: number) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
     );
-  }
+    setCheckedState(updatedCheckedState);
+  };
 
-  return <TransactionsTable transactions={transactions} />;
+  const handleSelectAll = () => {
+    const updatedCheckedState = checkedState.map(() => !selectedAll);
+    setCheckedState(updatedCheckedState);
+  };
+
+  return (
+    <div>
+      <label>
+        <input
+          type='checkbox'
+          checked={selectedAll}
+          onChange={handleSelectAll}
+        />
+        <div>Select All</div>
+      </label>
+      {accountTokens.map((token, index) => (
+        <label key={token.identifier}>
+          <input
+            type='checkbox'
+            checked={checkedState[index]}
+            onChange={() => handleOnChange(index)}
+          />
+          <TokenRow token={token} />
+        </label>
+      ))}
+    </div>
+  );
 };
 
 export const Convert = () => (
