@@ -29,7 +29,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext js,ts,tsx src"
+    "lint": "eslint --ext js,ts,tsx src",
+    "postbuild": "npm run create-version-file",
+    "create-version-file": "git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json"
   },
   "eslintConfig": {
     "extends": [
