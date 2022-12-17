@@ -12,6 +12,7 @@ import {
 
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
+import UpdateNotification from 'components/UpdateNotification';
 import {
   apiTimeout,
   walletConnectV2ProjectId,
@@ -27,6 +28,7 @@ export const App = () => {
       <AxiosInterceptorContext.Interceptor
         authenticatedDomanis={sampleAuthenticatedDomains}
       >
+        <UpdateNotification />
         <Router>
           <DappProvider
             environment={EnvironmentsEnum.devnet}
