@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
+import { logout } from '@elrondnetwork/dapp-core/utils';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
+import ActionOrConnect from 'components/ActionOrConnect';
 import { TokenRow } from './components';
 import { ConvertLayout } from './components/ConvertLayout';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
@@ -50,6 +52,15 @@ const ConvertPage = () => {
     setCheckedState(updatedCheckedState);
   };
 
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    // TODO
+  };
+
+  const handleLogout = () => {
+    logout(window.location.origin);
+  };
+
   return (
     <div>
       <label>
@@ -70,6 +81,10 @@ const ConvertPage = () => {
           <TokenRow token={token} />
         </label>
       ))}
+      <ActionOrConnect>
+        <button onClick={(e) => handleSubmit(e)}>Convert</button>
+        <button onClick={handleLogout}>Log out</button>
+      </ActionOrConnect>
     </div>
   );
 };
