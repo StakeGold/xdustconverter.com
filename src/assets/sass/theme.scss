@@ -9,7 +9,7 @@ $card-border-radius: 0.75rem;
 $card-inner-border-radius: subtract($card-border-radius, 1px);
 
 $headings-font-weight: 300 !important;
-$a: #1392ff;
+$a: #ffc629;
 
 /* Do not move the imports from here.
 Override Bootstrap variables only above.
@@ -25,7 +25,7 @@ Override Bootstrap variables only above.
 -------------------------------------------------- */
 html {
   min-height: 100%;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 body {
@@ -34,6 +34,37 @@ body {
 
 .wrapper {
   min-height: 100vh;
+}
+
+/* Convert Layout
+-------------------------------------------------- */
+.card {
+  background-color: #242526;
+  box-shadow: 0 0.6rem 1rem 0 rgb(0 0 0 / 6%);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 2rem;
+  border-radius: 0.75rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.page-description {
+  color: #9ba5b4;
+  font-size: 1rem;
+}
+
+.my-spacer {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
 }
 
 /* Footer
