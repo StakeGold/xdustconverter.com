@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 import ActionOrConnect from 'components/ActionOrConnect';
@@ -7,6 +8,9 @@ import { ConvertLayout } from './components/ConvertLayout';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 
 const ConvertPage = () => {
+  const { address } = useGetAccount();
+  const isLoggedIn = Boolean(address);
+
   const { tokens: accountTokens, isLoading, error } = useGetAccountTokens();
 
   const [checkedState, setCheckedState] = useState<boolean[]>([]);
@@ -65,11 +69,13 @@ const ConvertPage = () => {
         <thead>
           <tr>
             <th scope='col' className='mr-1'>
-              <input
-                type='checkbox'
-                checked={selectedAll}
-                onChange={handleSelectAll}
-              />
+              {isLoggedIn && (
+                <input
+                  type='checkbox'
+                  checked={selectedAll}
+                  onChange={handleSelectAll}
+                />
+              )}
             </th>
             <th scope='col' role='button' onClick={handleSelectAll}>
               Token
@@ -94,12 +100,14 @@ const ConvertPage = () => {
               onClick={() => handleOnChange(index)}
             >
               <th scope='row'>
-                <input
-                  type='checkbox'
-                  checked={checkedState[index]}
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onChange={() => {}}
-                />
+                {isLoggedIn && (
+                  <input
+                    type='checkbox'
+                    checked={checkedState[index]}
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    onChange={() => {}}
+                  />
+                )}
               </th>
               <TokenRow token={token} />
             </tr>
@@ -109,7 +117,7 @@ const ConvertPage = () => {
       <div className='card card-info my-spacer'>
         <div className='d-flex justify-content-between flex-wrap mb-2'>
           <div className='text-secondary mr-2'>Total USDC converted</div>
-          <span className='text-main'>1000 USDC</span>
+          <span className='text-main'>0 USDC</span>
         </div>
         <div className='d-flex justify-content-between flex-wrap mb-2'>
           <div className='text-secondary mr-2'>Protocol fee</div>

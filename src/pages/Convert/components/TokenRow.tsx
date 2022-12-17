@@ -9,7 +9,9 @@ export interface TokenRowProps {
 
 export const TokenRow = ({ token }: TokenRowProps) => {
   const tokenPrice = new BigNumber(token.price).decimalPlaces(4).toFixed();
-  const tokenValueUsd = new BigNumber(token.price).decimalPlaces(8).toFixed();
+  const tokenValueUsd = new BigNumber(token.valueUsd)
+    .decimalPlaces(8)
+    .toFixed();
 
   return (
     <>
