@@ -1,9 +1,9 @@
 /* Bootstrap overrides
 -------------------------------------------------- */
 
-$body: #000;
+$body: #18191a;
 $headings-font-weight: 300 !important;
-$primary: #1b46c2;
+$primary: #ffc629;
 $light: #fafafa;
 $card-border-radius: 0.75rem;
 $card-inner-border-radius: subtract($card-border-radius, 1px);
@@ -21,9 +21,6 @@ Override Bootstrap variables only above.
 
 @import '~bootstrap/scss/reboot';
 
-.custom-classname.btn-primary {
-  background-color: green;
-}
 /* Base
 -------------------------------------------------- */
 html {
@@ -31,193 +28,32 @@ html {
   font-size: 14px;
 }
 
+body {
+  background-color: $body;
+}
+
 .wrapper {
   min-height: 100vh;
-}
-
-.opacity-6 {
-  opacity: 0.6;
-}
-
-.dapp-icon {
-  padding: 5px;
-  border-radius: 50%;
-  background-color: $light;
-  width: 65px;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-
-  &.icon-medium {
-    width: 80px;
-    height: 80px;
-  }
-}
-
-/* Navbar
--------------------------------------------------- */
-.elrond-logo {
-  width: 85px;
-  height: 25px;
-}
-
-.dapp-name {
-  line-height: 1;
-  border-left: 1px solid $gray-400;
-  padding-left: 3px;
-  margin-left: 4px;
-}
-
-/* Dashboard
--------------------------------------------------- */
-.action-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: $white;
-  margin: 0 7px;
-
-  button {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    background-color: $white;
-
-    &:hover {
-      opacity: 0.9;
-    }
-  }
-}
-
-.transactions {
-  .transaction-icon {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-  }
-
-  &.table {
-    .transaction-hash .trim {
-      @include media-breakpoint-down(xl) {
-        max-width: none;
-      }
-      @include media-breakpoint-down(lg) {
-        max-width: 26rem;
-      }
-      @include media-breakpoint-down(md) {
-        max-width: 12rem;
-      }
-      @include media-breakpoint-down(sm) {
-        max-width: 8rem;
-      }
-    }
-
-    td,
-    tr {
-      padding: 0.65rem;
-    }
-
-    td {
-      white-space: nowrap;
-      vertical-align: middle;
-    }
-
-    tr:last-of-type {
-      td {
-        border-bottom: 1px solid #dee2e6;
-      }
-    }
-  }
-}
-
-/* Actions
--------------------------------------------------- */
-
-.not-allwed {
-  cursor: not-allowed;
-}
-
-/* Loader, Transaction success/Fail
--------------------------------------------------- */
-.page-state {
-  .lds-ellipsis {
-    display: inline-block;
-    position: relative;
-    width: 64px;
-    height: 64px;
-  }
-  .lds-ellipsis div {
-    position: absolute;
-    top: 27px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  .bg-blue .lds-ellipsis div {
-    background: rgba(255, 255, 255, 0.4);
-  }
-  .lds-ellipsis div:nth-child(1) {
-    left: 6px;
-    animation: lds-ellipsis1 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(2) {
-    left: 6px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(3) {
-    left: 26px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(4) {
-    left: 45px;
-    animation: lds-ellipsis3 0.6s infinite;
-  }
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(19px, 0);
-    }
-  }
 }
 
 /* Footer
 -------------------------------------------------- */
 footer {
   div {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
+    margin: 0;
+    padding-top: 48px;
+    padding-bottom: 24px;
+    font-size: 0.9rem;
     display: inline-block;
     font-weight: 400;
     line-height: 1.155rem;
-
+    
     a {
-      color: $black;
+      color: #9ba5b4;
 
       &:hover {
-        color: $black;
+        color: #fff;
+        text-decoration: none;
       }
 
       #heart {
@@ -225,9 +61,16 @@ footer {
         width: 16px;
 
         path {
-          fill: #ffc629;
+          fill: $primary;
         }
       }
+    }
+
+    .app-version {
+      color: #9ba5b4;
+      opacity: 60%;
+      margin-top: 10px;
+      display: block;
     }
   }
 }
