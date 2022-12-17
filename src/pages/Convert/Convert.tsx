@@ -65,55 +65,57 @@ const ConvertPage = () => {
 
   return (
     <div>
-      <table className='token-table'>
-        <thead>
-          <tr>
-            <th scope='col' className='mr-1'>
-              {isLoggedIn && (
-                <input
-                  type='checkbox'
-                  checked={selectedAll}
-                  onChange={handleSelectAll}
-                />
-              )}
-            </th>
-            <th scope='col' role='button' onClick={handleSelectAll}>
-              Token
-            </th>
-            <th scope='col' className='text-right'>
-              Price
-            </th>
-            <th scope='col' className='text-right'>
-              Balance
-            </th>
-            <th scope='col' className='text-right'>
-              Value USDC
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {accountTokens.map((token, index) => (
-            <tr
-              key={token.identifier}
-              className='token-table-row mb-4'
-              role='button'
-              onClick={() => handleOnChange(index)}
-            >
-              <th scope='row'>
+      <div className='token-table'>
+        <table>
+          <thead>
+            <tr>
+              <th scope='col' className='mr-1'>
                 {isLoggedIn && (
                   <input
                     type='checkbox'
-                    checked={checkedState[index]}
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onChange={() => {}}
+                    checked={selectedAll}
+                    onChange={handleSelectAll}
                   />
                 )}
               </th>
-              <TokenRow token={token} />
+              <th scope='col' role='button' onClick={handleSelectAll}>
+                Token
+              </th>
+              <th scope='col' className='text-right'>
+                Price
+              </th>
+              <th scope='col' className='text-right'>
+                Balance
+              </th>
+              <th scope='col' className='text-right pr-2'>
+                Value USDC
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {accountTokens.map((token, index) => (
+              <tr
+                key={token.identifier}
+                className='token-table-row mb-4'
+                role='button'
+                onClick={() => handleOnChange(index)}
+              >
+                <th scope='row'>
+                  {isLoggedIn && (
+                    <input
+                      type='checkbox'
+                      checked={checkedState[index]}
+                      // eslint-disable-next-line @typescript-eslint/no-empty-function
+                      onChange={() => {}}
+                    />
+                  )}
+                </th>
+                <TokenRow token={token} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <div className='card card-info my-spacer'>
         <div className='d-flex justify-content-between flex-wrap mb-2'>
           <div className='text-secondary mr-2'>Total USDC converted</div>

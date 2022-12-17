@@ -34,7 +34,7 @@ export const TokenRow = ({ token }: TokenRowProps) => {
           digits={8}
         />
       </td>
-      <td className='text-right'>$ {tokenValueUsd}</td>
+      <td className='text-right pr-2'>$ {tokenValueUsd}</td>
     </>
   );
 };
