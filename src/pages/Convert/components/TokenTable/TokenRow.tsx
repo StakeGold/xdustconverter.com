@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { FormatAmount } from '@elrondnetwork/dapp-core/UI';
 import BigNumber from 'bignumber.js';
+import { ValueWithTooltip } from 'components';
 import { AccountToken } from 'types';
 
 export interface TokenRowProps {
@@ -14,8 +14,17 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
-  const tokenPrice = new BigNumber(token.price).decimalPlaces(4).toFixed();
-  const tokenValueUsd = new BigNumber(token.valueUsd)
+  const formattedTokenPrice = new BigNumber(token.price)
+    .decimalPlaces(6)
+    .toFixed();
+  const tokenBalance = new BigNumber(token.balance)
+    .shiftedBy(-token.decimals)
+    .toFixed();
+  const formattedTokenBalance = new BigNumber(token.balance)
+    .shiftedBy(-token.decimals)
+    .decimalPlaces(8)
+    .toFixed();
+  const formattedTokenValueUsd = new BigNumber(token.valueUsd)
     .decimalPlaces(8)
     .toFixed();
 
@@ -40,16 +49,26 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
         {token.ticker}{' '}
         <small className='text-secondary'>{token.identifier}</small>
       </div>
-      <div className='table-col value'>$ {tokenPrice}</div>
       <div className='table-col value'>
-        <FormatAmount
-          value={token.balance}
-          decimals={token.decimals}
-          showLabel={false}
-          digits={8}
+        ${' '}
+        <ValueWithTooltip
+          formattedValue={formattedTokenPrice}
+          value={token.price.toString()}
         />
       </div>
-      <div className='table-col value'>$ {tokenValueUsd}</div>
+      <div className='table-col value'>
+        <ValueWithTooltip
+          formattedValue={formattedTokenBalance}
+          value={tokenBalance}
+        />
+      </div>
+      <div className='table-col value'>
+        ${' '}
+        <ValueWithTooltip
+          formattedValue={formattedTokenValueUsd}
+          value={token.valueUsd.toString()}
+        />
+      </div>
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
 import { AccountToken } from 'types';
 
 export interface ConvertInfoProps {
@@ -11,7 +13,20 @@ export const ConvertInfo = ({ checkedTokens }: ConvertInfoProps) => {
     return value.plus(new BigNumber(token.valueUsd));
   }, new BigNumber(0));
 
-  // TODO format total
+  const ProtocolFeeTooltip = () => {
+    return (
+      <OverlayTrigger
+        placement='top'
+        overlay={(props) => (
+          <Tooltip {...props}>
+            <p></p>
+          </Tooltip>
+        )}
+      >
+        <InfoIcon style={{ width: '1.25rem', height: '1.25rem' }} />
+      </OverlayTrigger>
+    );
+  };
 
   return (
     <div className='card card-info my-spacer'>
@@ -20,7 +35,9 @@ export const ConvertInfo = ({ checkedTokens }: ConvertInfoProps) => {
         <span className='text-main'>{total.toFixed()} USDC</span>
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>Protocol fee</div>
+        <div className='text-secondary mr-2'>
+          Protocol fee <ProtocolFeeTooltip />
+        </div>
         <span className='text-main'>10%</span>
       </div>
     </div>
