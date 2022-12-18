@@ -205,9 +205,17 @@ input {
   }
 
   .btn-logout {
-    width: 35px;
-    height: 35px;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
+    color: #9ba5b4;
+    background-color: #18191a;
+    outline: none;
+    border: none;
+
+    &:hover {
+      color: #fff;
+    }
   }
 }
 
