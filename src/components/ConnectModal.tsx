@@ -26,10 +26,10 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
   }, [isLoggedIn]);
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} className='login-modal'>
       <Modal.Header>
         <Modal.Title>Connect to a wallet</Modal.Title>
-        <span className='btn btn-primary btn-xs' onClick={onHide}>
+        <span className='btn btn-close' onClick={onHide}>
           <FontAwesomeIcon icon={faTimes} />
         </span>
       </Modal.Header>

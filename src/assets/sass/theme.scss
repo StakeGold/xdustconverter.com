@@ -54,6 +54,26 @@ input {
   color: $primary !important ;
 }
 
+.btn-logout,
+.btn-close,
+.btn-reload {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: #9ba5b4;
+  background-color: #18191a;
+  outline: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    color: #fff;
+    background-color: #18191a;
+  }
+}
+
 /* Scrollbar
 -------------------------------------------------- */
 ::-webkit-scrollbar {
@@ -203,18 +223,54 @@ input {
       text-decoration: none;
     }
   }
+}
 
-  .btn-logout {
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
+/* Login Modal
+-------------------------------------------------- */
+.modal-backdrop {
+  z-index: 980;
+}
+
+.login-modal {
+  font-size: 16px;
+  z-index: 990;
+
+  .modal-dialog {
     color: #9ba5b4;
-    background-color: #18191a;
-    outline: none;
-    border: none;
+    box-shadow: 0 0.6rem 1rem 0 rgb(0 0 0 / 6%);
 
-    &:hover {
-      color: #fff;
+    .modal-content {
+      background-color: #242526;
+      border-radius: 0.75rem;
+      padding: 2rem;
+
+      .modal-header,
+      .modal-body {
+        padding: 0;
+        border: 0;
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+      }
+
+      .modal-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    .dapp-core-component__main__btn {
+      margin: 0 !important;
+      margin-top: 1rem !important;
+      color: #000;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: 0.45rem;
+      outline: none;
+      border: none;
+      background-color: $primary;
     }
   }
 }
@@ -222,38 +278,151 @@ input {
 /* Footer
 -------------------------------------------------- */
 footer {
-  div {
-    margin: 0;
-    padding-top: 48px;
-    padding-bottom: 24px;
-    font-size: 0.9rem;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.155rem;
+  margin: 0 auto;
+  padding-top: 48px;
+  padding-bottom: 24px;
+  font-size: 0.9rem;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.155rem;
 
-    a {
-      color: #9ba5b4;
+  a {
+    color: #9ba5b4;
+
+    &:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    #heart {
+      height: 16px;
+      width: 16px;
+
+      path {
+        fill: $primary;
+      }
+    }
+  }
+
+  .social {
+    justify-content: center;
+
+    svg {
+      height: 2rem;
+      width: auto;
+      fill: #9ba5b4;
 
       &:hover {
-        color: #fff;
-        text-decoration: none;
-      }
-
-      #heart {
-        height: 16px;
-        width: 16px;
-
-        path {
-          fill: $primary;
-        }
+        fill: #fff;
       }
     }
+  }
 
-    .app-version {
-      color: #9ba5b4;
-      opacity: 60%;
-      margin-top: 10px;
-      display: block;
+  .app-version {
+    color: #9ba5b4;
+    opacity: 60%;
+    display: block;
+  }
+}
+
+/* Responsive
+-------------------------------------------------- */
+@media (max-width: 1400px) {
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+
+  .page-title {
+    margin-top: 3rem;
+
+    img {
+      height: 2rem;
+      width: auto;
     }
+  }
+
+  .page-description {
+    margin-bottom: 3rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .table-col.title {
+    .text-secondary {
+      display: none;
+    }
+  }
+
+  .token-table .token-image {
+    width: auto;
+    height: 1.75rem;
+    border-radius: 1.75rem;
+  }
+
+  .my-spacer {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .welcome-card h3 {
+    margin-right: 1rem;
+
+    a {
+      overflow-wrap: anywhere;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 14px;
+  }
+
+  .col-12 {
+    padding: 0 !important;
+  }
+
+  .page-title img {
+    height: 1.75rem;
+    width: auto;
+  }
+
+  .token-table .table-col {
+    min-width: 75px;
+  }
+
+  .token-table .table-header {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .token-table .table-body {
+    padding: 1rem;
+  }
+
+  .welcome-card h3 {
+    margin-right: 0.5rem;
+  }
+
+  .btn-logout,
+  .btn-close,
+  .btn-reload {
+    width: 47.5px;
+    height: 30px;
+  }
+
+  .token-table .token-image {
+    display: none;
   }
 }

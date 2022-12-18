@@ -1,5 +1,7 @@
 import React from 'react';
 import { useCheckVersion } from '@buidly/dapp-core/dist/hooks';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UPDATE_REFRESH_RATE } from 'config';
 
 const UpdateNotification = () => {
@@ -9,13 +11,13 @@ const UpdateNotification = () => {
 
   return updateAvailable ? (
     <div className='d-flex justify-content-between align-items-center px-3 py-3 px-md-4 bg-primary text-dark font-weight-bold'>
-      A new version of the Dapp is available.
+      A new version of the xDustConverter is available.
       <a
         href='/#'
         onClick={refreshPage}
-        className='ml-1 text-black font-weight-bold'
+        className='btn btn-secondary btn-reload'
       >
-        <span className=' text-dark'>Reload</span>
+        <FontAwesomeIcon icon={faRefresh} />
       </a>
     </div>
   ) : (
