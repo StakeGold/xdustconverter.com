@@ -57,15 +57,17 @@ input {
 /* Scrollbar
 -------------------------------------------------- */
 ::-webkit-scrollbar {
-  width: 5px;
-  margin: 10px;
+  width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
+  margin: 0.75rem 0;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #18191a;
-  border-radius: 10px;
+  background: $primary;
+  border-radius: 0.75rem;
 }
 
 /* Converter Layout
@@ -127,27 +129,57 @@ input {
 
 .token-table {
   width: 100%;
-  max-height: 450px;
-  margin: 0;
-  overflow: auto;
 
-  table {
-    border-spacing: 0 1rem;
-    border-collapse: separate;
-    width: 100%;
-  }
+  .table-header {
+    padding-top: 0;
+    padding-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 
-  thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #242526;
-  }
-
-  .token-table-row {
-    &:hover {
-      opacity: 75%;
+    .table-col.title {
+      cursor: pointer;
     }
+  }
+
+  .table-body {
+    background-color: #18191a;
+    padding: 1.5rem;
+    min-height: 350px;
+    max-height: 500px;
+    overflow-y: scroll;
+
+    .table-row {
+      margin-bottom: 1rem;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 75%;
+      }
+    }
+  }
+
+  .table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .table-col {
+    min-width: 110px;
+
+    &.title {
+      flex-grow: 1;
+    }
+
+    &.value {
+      text-align: right;
+    }
+  }
+
+  .token-image {
+    width: auto;
+    height: 2rem;
+    border-radius: 2rem;
   }
 }
 
@@ -173,9 +205,17 @@ input {
   }
 
   .btn-logout {
-    width: 35px;
-    height: 35px;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
+    color: #9ba5b4;
+    background-color: #18191a;
+    outline: none;
+    border: none;
+
+    &:hover {
+      color: #fff;
+    }
   }
 }
 
