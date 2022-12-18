@@ -14,30 +14,20 @@ export const TokenHeader = ({
   const isLoggedIn = Boolean(address);
 
   return (
-    <thead>
-      <tr>
-        <th scope='col' className='mr-1'>
-          {isLoggedIn && (
-            <input
-              type='checkbox'
-              checked={selectedAll}
-              onChange={handleSelectAll}
-            />
-          )}
-        </th>
-        <th scope='col' role='button' onClick={handleSelectAll}>
-          Token
-        </th>
-        <th scope='col' className='text-right'>
-          Price
-        </th>
-        <th scope='col' className='text-right'>
-          Balance
-        </th>
-        <th scope='col' className='text-right pr-2'>
-          Value USDC
-        </th>
-      </tr>
-    </thead>
+    <div className='table-header table-row'>
+      <div className='table-col title' onClick={handleSelectAll}>
+        {isLoggedIn && (
+          <input
+            type='checkbox'
+            checked={selectedAll}
+            onChange={handleSelectAll}
+          />
+        )}
+        Token
+      </div>
+      <div className='table-col value'>Price</div>
+      <div className='table-col value'>Balance</div>
+      <div className='table-col value'>Value USDC</div>
+    </div>
   );
 };

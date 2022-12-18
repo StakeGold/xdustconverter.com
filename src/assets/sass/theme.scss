@@ -127,27 +127,52 @@ input {
 
 .token-table {
   width: 100%;
-  max-height: 450px;
-  margin: 0;
-  overflow: auto;
 
-  table {
-    border-spacing: 0 1rem;
-    border-collapse: separate;
-    width: 100%;
+  .table-header {
+    padding-top: 0;
+    padding-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
-  thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #242526;
-  }
+  .table-body {
+    background-color: #18191a;
+    padding: 1.5rem;
+    min-height: 350px;
+    max-height: 500px;
+    overflow-y: scroll;
 
-  .token-table-row {
-    &:hover {
-      opacity: 75%;
+    .table-row {
+      margin-bottom: 1rem;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 75%;
+      }
     }
+  }
+
+  .table-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .table-col {
+    min-width: 110px;
+
+    &.title {
+      flex-grow: 1;
+    }
+
+    &.value {
+      text-align: right;
+    }
+  }
+
+  .token-image {
+    width: auto;
+    height: 2.5rem;
   }
 }
 

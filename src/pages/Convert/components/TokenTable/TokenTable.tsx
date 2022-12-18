@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { AccountToken } from 'types';
 import { TokenHeader } from './TokenHeader';
 import { TokenRow } from './TokenRow';
@@ -10,9 +9,6 @@ export interface TokenTableProps {
 }
 
 export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
-  const { address } = useGetAccount();
-  const isLoggedIn = Boolean(address);
-
   const [checkedState, setCheckedState] = useState<boolean[]>([]);
 
   useEffect(() => {
@@ -42,34 +38,20 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
 
   return (
     <div className='token-table'>
-      <table>
-        <TokenHeader
-          selectedAll={selectedAll}
-          handleSelectAll={handleSelectAll}
-        />
-        <tbody>
-          {tokens.map((token, index) => (
-            <tr
-              key={token.identifier}
-              className='token-table-row mb-4'
-              role='button'
-              onClick={() => handleOnChange(index)}
-            >
-              <th scope='row'>
-                {isLoggedIn && (
-                  <input
-                    type='checkbox'
-                    checked={checkedState[index]}
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    onChange={() => {}}
-                  />
-                )}
-              </th>
-              <TokenRow token={token} />
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TokenHeader
+        selectedAll={selectedAll}
+        handleSelectAll={handleSelectAll}
+      />
+      <div className='card table-body'>
+        {tokens.map((token, index) => (
+          <TokenRow
+            key={token.identifier}
+            token={token}
+            checked={checkedState[index]}
+            handleCheck={() => handleOnChange(index)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
