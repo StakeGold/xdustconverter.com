@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
-import ActionOrConnect from 'components/ActionOrConnect';
 import { AccountToken } from 'types';
-import { ConvertInfo, ConvertLayout, TokenTable } from './components';
+import {
+  ConvertInfo,
+  ConvertLayout,
+  TokenTable,
+  ConvertButton
+} from './components';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 
 const ConvertPage = () => {
@@ -27,7 +31,7 @@ const ConvertPage = () => {
     );
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
 
     console.log(checkedTokens);
@@ -38,14 +42,7 @@ const ConvertPage = () => {
     <div>
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
       <ConvertInfo checkedTokens={checkedTokens} />
-      <ActionOrConnect>
-        <button
-          className='btn btn-primary btn-connect'
-          onClick={(e) => handleSubmit(e)}
-        >
-          Convert small amounts
-        </button>
-      </ActionOrConnect>
+      <ConvertButton handleSubmit={handleSubmit} />
     </div>
   );
 };
