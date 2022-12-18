@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start:devnet": "npm run copy-devnet-config & HTTPS=false PORT=3001 react-scripts start",
-    "start:mainnet": "npm run copy-mainnet-config & HTTPS=true PORT=3001 react-scripts start",
+    "start:mainnet": "npm run copy-mainnet-config & HTTPS=false PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
