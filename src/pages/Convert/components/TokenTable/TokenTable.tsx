@@ -43,14 +43,19 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
         handleSelectAll={handleSelectAll}
       />
       <div className='card table-body'>
-        {tokens.map((token, index) => (
-          <TokenRow
-            key={token.identifier}
-            token={token}
-            checked={checkedState[index]}
-            handleCheck={() => handleOnChange(index)}
-          />
-        ))}
+        {tokens.length > 0 ? (
+          tokens.map((token, index) => (
+            <TokenRow
+              key={token.identifier}
+              token={token}
+              checked={checkedState[index]}
+              handleCheck={() => handleOnChange(index)}
+            />
+          ))
+        ) : (
+          // TODO format error
+          <div>No tokens</div>
+        )}
       </div>
     </div>
   );

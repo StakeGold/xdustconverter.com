@@ -1,4 +1,6 @@
+import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
 import axios from 'axios';
+import { ENVIRONMENT } from 'config';
 import { AccountToken } from 'types';
 import { sliceIntoChunks } from 'utils';
 import { getWhitelistedTokens } from './getWhitelistedTokens';
@@ -25,6 +27,12 @@ export const getWhitelistedDashboardTokens = async (
     balance: '0',
     valueUsd: 0
   }));
+
+  if (ENVIRONMENT === EnvironmentsEnum.devnet) {
+    for (const token of tokens) {
+      token.price = 0.04;
+    }
+  }
 
   return tokens;
 };
