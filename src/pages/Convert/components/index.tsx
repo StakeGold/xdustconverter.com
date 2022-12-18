@@ -1,2 +1,3 @@
 export * from './ConvertLayout';
-export * from './TokenRow';
+export * from './TokenTable';
+export * from './ConvertInfo';
