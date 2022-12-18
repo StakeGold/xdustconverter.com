@@ -55,7 +55,8 @@ input {
 }
 
 .btn-logout,
-.btn-close {
+.btn-close,
+.btn-reload {
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
@@ -69,6 +70,7 @@ input {
 
   &:hover {
     color: #fff;
+    background-color: #18191a;
   }
 }
 
