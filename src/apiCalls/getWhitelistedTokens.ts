@@ -1,5 +1,12 @@
+import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
+import { ENVIRONMENT } from 'config';
+
 // TODO implement
 export const getWhitelistedTokens = async (): Promise<string[]> => {
+  if (ENVIRONMENT === EnvironmentsEnum.devnet) {
+    return ['AERO-ecf4e7', 'ASH-4ce444'];
+  }
+
   const tokenIdentifiers = [
     'MEX-455c57',
     'WEGLD-bd4d79',

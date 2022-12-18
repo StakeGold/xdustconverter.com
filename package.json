@@ -24,14 +24,16 @@
     "web-vitals": "1.0.1"
   },
   "scripts": {
-    "start": "HTTPS=true PORT=3001 react-scripts start",
-    "dev": "HTTPS=false PORT=3001 react-scripts start",
+    "start:devnet": "npm run copy-devnet-config & HTTPS=false PORT=3001 react-scripts start",
+    "start:mainnet": "npm run copy-mainnet-config & HTTPS=false PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext js,ts,tsx src",
     "postbuild": "npm run create-version-file",
-    "create-version-file": "git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json"
+    "create-version-file": "git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json",
+    "copy-devnet-config": "cp ./src/config.devnet.tsx ./src/config.tsx",
+    "copy-mainnet-config": "cp ./src/config.mainnet.tsx ./src/config.tsx"
   },
   "eslintConfig": {
     "extends": [

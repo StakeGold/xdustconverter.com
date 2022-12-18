@@ -8,7 +8,7 @@ import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
 import UpdateNotification from 'components/UpdateNotification';
-import { apiTimeout, environment, walletConnectV2ProjectId } from 'config';
+import { API_TIMEOUT, ENVIRONMENT, WALLET_CONNECT_V2_PROJECT_ID } from 'config';
 import { Convert } from 'pages';
 
 export const App = () => {
@@ -17,11 +17,11 @@ export const App = () => {
       <UpdateNotification />
       <Router>
         <DappProvider
-          environment={environment}
+          environment={ENVIRONMENT}
           customNetworkConfig={{
             name: 'customConfig',
-            apiTimeout,
-            walletConnectV2ProjectId
+            apiTimeout: API_TIMEOUT,
+            walletConnectV2ProjectId: WALLET_CONNECT_V2_PROJECT_ID
           }}
         >
           <Layout>
