@@ -19,6 +19,7 @@ export const TokenHeader = ({
         {isLoggedIn && (
           <input
             type='checkbox'
+            className='mr-2'
             checked={selectedAll}
             onChange={handleSelectAll}
           />

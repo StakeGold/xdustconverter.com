@@ -25,6 +25,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
         {isLoggedIn && (
           <input
             type='checkbox'
+            className='mr-2'
             checked={checked}
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onChange={() => {}}
@@ -34,7 +35,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
           src={token.assets.svgUrl}
           width={35}
           height={35}
-          className='token-image mr-2'
+          className='token-image mr-3'
         />
         {token.ticker}{' '}
         <small className='text-secondary'>{token.identifier}</small>
