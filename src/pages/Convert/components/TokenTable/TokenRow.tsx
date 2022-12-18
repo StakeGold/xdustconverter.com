@@ -22,10 +22,10 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
     .toFixed();
   const formattedTokenBalance = new BigNumber(token.balance)
     .shiftedBy(-token.decimals)
-    .decimalPlaces(8)
+    .decimalPlaces(6)
     .toFixed();
   const formattedTokenValueUsd = new BigNumber(token.valueUsd)
-    .decimalPlaces(8)
+    .decimalPlaces(6)
     .toFixed();
 
   return (
@@ -50,7 +50,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
         <small className='text-secondary'>{token.identifier}</small>
       </div>
       <div className='table-col value'>
-        ${' '}
+        $
         <ValueWithTooltip
           formattedValue={formattedTokenPrice}
           value={token.price.toString()}
@@ -63,7 +63,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
         />
       </div>
       <div className='table-col value'>
-        ${' '}
+        $
         <ValueWithTooltip
           formattedValue={formattedTokenValueUsd}
           value={token.valueUsd.toString()}
