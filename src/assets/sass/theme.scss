@@ -54,6 +54,24 @@ input {
   color: $primary !important ;
 }
 
+.btn-logout,
+.btn-close {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: #9ba5b4;
+  background-color: #18191a;
+  outline: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
 /* Scrollbar
 -------------------------------------------------- */
 ::-webkit-scrollbar {
@@ -203,18 +221,54 @@ input {
       text-decoration: none;
     }
   }
+}
 
-  .btn-logout {
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
+/* Login Modal
+-------------------------------------------------- */
+.modal-backdrop {
+  z-index: 980;
+}
+
+.login-modal {
+  font-size: 16px;
+  z-index: 990;
+
+  .modal-dialog {
     color: #9ba5b4;
-    background-color: #18191a;
-    outline: none;
-    border: none;
+    box-shadow: 0 0.6rem 1rem 0 rgb(0 0 0 / 6%);
+    
+    .modal-content {
+      background-color: #242526;
+      border-radius: 0.75rem;
+      padding: 2rem;
+    
+      .modal-header,
+      .modal-body {
+        padding: 0;
+        border: 0;
+      }
 
-    &:hover {
-      color: #fff;
+      .modal-header {
+        display: flex;
+        align-items: center;
+      }
+      
+      .modal-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    .dapp-core-component__main__btn {
+      margin: 0 !important;
+      margin-top: 1rem !important;
+      color: #000;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: 0.45rem;
+      outline: none;
+      border: none;
+      background-color: $primary;
     }
   }
 }
