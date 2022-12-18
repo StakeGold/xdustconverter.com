@@ -6,7 +6,7 @@ export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col-12 col-md-10 col-lg-8 mx-auto text-center my-spacer'>
+        <div className='col-12 col-md-12 col-lg-9 col-xl-8 mx-auto text-center my-spacer'>
           <h1 className='page-title'>
             <span>xDustConverter</span>
             <img src={logo} />
@@ -17,7 +17,7 @@ export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
         </div>
       </div>
       <div className='row'>
-        <div className='col-12 col-md-10 col-lg-8 mx-auto'>
+        <div className='col-12 col-md-12 col-lg-9 col-xl-8 mx-auto'>
           <Welcome />
           <div className='card'>{children}</div>
         </div>
