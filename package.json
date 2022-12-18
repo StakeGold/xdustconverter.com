@@ -1,10 +1,10 @@
 {
-  "name": "@elrondnetwork/dapp-template",
-  "description": "Elrond Dapp Template",
+  "name": "@StakeGold/xdustconverter.com",
+  "description": "xDustConverter - Convert small ESDT amounts to WEGLD",
   "version": "1.0.0",
-  "author": "ElrondNetwork",
+  "author": "StakeGold",
   "license": "GPL-3.0-or-later",
-  "repository": "@elrondnetwork/dapp-template",
+  "repository": "@StakeGold/xdustconverter.com",
   "dependencies": {
     "@buidly/dapp-core": "^0.1.4",
     "@elrondnetwork/dapp-core": "2.2.0",
