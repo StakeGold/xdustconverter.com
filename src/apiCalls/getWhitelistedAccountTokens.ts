@@ -11,7 +11,7 @@ export const getWhitelistedAccountTokens = async (
   apiAddress: string,
   accountAddress: string
 ): Promise<AccountToken[]> => {
-  const maxUSDValue = 0.5; // TODO;
+  const maxWegldValue = '0.5';
   const tokenIdentifiers = await getWhitelistedTokens(apiAddress);
   const tokenIdentifierChunks = sliceIntoChunks(tokenIdentifiers, 25);
   const wegldPrice = await getWegldPrice(apiAddress);
@@ -38,7 +38,8 @@ export const getWhitelistedAccountTokens = async (
   if (ENVIRONMENT === EnvironmentsEnum.devnet) {
     for (const token of tokens) {
       token.price = 0.04;
-      token.valueUsd = maxUSDValue;
+      token.valueUsd = 0.123;
+      token.valueWegld = maxWegldValue;
     }
   }
 
@@ -51,6 +52,8 @@ export const getWhitelistedAccountTokens = async (
           .toFixed()
       };
     })
-    .filter((token) => token.valueUsd <= maxUSDValue);
+    .filter((token) =>
+      new BigNumber(token.valueWegld).isLessThanOrEqualTo(maxWegldValue)
+    );
   return filteredTokens;
 };
