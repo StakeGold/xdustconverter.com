@@ -52,6 +52,8 @@ export const getWhitelistedAccountTokens = async (
           .toFixed()
       };
     })
-    .filter((token) => token.valueWegld <= maxWegldValue);
+    .filter((token) =>
+      new BigNumber(token.valueWegld).isLessThanOrEqualTo(maxWegldValue)
+    );
   return filteredTokens;
 };
