@@ -10,15 +10,12 @@ export const useGetSwapDustTokens = () => {
 
   const swapDustTokens = (tokens: AccountToken[]): Transaction | undefined => {
     try {
-      const args = [];
-      for (const token of tokens) {
-        args.push(
-          TokenPayment.fungibleFromBigInteger(
-            token.identifier,
-            new BigNumber(token.balance)
-          )
+      const args = tokens.map((token) => {
+        return TokenPayment.fungibleFromBigInteger(
+          token.identifier,
+          new BigNumber(token.balance)
         );
-      }
+      });
 
       return dustSmartContract.methodsExplicit
         .swapDustTokens()
