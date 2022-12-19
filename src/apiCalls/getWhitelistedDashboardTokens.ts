@@ -8,7 +8,7 @@ import { getWhitelistedTokens } from './getWhitelistedTokens';
 export const getWhitelistedDashboardTokens = async (
   apiAddress: string
 ): Promise<AccountToken[]> => {
-  const tokenIdentifiers = await getWhitelistedTokens();
+  const tokenIdentifiers = await getWhitelistedTokens(apiAddress);
   const tokenIdentifierChunks = sliceIntoChunks(tokenIdentifiers, 25);
 
   const tokensRaw = await Promise.all(

@@ -3,12 +3,16 @@ import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
 import { AccountToken } from 'types';
+import { useGetProtocolFee } from '../hooks';
 
 export interface ConvertInfoProps {
   checkedTokens: AccountToken[];
 }
 
 export const ConvertInfo = ({ checkedTokens }: ConvertInfoProps) => {
+  const protocolFee = useGetProtocolFee();
+  const formattedProtocolFee = protocolFee ? `${protocolFee}%` : '-';
+
   const total = checkedTokens.reduce((value, token) => {
     return value.plus(new BigNumber(token.valueUsd));
   }, new BigNumber(0));
@@ -38,7 +42,7 @@ export const ConvertInfo = ({ checkedTokens }: ConvertInfoProps) => {
         <div className='text-secondary mr-2'>
           Protocol fee <ProtocolFeeTooltip />
         </div>
-        <span className='text-main'>10%</span>
+        <span className='text-main'>{formattedProtocolFee}</span>
       </div>
     </div>
   );

@@ -1,46 +1,32 @@
-import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
-import { ENVIRONMENT } from 'config';
+import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
+import { ResultsParser } from '@elrondnetwork/erdjs/out';
+import { ContractFunction } from '@elrondnetwork/erdjs/out/smartcontracts';
+import { dustSmartContract } from 'pages/Convert/helpers';
 
-// TODO implement
-export const getWhitelistedTokens = async (): Promise<string[]> => {
-  if (ENVIRONMENT === EnvironmentsEnum.devnet) {
-    return ['AERO-ecf4e7', 'ASH-4ce444'];
+const resultsParser = new ResultsParser();
+const endpoint = 'getAllTokens';
+
+export const getWhitelistedTokens = async (
+  apiAddress: string
+): Promise<string[]> => {
+  const proxy = new ProxyNetworkProvider(apiAddress);
+
+  try {
+    const query = dustSmartContract.createQuery({
+      func: new ContractFunction(endpoint)
+    });
+    const queryResponse = await proxy.queryContract(query);
+
+    const endpointDefinition = dustSmartContract.getEndpoint(endpoint);
+
+    const { firstValue: tokens } = resultsParser.parseQueryResponse(
+      queryResponse,
+      endpointDefinition
+    );
+
+    return tokens?.valueOf() ?? [];
+  } catch (err) {
+    console.error('Unable to call getAllTokens', err);
+    return [];
   }
-
-  const tokenIdentifiers = [
-    'MEX-455c57',
-    'WEGLD-bd4d79',
-    'USDC-c76f1f',
-    'RIDE-7d18e9',
-    'ISET-84e55e',
-    'AERO-458bbf',
-    'SUPER-507aa6',
-    'BSK-baa025',
-    'PLATA-9ba6c3',
-    'EFFORT-a13513',
-    'CRU-a5f4aa',
-    'ZPAY-247875',
-    'WAM-510e42',
-    'OFE-29eb54',
-    'ITHEUM-df6f26',
-    'BHAT-c1fde3',
-    'UTK-2f80e9',
-    'KRO-df97ec',
-    'LAND-40f26f',
-    'LAUNCH-3e2258',
-    'PROTEO-0c7311',
-    'CRT-52decf',
-    'VITAL-ab7917',
-    'HODL-d7f4b5',
-    'DEAD-4c133a',
-    'LPAD-84628f',
-    'QWT-46ac01',
-    'EPUNKS-dc0f59',
-    'INSTANT-086961',
-    'ASH-a642d1',
-    'JOY-43bad3',
-    'ESTAR-461bab',
-    'RARE-99e8b0'
-  ];
-  return tokenIdentifiers;
 };
