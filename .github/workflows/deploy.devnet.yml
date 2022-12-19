@@ -25,6 +25,8 @@ jobs:
         run: npm run build:devnet
       - name: Add .nojekyll file
         run: touch ./build/.nojekyll
+      - name: Add version file
+        run: git describe --always | sed 's/^/\"/;s/$/\"/' > build/version.json
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
