@@ -12,7 +12,7 @@ export const getWhitelistedAccountTokens = async (
   // accountAddress = 'erd15pfa69860rx8klgg37zg9lh7kn2ud62e6zlp4ndcq2es6zjvny8qzpvf4p';
 
   const maxUSDValue = 0.5; // TODO;
-  const tokenIdentifiers = await getWhitelistedTokens();
+  const tokenIdentifiers = await getWhitelistedTokens(apiAddress);
   const tokenIdentifierChunks = sliceIntoChunks(tokenIdentifiers, 25);
 
   const tokens = await Promise.all(
