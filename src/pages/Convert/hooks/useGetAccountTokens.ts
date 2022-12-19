@@ -43,5 +43,5 @@ export const useGetAccountTokens = () => {
     fetchAccountTokens();
   }, [isLoggedIn]);
 
-  return { tokens, isLoading, error, fetchAccountTokens };
+  return { tokens, isLoading, error, reloadTokens: fetchAccountTokens };
 };

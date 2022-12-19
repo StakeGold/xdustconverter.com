@@ -26,9 +26,7 @@ export const TokenHeader = ({
         )}
         Token
       </div>
-      <div className='table-col value'>Price</div>
-      <div className='table-col value'>Balance</div>
-      <div className='table-col value'>Value USDC</div>
+      <div className='table-col value'>Value WEGLD</div>
     </div>
   );
 };

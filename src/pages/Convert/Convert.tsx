@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
+import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { sendAndSignTransactions } from 'apiCalls';
 import { AccountToken } from 'types';
 import {
@@ -11,6 +12,8 @@ import {
   TokenTable,
   ConvertButton
 } from './components';
+import { TransactionsSignedInfo } from './components/TransactionsSignedInfo';
+import { useGetProtocolFee } from './hooks';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
@@ -19,14 +22,15 @@ const ConvertPage = () => {
     tokens: accountTokens,
     isLoading,
     error,
-    fetchAccountTokens
+    reloadTokens
   } = useGetAccountTokens();
   const swapDustTokens = useGetSwapDustTokens();
+  const protocolFee = useGetProtocolFee();
   const { success } = useGetActiveTransactionsStatus();
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
 
-  const hasTokens = accountTokens.length > 0;
+  const hasTokens = checkedTokens.length > 0;
 
   const processConvertTransaction = async (
     transaction: Transaction | undefined
@@ -49,7 +53,7 @@ const ConvertPage = () => {
 
   useEffect(() => {
     if (success) {
-      fetchAccountTokens();
+      reloadTokens();
     }
   }, [success]);
 
@@ -57,14 +61,13 @@ const ConvertPage = () => {
     return <Loader />;
   }
 
-  if (error) {
-    // TODO style
+  if (error || protocolFee === undefined) {
     return (
       <div className='my-5'>
         <PageState
-          icon={faBan}
+          icon={faClose}
           className='text-muted'
-          title='Error fetching transactions.'
+          title='Unable to load.'
         />
       </div>
     );
@@ -80,8 +83,11 @@ const ConvertPage = () => {
   return (
     <div>
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
-      <ConvertInfo checkedTokens={checkedTokens} />
+      <ConvertInfo checkedTokens={checkedTokens} protocolFee={protocolFee} />
       <ConvertButton handleSubmit={handleSubmit} disabled={!hasTokens} />
+      {getIsLoggedIn() && hasTokens && (
+        <TransactionsSignedInfo transactions={1} />
+      )}
     </div>
   );
 };
