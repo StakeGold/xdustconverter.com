@@ -51,7 +51,7 @@ input {
 }
 
 .dapp-core-component__main__text-primary {
-  color: $primary !important ;
+  color: $primary !important;
 }
 
 .btn-logout,
@@ -327,14 +327,11 @@ footer {
 
 /* Responsive
 -------------------------------------------------- */
-@media (max-width: 1400px) {
-}
+@media (max-width: 1400px) {}
 
-@media (max-width: 1200px) {
-}
+@media (max-width: 1200px) {}
 
-@media (max-width: 992px) {
-}
+@media (max-width: 992px) {}
 
 @media (max-width: 768px) {
   .container {
@@ -356,12 +353,6 @@ footer {
 
   .card {
     padding: 1rem;
-  }
-
-  .table-col.title {
-    .text-secondary {
-      display: none;
-    }
   }
 
   .token-table .token-image {
@@ -420,9 +411,5 @@ footer {
   .btn-reload {
     width: 47.5px;
     height: 30px;
-  }
-
-  .token-table .token-image {
-    display: none;
   }
 }
