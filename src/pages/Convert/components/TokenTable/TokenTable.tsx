@@ -53,8 +53,7 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
             />
           ))
         ) : (
-          // TODO format error
-          <div>No tokens</div>
+          <div className='m-auto'>There are no tokens available</div>
         )}
       </div>
     </div>
