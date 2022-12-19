@@ -1,19 +1,24 @@
 import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
 import axios from 'axios';
+import { BigNumber } from 'bignumber.js';
 import { ENVIRONMENT } from 'config';
 import { AccountToken } from 'types';
 import { sliceIntoChunks } from 'utils';
+import { getWegldPrice } from './getWegldPrice';
 import { getWhitelistedTokens } from './getWhitelistedTokens';
 
 export const getWhitelistedAccountTokens = async (
   apiAddress: string,
   accountAddress: string
 ): Promise<AccountToken[]> => {
-  // accountAddress = 'erd15pfa69860rx8klgg37zg9lh7kn2ud62e6zlp4ndcq2es6zjvny8qzpvf4p';
-
   const maxUSDValue = 0.5; // TODO;
   const tokenIdentifiers = await getWhitelistedTokens(apiAddress);
   const tokenIdentifierChunks = sliceIntoChunks(tokenIdentifiers, 25);
+  const wegldPrice = await getWegldPrice(apiAddress);
+
+  if (wegldPrice === undefined) {
+    throw new Error('WEGLD price could not be fetched');
+  }
 
   const tokens = await Promise.all(
     tokenIdentifierChunks.map(async (identifiers) => {
@@ -37,8 +42,15 @@ export const getWhitelistedAccountTokens = async (
     }
   }
 
-  const filteredTokens = tokens.filter(
-    (token) => token.valueUsd <= maxUSDValue
-  );
+  const filteredTokens = tokens
+    .map((token) => {
+      return {
+        ...token,
+        valueWegld: new BigNumber(token.valueUsd)
+          .dividedBy(wegldPrice)
+          .toFixed()
+      };
+    })
+    .filter((token) => token.valueUsd <= maxUSDValue);
   return filteredTokens;
 };
