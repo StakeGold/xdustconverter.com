@@ -26,16 +26,22 @@ const ConvertPage = () => {
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
 
+  const hasTokens = accountTokens.length > 0;
+
   const processConvertTransaction = async (
-    transaction: Transaction | undefined,
-    method: string
+    transaction: Transaction | undefined
   ) => {
     try {
       if (transaction === undefined) {
         return;
       }
 
-      await sendAndSignTransactions([transaction], method);
+      const displayInfo = {
+        processingMessage: 'Converting small amounts',
+        errorMessage: 'An error has occurred while converting small amounts',
+        successMessage: 'Converting small amounts succeeded'
+      };
+      await sendAndSignTransactions([transaction], displayInfo);
     } catch (err: any) {
       console.log('processConvertTransaction error', err);
     }
@@ -67,22 +73,15 @@ const ConvertPage = () => {
   const handleSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
 
-    if (checkedTokens.length === 0) {
-      return;
-    }
-
     const transaction = swapDustTokens(checkedTokens);
-    processConvertTransaction(transaction, 'Convert small amounts');
+    processConvertTransaction(transaction);
   };
 
   return (
     <div>
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
       <ConvertInfo checkedTokens={checkedTokens} />
-      <ConvertButton
-        handleSubmit={handleSubmit}
-        disabled={checkedTokens.length === 0}
-      />
+      <ConvertButton handleSubmit={handleSubmit} disabled={!hasTokens} />
     </div>
   );
 };

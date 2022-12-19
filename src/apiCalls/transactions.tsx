@@ -1,10 +1,12 @@
 import { sendTransactions } from '@elrondnetwork/dapp-core/services';
+import { TransactionsDisplayInfoType } from '@elrondnetwork/dapp-core/types';
 import { refreshAccount } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 export const sendAndSignTransactions = async (
   transactions: Transaction[],
-  transactionName: string,
-  callbackRoute?: string
+  transactionsDisplayInfo: TransactionsDisplayInfoType,
+  callbackRoute?: string,
+  minGasLimit = 20000000
 ): Promise<{
   success: boolean;
   error: string;
@@ -14,14 +16,10 @@ export const sendAndSignTransactions = async (
     await refreshAccount();
     const { sessionId, error } = await sendTransactions({
       transactions: transactions,
-      transactionsDisplayInfo: {
-        processingMessage: `Processing ${transactionName} transaction`,
-        errorMessage: `An error has occurred during ${transactionName}`,
-        successMessage: `${transactionName} transaction successful`
-      },
+      transactionsDisplayInfo,
       callbackRoute: callbackRoute,
       redirectAfterSign: callbackRoute,
-      minGasLimit: 20000000
+      minGasLimit
     });
     await refreshAccount();
     return { success: error !== undefined, error: error ?? '', sessionId };
