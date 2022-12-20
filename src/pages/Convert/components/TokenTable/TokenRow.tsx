@@ -36,7 +36,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
             />
           )}
           <img
-            src={token.assets.svgUrl}
+            src={token.assets?.svgUrl}
             width={35}
             height={35}
             className='token-image mr-3'

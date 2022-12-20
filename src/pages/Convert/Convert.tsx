@@ -18,6 +18,7 @@ import {
   ConvertButton
 } from './components';
 import { TransactionsSignedInfo } from './components/TransactionsSignedInfo';
+import { computeValueAfterFees } from './helpers';
 import { useGetProtocolFee } from './hooks';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
@@ -86,20 +87,25 @@ const ConvertPage = () => {
     return value.plus(new BigNumber(token.valueWegld));
   }, new BigNumber(0));
 
-  const totalProtocolFee = new BigNumber(protocolFee / 100).multipliedBy(
-    totalWegld
-  );
-  let totalWegldWithFee = totalWegld.minus(totalProtocolFee);
+  const totalUsd = checkedTokens.reduce((value, token) => {
+    return value.plus(new BigNumber(token.valueUsd));
+  }, new BigNumber(0));
 
-  const totalSlippage = new BigNumber(SLIPPAGE).multipliedBy(totalWegldWithFee);
-  totalWegldWithFee = totalWegldWithFee
-    .minus(totalSlippage)
-    .decimalPlaces(18, BigNumber.ROUND_DOWN);
+  const totalWegldAfterFees = computeValueAfterFees(
+    totalWegld,
+    protocolFee,
+    SLIPPAGE
+  );
+  const totalUsdAfterFees = computeValueAfterFees(
+    totalUsd,
+    protocolFee,
+    SLIPPAGE
+  );
 
   const handleSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
 
-    const transaction = swapDustTokens(totalWegldWithFee, checkedTokens);
+    const transaction = swapDustTokens(totalWegldAfterFees, checkedTokens);
     processConvertTransaction(transaction);
   };
 
@@ -108,8 +114,8 @@ const ConvertPage = () => {
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
       {isLoggedIn && (
         <ConvertInfo
-          totalWegld={totalWegldWithFee}
-          totalUsd={totalWegldWithFee}
+          totalWegld={totalWegldAfterFees}
+          totalUsd={totalUsdAfterFees}
           protocolFee={protocolFee}
         />
       )}

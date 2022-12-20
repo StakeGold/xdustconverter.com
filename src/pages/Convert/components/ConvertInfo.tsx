@@ -17,7 +17,9 @@ export const ConvertInfo = ({
   const formattedTotalWegld = totalWegld
     .decimalPlaces(6, BigNumber.ROUND_DOWN)
     .toFixed();
-  const formattedTotalUsd = totalUsd.decimalPlaces(2).toFixed();
+  const formattedTotalUsd = totalUsd
+    .decimalPlaces(2, BigNumber.ROUND_DOWN)
+    .toFixed();
 
   return (
     <div className='card card-info my-spacer'>
@@ -31,9 +33,9 @@ export const ConvertInfo = ({
             />{' '}
             WEGLD
           </span>
-          {/* <small className='text-secondary text-right'>
+          <small className='text-secondary text-right'>
             ≈ ${formattedTotalUsd}
-          </small> */}
+          </small>
         </div>
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
