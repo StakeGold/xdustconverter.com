@@ -8,3 +8,4 @@ export const CONTRACT_ADDRESS =
 export const WALLET_CONNECT_V2_PROJECT_ID = '9c1851da02319e1280cbbf2de5d8ee46';
 export const WEGLD_ID = 'WEGLD-d7c6bb';
 export const USDC_ID = 'USDC-8d4068';
+export const MIN_AMOUNT = 0.01;

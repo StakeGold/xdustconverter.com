@@ -18,12 +18,12 @@ export const ConvertInfo = ({
   const totalWegldWithFee = totalWegld.minus(
     new BigNumber(protocolFee / 100).multipliedBy(totalWegld)
   );
-  const formattedTotalWegld = totalWegldWithFee.decimalPlaces(6).toString();
+  const formattedTotalWegld = totalWegldWithFee.decimalPlaces(6).toFixed();
 
   const totalUsd = checkedTokens.reduce((value, token) => {
     return value.plus(new BigNumber(token.valueUsd));
   }, new BigNumber(0));
-  const formattedTotalUsd = totalUsd.decimalPlaces(2).toString();
+  const formattedTotalUsd = totalUsd.decimalPlaces(2).toFixed();
 
   return (
     <div className='card card-info my-spacer'>
@@ -33,7 +33,7 @@ export const ConvertInfo = ({
           <span className='text-main'>
             <ValueWithTooltip
               formattedValue={formattedTotalWegld}
-              value={totalWegldWithFee.toString()}
+              value={totalWegldWithFee.toFixed()}
             />{' '}
             WEGLD
           </span>
