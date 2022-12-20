@@ -7,7 +7,9 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import BigNumber from 'bignumber.js';
 import { sendAndSignTransactions } from 'apiCalls';
+import { SLIPPAGE } from 'config';
 import { AccountToken } from 'types';
 import {
   ConvertInfo,
@@ -31,6 +33,7 @@ const ConvertPage = () => {
     reloadTokens
   } = useGetAccountTokens();
   const swapDustTokens = useGetSwapDustTokens();
+
   const protocolFee = useGetProtocolFee();
   const { success } = useGetActiveTransactionsStatus();
 
@@ -79,10 +82,24 @@ const ConvertPage = () => {
     );
   }
 
+  const totalWegld = checkedTokens.reduce((value, token) => {
+    return value.plus(new BigNumber(token.valueWegld));
+  }, new BigNumber(0));
+
+  const totalProtocolFee = new BigNumber(protocolFee / 100).multipliedBy(
+    totalWegld
+  );
+  let totalWegldWithFee = totalWegld.minus(totalProtocolFee);
+
+  const totalSlippage = new BigNumber(SLIPPAGE).multipliedBy(totalWegldWithFee);
+  totalWegldWithFee = totalWegldWithFee
+    .minus(totalSlippage)
+    .decimalPlaces(18, BigNumber.ROUND_DOWN);
+
   const handleSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
 
-    const transaction = swapDustTokens(checkedTokens);
+    const transaction = swapDustTokens(totalWegldWithFee, checkedTokens);
     processConvertTransaction(transaction);
   };
 
@@ -90,7 +107,11 @@ const ConvertPage = () => {
     <div>
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
       {isLoggedIn && (
-        <ConvertInfo checkedTokens={checkedTokens} protocolFee={protocolFee} />
+        <ConvertInfo
+          totalWegld={totalWegldWithFee}
+          totalUsd={totalWegldWithFee}
+          protocolFee={protocolFee}
+        />
       )}
       <ConvertButton handleSubmit={handleSubmit} disabled={!hasTokens} />
       {getIsLoggedIn() && hasTokens && (

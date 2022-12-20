@@ -24,9 +24,9 @@ export const TokenHeader = ({
             onChange={handleSelectAll}
           />
         )}
-        Token
+        Select all
       </div>
-      <div className='table-col value'>{isLoggedIn ? 'Value WEGLD' : ''}</div>
+      <div className='table-col value'></div>
     </div>
   );
 };
