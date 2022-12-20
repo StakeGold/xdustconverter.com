@@ -37,16 +37,23 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
         <ExtensionLoginButton
           callbackRoute={'/'}
           loginButtonText='Maiar DeFi Wallet'
+          nativeAuth={true}
         />
         <WalletConnectLoginButton
           callbackRoute={'/'}
           loginButtonText='Maiar App'
+          nativeAuth={true}
         />
         <WebWalletLoginButton
           callbackRoute={'/'}
           loginButtonText='Elrond Web Wallet'
+          nativeAuth={true}
         />
-        <LedgerLoginButton callbackRoute={'/'} loginButtonText='Ledger' />
+        <LedgerLoginButton
+          callbackRoute={'/'}
+          loginButtonText='Ledger'
+          nativeAuth={true}
+        />
       </Modal.Body>
     </Modal>
   );
