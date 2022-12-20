@@ -1,5 +1,4 @@
 import axios from 'axios';
-import BigNumber from 'bignumber.js';
 import { AccountToken } from 'types';
 import { sliceIntoChunks } from 'utils';
 import { getWhitelistedTokens } from './getWhitelistedTokens';
@@ -23,8 +22,8 @@ export const getWhitelistedDashboardTokens = async (
   );
   const tokens = tokensRaw.flat().map((token) => ({
     ...token,
-    balance: new BigNumber(1).shiftedBy(token.decimals).toString(),
-    valueUsd: token.price,
+    balance: '0',
+    valueUsd: '0',
     valueWegld: '0'
   }));
 

@@ -32,6 +32,8 @@ export const useGetAccountTokens = () => {
 
       setTokens(allTokens);
     } catch (err) {
+      console.error(error);
+
       const { message } = err as AxiosError;
       setError(message);
     } finally {
