@@ -20,10 +20,12 @@ export const ConvertInfo = ({
   const totalProtocolFee = new BigNumber(protocolFee / 100).multipliedBy(
     totalWegld
   );
-  let totalWegldWithFee = totalWegld.minus(totalProtocolFee).decimalPlaces(18);
+  let totalWegldWithFee = totalWegld.minus(totalProtocolFee);
 
   const totalSlippage = new BigNumber(SLIPPAGE).multipliedBy(totalWegldWithFee);
-  totalWegldWithFee = totalWegldWithFee.minus(totalSlippage).decimalPlaces(18);
+  totalWegldWithFee = totalWegldWithFee
+    .minus(totalSlippage)
+    .decimalPlaces(18, BigNumber.ROUND_DOWN);
 
   const formattedTotalWegld = totalWegldWithFee.decimalPlaces(6).toFixed();
 
