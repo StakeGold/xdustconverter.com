@@ -1,8 +1,8 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { ValueWithTooltip } from 'components';
-import { AccountToken } from 'types';
 import { SLIPPAGE } from 'config';
+import { AccountToken } from 'types';
 
 export interface ConvertInfoProps {
   checkedTokens: AccountToken[];
@@ -16,9 +16,15 @@ export const ConvertInfo = ({
   const totalWegld = checkedTokens.reduce((value, token) => {
     return value.plus(new BigNumber(token.valueWegld));
   }, new BigNumber(0));
-  const totalWegldWithFee = totalWegld.minus(
-    new BigNumber(protocolFee / 100).multipliedBy(totalWegld)
+
+  const totalProtocolFee = new BigNumber(protocolFee / 100).multipliedBy(
+    totalWegld
   );
+  let totalWegldWithFee = totalWegld.minus(totalProtocolFee).decimalPlaces(18);
+
+  const totalSlippage = new BigNumber(SLIPPAGE).multipliedBy(totalWegldWithFee);
+  totalWegldWithFee = totalWegldWithFee.minus(totalSlippage).decimalPlaces(18);
+
   const formattedTotalWegld = totalWegldWithFee.decimalPlaces(6).toFixed();
 
   const totalUsd = checkedTokens.reduce((value, token) => {
@@ -29,7 +35,7 @@ export const ConvertInfo = ({
   return (
     <div className='card card-info my-spacer'>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>Total converted</div>
+        <div className='text-secondary mr-2'>Minimum converted</div>
         <div className='d-flex flex-column'>
           <span className='text-main'>
             <ValueWithTooltip
