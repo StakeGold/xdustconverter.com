@@ -1,7 +1,5 @@
-import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
 import axios from 'axios';
 import { BigNumber } from 'bignumber.js';
-import { ENVIRONMENT } from 'config';
 import { AccountToken } from 'types';
 import { sliceIntoChunks } from 'utils';
 import { getWegldPrice } from './getWegldPrice';
@@ -34,14 +32,6 @@ export const getWhitelistedAccountTokens = async (
       return data as AccountToken[];
     })
   ).then((response) => response.flat());
-
-  if (ENVIRONMENT === EnvironmentsEnum.devnet) {
-    for (const token of tokens) {
-      token.price = 0.04;
-      token.valueUsd = 0.123;
-      token.valueWegld = maxWegldValue;
-    }
-  }
 
   const filteredTokens = tokens
     .map((token) => {

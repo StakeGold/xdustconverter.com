@@ -1,3 +1,4 @@
+import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 import { AccountToken } from 'types';
 import { TokenHeader } from './TokenHeader';
@@ -20,6 +21,10 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
   }, [checkedState]);
 
   const handleOnChange = (position: number) => {
+    if (!getIsLoggedIn()) {
+      return;
+    }
+
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
