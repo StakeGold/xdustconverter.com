@@ -1,50 +1,48 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { ValueWithTooltip } from 'components';
-import { AccountToken } from 'types';
+import { SLIPPAGE } from 'config';
 
 export interface ConvertInfoProps {
-  checkedTokens: AccountToken[];
+  totalWegld: BigNumber;
+  totalUsd: BigNumber;
   protocolFee: number;
 }
 
 export const ConvertInfo = ({
-  checkedTokens,
+  totalWegld,
+  totalUsd,
   protocolFee
 }: ConvertInfoProps) => {
-  const totalWegld = checkedTokens.reduce((value, token) => {
-    return value.plus(new BigNumber(token.valueWegld));
-  }, new BigNumber(0));
-  const totalWegldWithFee = totalWegld.minus(
-    new BigNumber(protocolFee / 100).multipliedBy(totalWegld)
-  );
-  const formattedTotalWegld = totalWegldWithFee.decimalPlaces(6).toFixed();
-
-  const totalUsd = checkedTokens.reduce((value, token) => {
-    return value.plus(new BigNumber(token.valueUsd));
-  }, new BigNumber(0));
+  const formattedTotalWegld = totalWegld
+    .decimalPlaces(6, BigNumber.ROUND_DOWN)
+    .toFixed();
   const formattedTotalUsd = totalUsd.decimalPlaces(2).toFixed();
 
   return (
     <div className='card card-info my-spacer'>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>Total WEGLD converted</div>
+        <div className='text-secondary mr-2'>Minimum converted</div>
         <div className='d-flex flex-column'>
           <span className='text-main'>
             <ValueWithTooltip
               formattedValue={formattedTotalWegld}
-              value={totalWegldWithFee.toFixed()}
+              value={totalWegld.toFixed()}
             />{' '}
             WEGLD
           </span>
-          <small className='text-secondary text-right'>
+          {/* <small className='text-secondary text-right'>
             ≈ ${formattedTotalUsd}
-          </small>
+          </small> */}
         </div>
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Protocol fee</div>
         <span className='text-main'>{protocolFee}%</span>
+      </div>
+      <div className='d-flex justify-content-between flex-wrap mb-2'>
+        <div className='text-secondary mr-2'>Slippage</div>
+        <span className='text-main'>{SLIPPAGE * 100}%</span>
       </div>
     </div>
   );
