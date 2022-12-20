@@ -17,7 +17,11 @@ export const Footer = () => {
         Made with <HeartIcon className='mx-1' /> by StakeGold team.
       </a>
       <div className='social mb-2'>
-        <a target={'_blank'} href='https://telegram.org' rel='noreferrer'>
+        <a
+          target={'_blank'}
+          href='https://t.me/+jlbYMJDk8_o3N2Q0'
+          rel='noreferrer'
+        >
           <TelegramIcon />
         </a>
       </div>

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
+import {
+  useGetAccount,
+  useGetActiveTransactionsStatus
+} from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
@@ -18,6 +21,9 @@ import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const ConvertPage = () => {
+  const { address } = useGetAccount();
+  const isLoggedIn = Boolean(address);
+
   const {
     tokens: accountTokens,
     isLoading,
@@ -83,7 +89,9 @@ const ConvertPage = () => {
   return (
     <div>
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
-      <ConvertInfo checkedTokens={checkedTokens} protocolFee={protocolFee} />
+      {isLoggedIn && (
+        <ConvertInfo checkedTokens={checkedTokens} protocolFee={protocolFee} />
+      )}
       <ConvertButton handleSubmit={handleSubmit} disabled={!hasTokens} />
       {getIsLoggedIn() && hasTokens && (
         <TransactionsSignedInfo transactions={1} />
