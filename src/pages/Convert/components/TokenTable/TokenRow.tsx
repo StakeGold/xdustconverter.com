@@ -42,12 +42,16 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
             className='token-image mr-3'
           />
           <div className='d-flex flex-column'>
-            <TokenAmountWithTooltip
-              value={token.balance}
-              decimals={token.decimals}
-              egldLabel={token.ticker}
-              digits={4}
-            />
+            {isLoggedIn ? (
+              <TokenAmountWithTooltip
+                value={token.balance}
+                decimals={token.decimals}
+                egldLabel={token.ticker}
+                digits={4}
+              />
+            ) : (
+              <>{token.ticker}</>
+            )}
             <small className='text-secondary'>
               ≈ ${formattedTokenValueUsd}
             </small>
@@ -55,7 +59,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
         </div>
       </div>
       <div className='table-col value'>
-        {isLoggedIn ? (
+        {isLoggedIn && (
           <>
             <ValueWithTooltip
               formattedValue={formattedTokenValueWegld}
@@ -63,8 +67,6 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
             />{' '}
             WEGLD
           </>
-        ) : (
-          '-'
         )}
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import React, { useEffect, useMemo, useState } from 'react';
+import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { AccountToken } from 'types';
 import { TokenHeader } from './TokenHeader';
 import { TokenRow } from './TokenRow';
@@ -42,7 +42,7 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
   }, [checkedState]);
 
   return (
-    <div className='token-table'>
+    <div className='token-table my-spacer'>
       <TokenHeader
         selectedAll={selectedAll}
         handleSelectAll={handleSelectAll}

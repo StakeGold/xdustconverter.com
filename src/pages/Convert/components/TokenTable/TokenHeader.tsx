@@ -26,7 +26,7 @@ export const TokenHeader = ({
         )}
         Token
       </div>
-      <div className='table-col value'>Value WEGLD</div>
+      <div className='table-col value'>{isLoggedIn ? 'Value WEGLD' : ''}</div>
     </div>
   );
 };
