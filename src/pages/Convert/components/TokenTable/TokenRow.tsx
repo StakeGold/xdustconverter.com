@@ -63,7 +63,7 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
           <>
             <ValueWithTooltip
               formattedValue={formattedTokenValueWegld}
-              value={token.valueWegld.toString()}
+              value={token.valueWegld}
             />{' '}
             WEGLD
           </>

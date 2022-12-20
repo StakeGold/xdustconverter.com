@@ -3,9 +3,13 @@ import {
   FormatAmount,
   FormatAmountPropsType
 } from '@elrondnetwork/dapp-core/UI';
+import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { MIN_AMOUNT } from 'config';
 
 export const TokenAmountWithTooltip = ({ ...props }: FormatAmountPropsType) => {
+  const valueBig = new BigNumber(props.value).shiftedBy(-(props.decimals ?? 0));
+
   return (
     <OverlayTrigger
       placement='top'
@@ -15,20 +19,24 @@ export const TokenAmountWithTooltip = ({ ...props }: FormatAmountPropsType) => {
             value={props.value}
             decimals={props.decimals}
             showLabel={false}
-            digits={props.value.length}
+            digits={props.decimals}
             showLastNonZeroDecimal={false}
           />
         </Tooltip>
       )}
     >
       <span>
-        <FormatAmount
-          value={props.value}
-          decimals={props.decimals}
-          egldLabel={props.egldLabel}
-          digits={props.digits}
-          showLastNonZeroDecimal={false}
-        />
+        {valueBig.isLessThanOrEqualTo(MIN_AMOUNT) && !valueBig.isEqualTo(0) ? (
+          <>{`< ${MIN_AMOUNT}`}</>
+        ) : (
+          <FormatAmount
+            value={props.value}
+            decimals={props.decimals}
+            egldLabel={props.egldLabel}
+            digits={props.digits}
+            showLastNonZeroDecimal={false}
+          />
+        )}
       </span>
     </OverlayTrigger>
   );
