@@ -6,3 +6,5 @@ export const API_TIMEOUT = 6000;
 export const CONTRACT_ADDRESS =
   'erd1qqqqqqqqqqqqqpgqx5dy9lnep2uj43f066xp995phtqfyth54jusdk8pg4';
 export const WALLET_CONNECT_V2_PROJECT_ID = '9c1851da02319e1280cbbf2de5d8ee46';
+export const WEGLD_ID = 'WEGLD-d7c6bb';
+export const USDC_ID = 'USDC-8d4068';

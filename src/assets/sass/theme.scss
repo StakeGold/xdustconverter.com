@@ -127,8 +127,12 @@ input {
 }
 
 .my-spacer {
-  margin-top: 2rem !important;
+  margin-top: 0 !important;
   margin-bottom: 2rem !important;
+}
+
+.page-title {
+  margin-top: 3rem;
 }
 
 /* Converter
@@ -362,7 +366,7 @@ footer {
   }
 
   .my-spacer {
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
     margin-bottom: 1rem !important;
   }
 
