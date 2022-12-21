@@ -15,17 +15,17 @@ export const TokenHeader = ({
 
   return (
     <div className='table-header table-row'>
-      <div className='table-col title' onClick={handleSelectAll}>
-        {isLoggedIn && (
+      {isLoggedIn && (
+        <div className='table-col title' onClick={handleSelectAll}>
           <input
             type='checkbox'
             className='mr-2'
             checked={selectedAll}
             onChange={handleSelectAll}
           />
-        )}
-        Select all
-      </div>
+          Select all
+        </div>
+      )}
       <div className='table-col value'></div>
     </div>
   );

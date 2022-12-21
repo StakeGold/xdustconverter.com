@@ -1,14 +1,17 @@
 import React from 'react';
+import { Spinner } from 'react-bootstrap';
 import ActionOrConnect from 'components/ActionOrConnect';
 
 export interface ConvertButtonProps {
   handleSubmit: (event: React.MouseEvent) => void;
   disabled: boolean;
+  loading: boolean;
 }
 
 export const ConvertButton = ({
   handleSubmit,
-  disabled
+  disabled,
+  loading
 }: ConvertButtonProps) => {
   return (
     <ActionOrConnect>
@@ -17,7 +20,11 @@ export const ConvertButton = ({
         onClick={(e) => handleSubmit(e)}
         disabled={disabled}
       >
-        Convert small amounts
+        {loading ? (
+          <Spinner as='span' animation='border' size='sm' />
+        ) : (
+          'Convert small amounts'
+        )}
       </button>
     </ActionOrConnect>
   );

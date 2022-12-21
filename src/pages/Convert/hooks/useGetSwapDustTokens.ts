@@ -17,6 +17,10 @@ export const useGetSwapDustTokens = () => {
     totalWegld: BigNumber,
     tokens: AccountToken[]
   ): Transaction | undefined => {
+    if (tokens.length === 0) {
+      return undefined;
+    }
+
     try {
       const args = tokens.map((token) => {
         return TokenPayment.fungibleFromBigInteger(
@@ -25,16 +29,24 @@ export const useGetSwapDustTokens = () => {
         );
       });
 
-      return dustSmartContract.methodsExplicit
+      const interaction = dustSmartContract.methodsExplicit
         .swapDustTokens([
           new BigUIntValue(totalWegld.shiftedBy(18).decimalPlaces(18))
         ])
-        .withMultiESDTNFTTransfer(args, Address.fromString(address))
         .withGasLimit(args.length * 10000000)
-        .withChainID(getChainID())
-        .buildTransaction();
+        .withChainID(getChainID());
+
+      args.length === 1
+        ? interaction.withSingleESDTTransfer(args[0])
+        : interaction.withMultiESDTNFTTransfer(
+            args,
+            Address.fromString(address)
+          );
+
+      return interaction.buildTransaction();
     } catch (err) {
       console.error('Unable to call swapDustTokens transaction', err);
+      return undefined;
     }
   };
 
