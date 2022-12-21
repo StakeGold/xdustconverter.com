@@ -6,7 +6,7 @@ import {
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import { faClose, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faSadTear } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
@@ -88,9 +88,9 @@ const ConvertPage = () => {
     return (
       <div className='my-5'>
         <PageState
-          icon={faPause}
+          icon={faSadTear}
           className='text-muted'
-          title='Contract is paused'
+          title={'xDustConverter is under maintenance'}
         />
       </div>
     );
