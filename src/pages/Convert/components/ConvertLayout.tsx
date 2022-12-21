@@ -12,7 +12,7 @@ export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
             <img src={logo} />
           </h1>
           <h3 className='page-description font-weight-light text-secondary'>
-            Convert small ESDT amounts to WEGLD
+            Convert small tokens amounts to WEGLD
           </h3>
         </div>
       </div>

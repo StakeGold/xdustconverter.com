@@ -11,4 +11,4 @@ export const USDC_ID = 'USDC-8d4068';
 export const X_EXCHANGE_URL =
   'https://devnet-graphql-next.maiar.exchange/graphql';
 export const MIN_AMOUNT = 0.01;
-export const SLIPPAGE = 0.01;
+export const SLIPPAGE = 0.005;
