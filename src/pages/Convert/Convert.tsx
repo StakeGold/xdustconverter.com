@@ -6,7 +6,7 @@ import {
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faPause } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
@@ -19,7 +19,7 @@ import {
 } from './components';
 import { TransactionsSignedInfo } from './components/TransactionsSignedInfo';
 import { computeValueAfterFees } from './helpers';
-import { useGetProtocolFee } from './hooks';
+import { useGetContractState, useGetProtocolFee } from './hooks';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
@@ -35,6 +35,7 @@ const ConvertPage = () => {
   } = useGetAccountTokens();
   const swapDustTokens = useGetSwapDustTokens();
 
+  const contractState = useGetContractState();
   const protocolFee = useGetProtocolFee();
   const { success, pending } = useGetActiveTransactionsStatus();
 
@@ -67,7 +68,7 @@ const ConvertPage = () => {
     }
   }, [success]);
 
-  if (isLoading) {
+  if (isLoading || contractState === undefined) {
     return <Loader />;
   }
 
@@ -78,6 +79,18 @@ const ConvertPage = () => {
           icon={faClose}
           className='text-muted'
           title='Unable to load.'
+        />
+      </div>
+    );
+  }
+
+  if (contractState === 'Inactive') {
+    return (
+      <div className='my-5'>
+        <PageState
+          icon={faPause}
+          className='text-muted'
+          title='Contract is paused'
         />
       </div>
     );
