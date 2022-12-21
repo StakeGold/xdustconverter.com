@@ -27,7 +27,7 @@ export const TokenAmountWithTooltip = ({ ...props }: FormatAmountPropsType) => {
     >
       <span>
         {valueBig.isLessThanOrEqualTo(MIN_AMOUNT) && !valueBig.isEqualTo(0) ? (
-          <>{`< ${MIN_AMOUNT}`}</>
+          <>{`< ${MIN_AMOUNT} ${props.egldLabel}`}</>
         ) : (
           <FormatAmount
             value={props.value}
