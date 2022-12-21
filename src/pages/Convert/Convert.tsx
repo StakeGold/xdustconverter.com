@@ -36,7 +36,7 @@ const ConvertPage = () => {
   const swapDustTokens = useGetSwapDustTokens();
 
   const protocolFee = useGetProtocolFee();
-  const { success } = useGetActiveTransactionsStatus();
+  const { success, pending } = useGetActiveTransactionsStatus();
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
 
@@ -119,7 +119,11 @@ const ConvertPage = () => {
           protocolFee={protocolFee}
         />
       )}
-      <ConvertButton handleSubmit={handleSubmit} disabled={!hasTokens} />
+      <ConvertButton
+        handleSubmit={handleSubmit}
+        disabled={!hasTokens || pending}
+        loading={pending}
+      />
       {getIsLoggedIn() && hasTokens && (
         <TransactionsSignedInfo transactions={1} />
       )}
