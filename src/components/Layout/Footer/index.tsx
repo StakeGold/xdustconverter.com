@@ -12,7 +12,7 @@ export const Footer = () => {
       <a
         target={'_blank'}
         className='d-flex align-items-center mb-2'
-        href='https://stakegold.com'
+        // href='https://buidly.com'
         rel='noreferrer'
       >
         Made with <HeartIcon className='mx-1' /> by Buidly team.
