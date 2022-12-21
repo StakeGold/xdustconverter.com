@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.67.0-nightly",
-            "commitHash": "c090c6880c0183ba248bde4a16e29ba29ac4fbba",
-            "commitDate": "2022-12-01",
+            "version": "1.66.0-nightly",
+            "commitHash": "b8c35ca26b191bb9a9ac669a4b3f4d3d52d97fb1",
+            "commitDate": "2022-10-15",
             "channel": "Nightly",
-            "short": "rustc 1.67.0-nightly (c090c6880 2022-12-01)"
+            "short": "rustc 1.66.0-nightly (b8c35ca26 2022-10-15)"
         },
         "contractCrate": {
             "name": "dust-converter",
@@ -16,14 +16,15 @@
             "version": "0.38.0"
         }
     },
-    "docs": [
-        "An empty contract. To be used as a template when starting a new contract from scratch."
-    ],
-    "name": "EmptyContract",
+    "name": "DustConverter",
     "constructor": {
         "inputs": [
             {
                 "name": "protocol_fee_percent",
+                "type": "u64"
+            },
+            {
+                "name": "slippage_percent",
                 "type": "u64"
             },
             {
@@ -40,18 +41,43 @@
             "payableInTokens": [
                 "*"
             ],
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "amount_out_min",
+                    "type": "BigUint"
+                }
+            ],
             "outputs": []
         },
         {
             "name": "sellDustTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens_to_sell",
+                    "type": "variadic<TokenIdentifier>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "topUp",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "extractFees",
             "mutability": "mutable",
             "inputs": [],
             "outputs": []
         },
         {
             "name": "setFeePercentage",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -62,8 +88,18 @@
             "outputs": []
         },
         {
+            "name": "setSlippagePercentage",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "slippage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "addKnownTokens",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -76,7 +112,6 @@
         },
         {
             "name": "removeKnownTokens",
-            "onlyOwner": true,
             "mutability": "mutable",
             "inputs": [
                 {
@@ -124,6 +159,16 @@
             ]
         },
         {
+            "name": "getSlippagePercent",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
             "name": "getWrappedTokenId",
             "mutability": "readonly",
             "inputs": [],
@@ -132,9 +177,118 @@
                     "type": "TokenIdentifier"
                 }
             ]
+        },
+        {
+            "name": "addAdmin",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeAdmin",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateOwnerOrAdmin",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "previous_owner",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getPermissions",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "addToPauseWhitelist",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address_list",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeFromPauseWhitelist",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address_list",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "pause",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "resume",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getState",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "State"
+                }
+            ]
         }
     ],
     "events": [],
     "hasCallback": false,
-    "types": {}
+    "types": {
+        "State": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Inactive",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Active",
+                    "discriminant": 1
+                }
+            ]
+        }
+    }
 }
