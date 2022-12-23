@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from 'assets/img/xdustconverter.png';
+import logo from 'assets/img/xdustconverter_mas.png';
 import { Welcome } from 'components/Welcome';
 
 export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
@@ -12,7 +12,7 @@ export const ConvertLayout = ({ children }: React.PropsWithChildren) => {
             <img src={logo} />
           </h1>
           <h3 className='page-description font-weight-light text-secondary'>
-            Convert small tokens amounts to WEGLD
+            Convert small token amounts to WEGLD
           </h3>
         </div>
       </div>

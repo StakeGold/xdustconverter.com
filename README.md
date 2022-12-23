@@ -1,3 +1,3 @@
 # xDustConverter
 
-Convert small tokens amounts to WEGLD
+Convert small token amounts to WEGLD
