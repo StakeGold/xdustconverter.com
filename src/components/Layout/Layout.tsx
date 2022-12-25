@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from 'assets/img/xdustconverter_mas.png';
+import logo from 'assets/img/xdustconverter.png';
 import { ReferralNotification } from 'components/Notifications';
 import { Welcome } from 'components/Welcome';
 import { routeNames } from 'routes';
