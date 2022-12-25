@@ -23,7 +23,7 @@ export const ReferralInfo = () => {
               <h5>Create tag</h5>
               <p>
                 Create your own referral tag by setting a unique descriptive
-                name for your tag
+                name for your tag.
               </p>
             </li>
             <li>
