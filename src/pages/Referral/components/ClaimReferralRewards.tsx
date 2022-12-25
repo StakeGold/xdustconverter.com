@@ -3,7 +3,7 @@ import { TokenAmountWithTooltip } from 'components';
 import { useGetReferralRewards } from '../hooks';
 
 export const ClaimReferralRewards = () => {
-  const { rewards, reloadReferralRewards } = useGetReferralRewards();
+  const { rewards } = useGetReferralRewards();
 
   if (rewards.egld === '0') {
     return <></>;
