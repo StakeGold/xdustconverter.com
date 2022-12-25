@@ -10,31 +10,33 @@ export const ReferralInfo = () => {
       <div className='header'>
         <h4>How it works</h4>
         <a
-          className='btn btn-secondary btn-logout'
+          className={`btn btn-secondary btn-logout ${expanded ? 'active' : ''}`}
           onClick={() => setExpanded(!expanded)}
         >
           <FontAwesomeIcon icon={faInfo} />
         </a>
       </div>
       {expanded && (
-        <ol>
-          <li>
-            <h5>Set tag</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          </li>
-          <li>
-            <h5>Share</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          </li>
-          <li>
-            <h5>Earn</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          </li>
-          <li>
-            <h5>Claim</h5>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          </li>
-        </ol>
+        <div className='card card-info mt-4'>
+          <ol className='m-0'>
+            <li>
+              <h5>Set tag</h5>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </li>
+            <li>
+              <h5>Share</h5>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </li>
+            <li>
+              <h5>Earn</h5>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </li>
+            <li>
+              <h5>Claim</h5>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </li>
+          </ol>
+        </div>
       )}
     </div>
   );

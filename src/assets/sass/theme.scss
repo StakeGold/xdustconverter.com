@@ -54,6 +54,11 @@ input {
   color: $primary !important;
 }
 
+h4, .h4 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
 .btn-logout,
 .btn-close,
 .btn-reload {
@@ -68,7 +73,7 @@ input {
   justify-content: center;
   align-items: center;
 
-  &:hover, &:active, &:focus {
+  &:hover, &:active, &:focus, &.active {
     color: #fff !important;
     background-color: #18191a !important;
   }
@@ -333,6 +338,14 @@ footer {
 -------------------------------------------------- */
 .claim-rewards-card {
   background-color: $primary;
+}
+
+.referral-info-card {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 /* Responsive
