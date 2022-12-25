@@ -40,9 +40,7 @@ export const ConvertInfo = ({
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Protocol fee</div>
-        <span className='text-main'>
-          <del className='text-secondary'>5%</del> {protocolFee}%
-        </span>
+        <span className='text-main'>{protocolFee}%</span>
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Slippage</div>
