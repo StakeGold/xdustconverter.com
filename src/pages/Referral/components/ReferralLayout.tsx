@@ -6,7 +6,7 @@ export const ReferralLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <ClaimReferralRewards />
-      <div className='card mb-4'>{children}</div>
+      {children}
       <ReferralInfo />
     </>
   );

@@ -7,7 +7,7 @@ const ReferralPage = () => {
   const userTag = useGetUserReferralTag();
 
   if (userTag) {
-    return <ReferralAlreadyRegistered userTag={userTag} />;
+    return <ReferralAlreadyRegistered tag={userTag} />;
   }
 
   return <ReferralRegister />;

@@ -393,6 +393,16 @@ footer {
   }
 }
 
+.referral-registered-card{
+  .btn-copy {
+    color: #9ba5b4;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
 /* Responsive
 -------------------------------------------------- */
 @media (max-width: 1400px) {}
