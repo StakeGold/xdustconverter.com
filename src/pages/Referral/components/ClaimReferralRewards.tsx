@@ -1,9 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
+import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Spinner } from 'react-bootstrap';
+import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
-import { useGetReferralRewards } from '../hooks';
+import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
 
 export const ClaimReferralRewards = () => {
-  const { rewards } = useGetReferralRewards();
+  const { rewards, reloadReferralRewards } = useGetReferralRewards();
+  const { success, pending } = useGetActiveTransactionsStatus();
+
+  const claimReferralRewards = useClaimReferralRewards();
+
+  useEffect(() => {
+    if (success) {
+      reloadReferralRewards();
+    }
+  }, [success]);
+
+  const processClaimRewardsTransaction = async (
+    transaction: Transaction | undefined
+  ) => {
+    try {
+      if (transaction === undefined) {
+        return;
+      }
+
+      const displayInfo = {
+        processingMessage: 'Claim referral rewards',
+        errorMessage: 'An error has occurred while claiming referral rewards',
+        successMessage: 'referral rewards claimed '
+      };
+      await sendAndSignTransactions([transaction], displayInfo);
+    } catch (err: any) {
+      console.log('processClaimRewardsTransaction error', err);
+    }
+  };
+
+  const handleSubmit = (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    const transaction = claimReferralRewards();
+    processClaimRewardsTransaction(transaction);
+  };
 
   if (rewards.egld === '0') {
     return <></>;
@@ -25,7 +64,17 @@ export const ClaimReferralRewards = () => {
           )}
         </span>
       </div>
-      <button className='btn btn-logout'>Claim rewards</button>
+      <button
+        className='btn btn-logout'
+        onClick={(e) => handleSubmit(e)}
+        disabled={pending}
+      >
+        {pending ? (
+          <Spinner as='span' animation='border' size='sm' />
+        ) : (
+          <>Claim rewards</>
+        )}
+      </button>
     </div>
   );
 };
