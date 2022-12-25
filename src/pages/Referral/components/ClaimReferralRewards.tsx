@@ -3,9 +3,9 @@ import { TokenAmountWithTooltip } from 'components';
 import { useGetReferralRewards } from '../hooks';
 
 export const ClaimReferralRewards = () => {
-  const referralRewards = useGetReferralRewards();
+  const { rewards, reloadReferralRewards } = useGetReferralRewards();
 
-  if (referralRewards.egld === '0') {
+  if (rewards.egld === '0') {
     return <></>;
   }
 
@@ -15,14 +15,14 @@ export const ClaimReferralRewards = () => {
         <h4 className='mb-1'>Referral rewards</h4>
         <span>
           <TokenAmountWithTooltip
-            value={referralRewards.egld}
+            value={rewards.egld}
             decimals={18}
             egldLabel={'WEGLD'}
             digits={4}
           />
-          <small className='d-block text-secondary'>
-            ≈ ${referralRewards.usd}
-          </small>
+          {rewards.usd && (
+            <small className='d-block text-secondary'>≈ ${rewards.usd}</small>
+          )}
         </span>
       </div>
       <button className='btn btn-logout'>Claim rewards</button>
