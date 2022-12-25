@@ -68,9 +68,9 @@ input {
   justify-content: center;
   align-items: center;
 
-  &:hover {
-    color: #fff;
-    background-color: #18191a;
+  &:hover, &:active, &:focus {
+    color: #fff !important;
+    background-color: #18191a !important;
   }
 }
 
@@ -283,8 +283,8 @@ input {
 -------------------------------------------------- */
 footer {
   margin: 0 auto;
-  padding-top: 48px;
-  padding-bottom: 24px;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   font-size: 0.9rem;
   display: inline-block;
   font-weight: 400;
@@ -332,6 +332,7 @@ footer {
 /* Referral
 -------------------------------------------------- */
 .claim-rewards-card {
+  background-color: $primary;
 }
 
 /* Responsive

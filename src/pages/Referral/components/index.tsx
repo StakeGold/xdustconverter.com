@@ -1,3 +1,4 @@
+export * from './ClaimReferralRewards';
 export * from './ReferralAlreadyRegistered';
 export * from './ReferralClaim';
 export * from './ReferralLayout';

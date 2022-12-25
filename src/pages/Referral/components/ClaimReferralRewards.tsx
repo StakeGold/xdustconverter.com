@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGetReferralRewards } from './hooks';
+import { useGetReferralRewards } from '../hooks';
 
 export const ClaimReferralRewards = () => {
   const referralRewards = useGetReferralRewards();

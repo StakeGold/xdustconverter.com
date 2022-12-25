@@ -1,3 +1,3 @@
 export const useGetReferralRewards = (): string => {
-  return '10';
+  return '0.1';
 };
