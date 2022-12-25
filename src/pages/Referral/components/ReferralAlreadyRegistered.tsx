@@ -40,21 +40,24 @@ export const ReferralAlreadyRegistered = ({
       <h4 className='mb-4'>
         Share your tag with the community <InfoTooltip />
       </h4>
-      <div className='card card-info'>
-        <p>
-          Your referral tag: <b>{tag}</b>
-        </p>
-        <p className='mb-0'>
-          Your referral link:{' '}
+      <div className='mb-4'>
+        <label>Your referral tag</label>
+        <div className='referral-tag-input' placeholder='Referral tag..'>
+          {tag}
+        </div>
+      </div>
+      <div>
+        <label>Your referral link</label>
+        <div className='referral-tag-input' placeholder='Referral tag..'>
           <a href={referralUrl} target='_blank' rel='noreferrer'>
             {referralUrl}
           </a>
           <FontAwesomeIcon
             icon={faCopy}
-            className='btn btn-copy'
+            className='btn btn-copy float-right'
             onClick={handleCopyReferralUrl}
           />
-        </p>
+        </div>
       </div>
     </div>
   );
