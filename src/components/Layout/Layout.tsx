@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from 'assets/img/xdustconverter_mas.png';
+import { ClaimReferralRewards } from 'components/ClaimReferralRewards';
 import { ReferralNotification } from 'components/Notifications';
 import { Welcome } from 'components/Welcome';
 import { routeNames } from 'routes';
@@ -34,6 +35,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className='row'>
               <div className='col-12 col-md-12 col-lg-9 col-xl-8 mx-auto'>
                 <Welcome />
+                <ClaimReferralRewards />
                 {children}
               </div>
             </div>
