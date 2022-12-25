@@ -20,20 +20,25 @@ export const ReferralInfo = () => {
         <div className='card card-info mt-4'>
           <ol className='m-0'>
             <li>
-              <h5>Set tag</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <h5>Create tag</h5>
+              <p>
+                Create your own referral tag by setting a unique descriptive
+                name for your tag
+              </p>
             </li>
             <li>
               <h5>Share</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </li>
-            <li>
-              <h5>Earn</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <p>
+                Share your tag with the community and earn rewards by bringing
+                new users to our platform.
+              </p>
             </li>
             <li>
               <h5>Claim</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <p>
+                Claim your rewards accumulated from the transactions made by the
+                users on our platform.
+              </p>
             </li>
           </ol>
         </div>
