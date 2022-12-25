@@ -3,6 +3,7 @@ import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
+import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
 
 export interface ReferralAlreadyRegisteredProps {
   tag: string;
@@ -42,13 +43,17 @@ export const ReferralAlreadyRegistered = ({
       </h4>
       <div className='mb-4'>
         <label>Your referral tag</label>
-        <div className='referral-tag-input' placeholder='Referral tag..'>
-          {tag}
-        </div>
+        <div className='referral-tag-input disabled'>{tag}</div>
+      </div>
+      <div className='mb-4'>
+        <label>
+          Referral rewards percent <ReferralRewardsPercentTooltip />
+        </label>
+        <div className='referral-tag-input disabled'>5%</div>
       </div>
       <div>
         <label>Your referral link</label>
-        <div className='referral-tag-input' placeholder='Referral tag..'>
+        <div className='referral-tag-input'>
           <a href={referralUrl} target='_blank' rel='noreferrer'>
             {referralUrl}
           </a>

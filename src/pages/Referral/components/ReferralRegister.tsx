@@ -5,6 +5,7 @@ import { OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { sendAndSignTransactions } from 'apiCalls';
 import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
 import { useRegisterReferralTag } from '../hooks';
+import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
 
 export const ReferralRegister = () => {
   const registerReferralTag = useRegisterReferralTag();
@@ -61,22 +62,6 @@ export const ReferralRegister = () => {
     );
   };
 
-  const FeeTooltip = () => {
-    return (
-      <OverlayTrigger
-        placement='top'
-        overlay={(props) => (
-          <Tooltip {...props}>
-            {/* TODO */}
-            <p> </p>
-          </Tooltip>
-        )}
-      >
-        <InfoIcon style={{ width: '1.25rem', height: '1.25rem' }} />
-      </OverlayTrigger>
-    );
-  };
-
   return (
     <div className='card mb-4'>
       <h4 className='mb-4'>
@@ -94,7 +79,10 @@ export const ReferralRegister = () => {
         />
       </div>
       <div className='mb-4'>
-        Referral rewards percent: 5% <FeeTooltip />
+        <label>
+          Default referral rewards percent <ReferralRewardsPercentTooltip />
+        </label>
+        <div className='referral-tag-input disabled'>5%</div>
       </div>
       <button
         className='btn btn-primary btn-connect'

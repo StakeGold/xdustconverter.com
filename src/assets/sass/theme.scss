@@ -413,6 +413,11 @@ footer {
   width: 100%;
   box-shadow: 0 0.6rem 1rem 0 rgb(0 0 0 / 6%);
   border-radius: 0.75rem;
+
+  &.disabled {
+    color: #9ba5b4;
+    cursor: default;
+  }
 }
 
 /* Responsive
