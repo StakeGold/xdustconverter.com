@@ -4,12 +4,13 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { ReferralAlreadyRegistered, ReferralLayout } from './components';
 import { ReferralRegister } from './components/ReferralRegister';
-import { useGetUserReferralTag } from './hooks';
+import { useGetReferralFeePercentage, useGetUserReferralTag } from './hooks';
 
 const ReferralPage = () => {
   // TODO contract paused
 
   const { tag, isLoading, error, reloadTag } = useGetUserReferralTag();
+  const referralFeePercentage = useGetReferralFeePercentage(tag);
 
   const { success } = useGetActiveTransactionsStatus();
 
@@ -19,7 +20,7 @@ const ReferralPage = () => {
     }
   }, [success]);
 
-  if (isLoading) {
+  if (isLoading || referralFeePercentage === undefined) {
     return (
       <div className='card mb-4'>
         <Loader />
@@ -40,7 +41,12 @@ const ReferralPage = () => {
   }
 
   if (tag) {
-    return <ReferralAlreadyRegistered tag={tag} />;
+    return (
+      <ReferralAlreadyRegistered
+        tag={tag}
+        feePercentage={referralFeePercentage}
+      />
+    );
   }
   return <ReferralRegister />;
 };

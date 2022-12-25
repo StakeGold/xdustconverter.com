@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import { OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import { sendAndSignTransactions } from 'apiCalls';
-import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
 import { useRegisterReferralTag } from '../hooks';
+import { InfoTooltip } from './InfoTooltip';
 import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
 
 export const ReferralRegister = () => {
@@ -44,28 +44,16 @@ export const ReferralRegister = () => {
     processRegisterTagTransaction(transaction);
   };
 
-  const InfoTooltip = () => {
-    return (
-      <OverlayTrigger
-        placement='top'
-        overlay={(props) => (
-          <Tooltip {...props}>
-            <p>
-              Create your own referral tag by setting a unique descriptive name
-              for your tag.
-            </p>
-          </Tooltip>
-        )}
-      >
-        <InfoIcon style={{ width: '1.25rem', height: '1.25rem' }} />
-      </OverlayTrigger>
-    );
-  };
-
   return (
     <div className='card mb-4'>
       <h4 className='mb-4'>
-        Create referral tag <InfoTooltip />
+        Create referral tag{' '}
+        <InfoTooltip>
+          <p>
+            Create your own referral tag by setting a unique descriptive name
+            for your tag.
+          </p>
+        </InfoTooltip>
       </h4>
       <div className='mb-4'>
         <label>Referral tag</label>

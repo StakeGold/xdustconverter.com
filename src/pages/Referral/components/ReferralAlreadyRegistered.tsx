@@ -1,16 +1,17 @@
 import React from 'react';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
+import { InfoTooltip } from './InfoTooltip';
 import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
 
 export interface ReferralAlreadyRegisteredProps {
   tag: string;
+  feePercentage: number;
 }
 
 export const ReferralAlreadyRegistered = ({
-  tag
+  tag,
+  feePercentage
 }: ReferralAlreadyRegisteredProps) => {
   const referralUrl = `${window.location.origin}?referral=${tag}`;
 
@@ -18,28 +19,16 @@ export const ReferralAlreadyRegistered = ({
     navigator.clipboard.writeText(referralUrl);
   };
 
-  const InfoTooltip = () => {
-    return (
-      <OverlayTrigger
-        placement='top'
-        overlay={(props) => (
-          <Tooltip {...props}>
-            <p>
-              Share your tag with the community and earn rewards by bringing new
-              users to our platform.
-            </p>
-          </Tooltip>
-        )}
-      >
-        <InfoIcon style={{ width: '1.25rem', height: '1.25rem' }} />
-      </OverlayTrigger>
-    );
-  };
-
   return (
     <div className='card referral-registered-card mb-4'>
       <h4 className='mb-4'>
-        Share your tag with the community <InfoTooltip />
+        Share your tag with the community{' '}
+        <InfoTooltip>
+          <p>
+            Share your tag with the community and earn rewards by bringing new
+            users to our platform.
+          </p>
+        </InfoTooltip>
       </h4>
       <div className='mb-4'>
         <label>Your referral tag</label>
@@ -49,7 +38,7 @@ export const ReferralAlreadyRegistered = ({
         <label>
           Referral rewards percent <ReferralRewardsPercentTooltip />
         </label>
-        <div className='referral-tag-input disabled'>5%</div>
+        <div className='referral-tag-input disabled'>{feePercentage}%</div>
       </div>
       <div>
         <label>Your referral link</label>
