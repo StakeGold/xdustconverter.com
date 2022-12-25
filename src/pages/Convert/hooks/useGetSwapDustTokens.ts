@@ -3,8 +3,10 @@ import { getChainID } from '@elrondnetwork/dapp-core/utils';
 import {
   Address,
   BigUIntValue,
+  BytesValue,
   TokenPayment,
-  Transaction
+  Transaction,
+  TypedValue
 } from '@elrondnetwork/erdjs/out';
 import { BigNumber } from 'bignumber.js';
 import { dustSmartContract } from 'apiCalls';
@@ -15,7 +17,8 @@ export const useGetSwapDustTokens = () => {
 
   const swapDustTokens = (
     totalWegld: BigNumber,
-    tokens: AccountToken[]
+    tokens: AccountToken[],
+    referralTag: string | null
   ): Transaction | undefined => {
     if (tokens.length === 0) {
       return undefined;
@@ -29,10 +32,15 @@ export const useGetSwapDustTokens = () => {
         );
       });
 
+      const endpointArgs: TypedValue[] = [
+        new BigUIntValue(totalWegld.shiftedBy(18).decimalPlaces(18))
+      ];
+      if (referralTag) {
+        endpointArgs.push(new BytesValue(Buffer.from(referralTag, 'utf-8')));
+      }
+
       const interaction = dustSmartContract.methodsExplicit
-        .swapDustTokens([
-          new BigUIntValue(totalWegld.shiftedBy(18).decimalPlaces(18))
-        ])
+        .swapDustTokens(endpointArgs)
         .withGasLimit(args.length * 10000000)
         .withChainID(getChainID());
 

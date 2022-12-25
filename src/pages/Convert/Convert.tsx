@@ -8,6 +8,7 @@ import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { faClose, faSadTear } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
+import { useSearchParams } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
 import { AccountToken } from 'types';
@@ -24,6 +25,9 @@ import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const ConvertPage = () => {
+  const [searchParams] = useSearchParams();
+  const referralTag = searchParams.get('referral');
+
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
@@ -118,7 +122,11 @@ const ConvertPage = () => {
   const handleSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
 
-    const transaction = swapDustTokens(totalWegldAfterFees, checkedTokens);
+    const transaction = swapDustTokens(
+      totalWegldAfterFees,
+      checkedTokens,
+      referralTag
+    );
     processConvertTransaction(transaction);
   };
 

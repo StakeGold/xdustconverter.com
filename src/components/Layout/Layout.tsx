@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import logo from 'assets/img/xdustconverter.png';
+import { LinkWithQuery } from 'components';
 import { ReferralNotification } from 'components/Notifications';
 import { Welcome } from 'components/Welcome';
 import { routeNames } from 'routes';
@@ -21,12 +21,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className='container'>
             <div className='row'>
               <div className='col-12 col-md-12 col-lg-9 col-xl-8 mx-auto text-center my-spacer'>
-                <NavLink to={routeNames.home}>
+                <LinkWithQuery to={routeNames.home}>
                   <h1 className='page-title'>
                     <span>xDustConverter</span>
                     <img src={logo} />
                   </h1>
-                </NavLink>
+                </LinkWithQuery>
                 <h3 className='page-description font-weight-light text-secondary'>
                   Convert small token amounts to WEGLD
                 </h3>
