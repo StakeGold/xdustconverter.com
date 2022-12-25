@@ -17,6 +17,7 @@ export const ClaimReferralRewards = () => {
           <TokenAmountWithTooltip
             value={referralRewards.egld}
             decimals={18}
+            egldLabel={'WEGLD'}
             digits={4}
           />
           <small className='d-block text-secondary'>

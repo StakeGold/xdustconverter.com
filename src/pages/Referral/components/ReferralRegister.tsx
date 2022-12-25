@@ -1,17 +1,46 @@
 import React, { useMemo, useState } from 'react';
+import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
+import { Transaction } from '@elrondnetwork/erdjs/out';
 import { OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
+import { sendAndSignTransactions } from 'apiCalls';
 import { ReactComponent as InfoIcon } from 'assets/img/info.svg';
+import { useRegisterReferralTag } from '../hooks';
 
 export const ReferralRegister = () => {
+  const registerReferralTag = useRegisterReferralTag();
+
   const [tag, setTag] = useState('');
 
-  const isLoading = false;
   const isDisabled = useMemo(() => {
     return tag.length === 0;
   }, [tag]);
 
-  const handleSubmit = () => {
-    // TODO
+  const { pending } = useGetActiveTransactionsStatus();
+
+  const processRegisterTagTransaction = async (
+    transaction: Transaction | undefined
+  ) => {
+    try {
+      if (transaction === undefined) {
+        return;
+      }
+
+      const displayInfo = {
+        processingMessage: 'Registering referral tag',
+        errorMessage: 'An error has occurred while registering referral tag',
+        successMessage: 'The referral tag has been registered successfully'
+      };
+      await sendAndSignTransactions([transaction], displayInfo);
+    } catch (err: any) {
+      console.log('processRegisterTagTransaction error', err);
+    }
+  };
+
+  const handleSubmit = (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    const transaction = registerReferralTag(tag);
+    processRegisterTagTransaction(transaction);
   };
 
   const InfoTooltip = () => {
@@ -60,6 +89,7 @@ export const ReferralRegister = () => {
           type='text'
           placeholder='Referral tag..'
           value={tag}
+          disabled={pending}
           onChange={(e) => setTag(e.target.value)}
         />
       </div>
@@ -68,10 +98,10 @@ export const ReferralRegister = () => {
       </div>
       <button
         className='btn btn-primary btn-connect'
-        onClick={handleSubmit}
-        disabled={isLoading || isDisabled}
+        onClick={(e) => handleSubmit(e)}
+        disabled={pending || isDisabled}
       >
-        {isLoading ? (
+        {pending ? (
           <Spinner as='span' animation='border' size='sm' />
         ) : (
           'Create referral tag'

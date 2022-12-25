@@ -7,8 +7,8 @@ import {
   Transaction
 } from '@elrondnetwork/erdjs/out';
 import { BigNumber } from 'bignumber.js';
+import { dustSmartContract } from 'apiCalls';
 import { AccountToken } from 'types';
-import { dustSmartContract } from '../helpers';
 
 export const useGetSwapDustTokens = () => {
   const { address } = useGetAccount();

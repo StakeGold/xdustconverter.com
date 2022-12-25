@@ -4,7 +4,7 @@ import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out
 import { ResultsParser } from '@elrondnetwork/erdjs/out';
 import { ContractFunction } from '@elrondnetwork/erdjs/out/smartcontracts';
 import { BigNumber } from 'bignumber.js';
-import { dustSmartContract } from '../helpers';
+import { dustSmartContract } from 'apiCalls';
 
 const resultsParser = new ResultsParser();
 const endpoint = 'getProtocolFeePercent';

@@ -1,7 +1,7 @@
 import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import { ResultsParser } from '@elrondnetwork/erdjs/out';
 import { ContractFunction } from '@elrondnetwork/erdjs/out/smartcontracts';
-import { dustSmartContract } from 'pages/Convert/helpers';
+import { dustSmartContract } from './dustSmartContract';
 
 const resultsParser = new ResultsParser();
 const endpoint = 'getAllTokens';
