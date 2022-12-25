@@ -337,7 +337,48 @@ footer {
 /* Referral
 -------------------------------------------------- */
 .claim-rewards-card {
+  color: #18191a;
   background-color: $primary;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 250px;
+    height: 100%;
+    background-image: linear-gradient(
+        120deg,
+        rgba(255,255,255, 0) 20%,
+        rgba(255,255,255, .6),
+        rgba(255,255,255, 0) 80%
+    );
+    top: 0;
+    left: -100px;
+    animation: shine 5s infinite linear;
+  }
+
+  .text-secondary {
+    color: #18191a !important;
+    opacity: 0.9;
+  }
+
+  .btn {
+    padding: 1rem;
+    width: unset;
+  }
+}
+
+@keyframes shine {
+  0% { left: -100px; opacity: 1; }
+  10% { opacity: 0.8 }
+  25% { opacity: 0.2 }
+  30% { left: 100% }
+  100% {left: 100% }
 }
 
 .referral-info-card {
