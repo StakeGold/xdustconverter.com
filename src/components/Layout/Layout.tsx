@@ -1,8 +1,11 @@
 import React from 'react';
+import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
+import { faSadTear } from '@fortawesome/free-solid-svg-icons';
 import logo from 'assets/img/xdustconverter.png';
 import { LinkWithQuery } from 'components';
 import { ReferralNotification } from 'components/Notifications';
 import { Welcome } from 'components/Welcome';
+import { useGetContractState } from 'pages/Convert/hooks';
 import { routeNames } from 'routes';
 import { Footer } from './Footer';
 import { Navbar } from './Navbar';
@@ -12,6 +15,29 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     // <NoFeeNotification key='no-fee' />,
     <ReferralNotification key='referral' />
   ];
+
+  const contractState = useGetContractState();
+
+  let pageComponent = children;
+  if (contractState === undefined) {
+    pageComponent = (
+      <div className='card'>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (contractState === 'Inactive') {
+    pageComponent = (
+      <div className='card'>
+        <PageState
+          icon={faSadTear}
+          className='text-muted'
+          title='xDustConverter is under maintenance'
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -35,7 +61,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className='row'>
               <div className='col-12 col-md-12 col-lg-9 col-xl-8 mx-auto'>
                 <Welcome />
-                {children}
+                {pageComponent}
               </div>
             </div>
           </div>
