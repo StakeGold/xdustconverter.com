@@ -14,13 +14,13 @@ const endpoint = 'getReferralFeePercentage';
 
 export const useGetReferralFeePercentage = (tag: string | undefined) => {
   const { network } = useGetNetworkConfig();
-  const [feePercent, setFeePercent] = useState<number | undefined>(undefined);
+  const [feePercent, setFeePercent] = useState<number>(-1);
 
   const proxy = new ProxyNetworkProvider(network.apiAddress);
 
   const getReferralFeePercentage = async () => {
     if (!tag) {
-      return undefined;
+      return -1;
     }
 
     try {

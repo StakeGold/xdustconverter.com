@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Spinner } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { useRegisterReferralTag } from '../hooks';
 import { InfoTooltip } from './InfoTooltip';
@@ -9,6 +10,9 @@ import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
 
 export const ReferralRegister = () => {
   const registerReferralTag = useRegisterReferralTag();
+
+  const location = useLocation();
+  const callbackRoute = `${location.pathname}${location.search}`;
 
   const [tag, setTag] = useState('');
 
@@ -31,11 +35,7 @@ export const ReferralRegister = () => {
         errorMessage: 'An error has occurred while registering referral tag',
         successMessage: 'The referral tag has been registered successfully'
       };
-      await sendAndSignTransactions(
-        [transaction],
-        displayInfo,
-        window.location.href
-      );
+      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
     } catch (err: any) {
       console.log('processRegisterTagTransaction error', err);
     }

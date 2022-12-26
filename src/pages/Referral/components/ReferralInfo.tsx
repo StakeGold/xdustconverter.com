@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ReferralInfo = () => {
-  const [expanded, setExpanded] = useState(false);
+  const { address } = useGetAccount();
+  const isLoggedIn = Boolean(address);
+
+  const [expanded, setExpanded] = useState(!isLoggedIn);
 
   return (
     <div className='card referral-info-card mb-4'>

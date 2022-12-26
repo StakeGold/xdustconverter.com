@@ -347,6 +347,7 @@ footer {
   align-items: center;
 
   &:before {
+    pointer-events: none;
     content: '';
     position: absolute;
     width: 250px;

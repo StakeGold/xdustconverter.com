@@ -10,7 +10,7 @@ export const Welcome = () => {
   const isLoggedIn = Boolean(address);
 
   const handleLogout = () => {
-    logout(window.location.origin);
+    logout(window.location.href);
   };
 
   if (!isLoggedIn) {

@@ -8,7 +8,7 @@ import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
 import { AccountToken } from 'types';
@@ -30,6 +30,9 @@ const ConvertPage = () => {
 
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
+
+  const location = useLocation();
+  const callbackRoute = `${location.pathname}${location.search}`;
 
   const {
     tokens: accountTokens,
@@ -59,11 +62,7 @@ const ConvertPage = () => {
         errorMessage: 'An error has occurred while converting small amounts',
         successMessage: 'Converting small amounts succeeded'
       };
-      await sendAndSignTransactions(
-        [transaction],
-        displayInfo,
-        window.location.href
-      );
+      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
     } catch (err: any) {
       console.log('processConvertTransaction error', err);
     }

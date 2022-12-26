@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Spinner } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
 import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
@@ -9,6 +10,9 @@ import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
 export const ClaimReferralRewards = () => {
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
+
+  const location = useLocation();
+  const callbackRoute = `${location.pathname}${location.search}`;
 
   const claimReferralRewards = useClaimReferralRewards();
 
@@ -31,11 +35,7 @@ export const ClaimReferralRewards = () => {
         errorMessage: 'An error has occurred while claiming referral rewards',
         successMessage: 'referral rewards claimed '
       };
-      await sendAndSignTransactions(
-        [transaction],
-        displayInfo,
-        window.location.href
-      );
+      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
