@@ -59,7 +59,11 @@ const ConvertPage = () => {
         errorMessage: 'An error has occurred while converting small amounts',
         successMessage: 'Converting small amounts succeeded'
       };
-      await sendAndSignTransactions([transaction], displayInfo);
+      await sendAndSignTransactions(
+        [transaction],
+        displayInfo,
+        window.location.href
+      );
     } catch (err: any) {
       console.log('processConvertTransaction error', err);
     }

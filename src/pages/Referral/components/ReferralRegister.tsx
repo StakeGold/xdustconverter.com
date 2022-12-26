@@ -31,7 +31,11 @@ export const ReferralRegister = () => {
         errorMessage: 'An error has occurred while registering referral tag',
         successMessage: 'The referral tag has been registered successfully'
       };
-      await sendAndSignTransactions([transaction], displayInfo);
+      await sendAndSignTransactions(
+        [transaction],
+        displayInfo,
+        window.location.href
+      );
     } catch (err: any) {
       console.log('processRegisterTagTransaction error', err);
     }

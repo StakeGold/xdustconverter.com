@@ -35,22 +35,22 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
       </Modal.Header>
       <Modal.Body className='d-flex flex-column'>
         <ExtensionLoginButton
-          callbackRoute={'/'}
+          callbackRoute={window.location.href}
           loginButtonText='Maiar DeFi Wallet'
           nativeAuth={true}
         />
         <WalletConnectLoginButton
-          callbackRoute={'/'}
+          callbackRoute={window.location.href}
           loginButtonText='Maiar App'
           nativeAuth={true}
         />
         <WebWalletLoginButton
-          callbackRoute={'/'}
+          callbackRoute={window.location.href}
           loginButtonText='Elrond Web Wallet'
           nativeAuth={true}
         />
         <LedgerLoginButton
-          callbackRoute={'/'}
+          callbackRoute={window.location.href}
           loginButtonText='Ledger'
           nativeAuth={true}
         />
