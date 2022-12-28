@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useGetPendingTransactions } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faSadTear } from '@fortawesome/free-solid-svg-icons';
+import { useSearchParams } from 'react-router-dom';
 import logo from 'assets/img/xdustconverter.png';
 import { LinkWithQuery } from 'components';
 import { ReferralNotification } from 'components/Notifications';
@@ -11,12 +13,27 @@ import { Footer } from './Footer';
 import { Navbar } from './Navbar';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
+  const referralKey = 'referral';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const referralTag = searchParams.get(referralKey);
+  const { hasPendingTransactions } = useGetPendingTransactions();
+
   const notifications = [
     // <NoFeeNotification key='no-fee' />,
     <ReferralNotification key='referral' />
   ];
 
   const contractState = useGetContractState();
+
+  useEffect(() => {
+    if (referralTag == null || !hasPendingTransactions) {
+      return;
+    }
+
+    const newQueryParameters = new URLSearchParams();
+    newQueryParameters.append(referralKey, referralTag);
+    setSearchParams(newQueryParameters);
+  }, [referralTag, hasPendingTransactions]);
 
   let pageComponent = children;
   if (contractState === undefined) {
