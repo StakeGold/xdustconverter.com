@@ -67,28 +67,6 @@
             "outputs": []
         },
         {
-            "name": "registerReferralTag",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "tag",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "removeReferralTag",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "user_address",
-                    "type": "Address"
-                }
-            ],
-            "outputs": []
-        },
-        {
             "name": "topUp",
             "mutability": "mutable",
             "payableInTokens": [
@@ -161,72 +139,6 @@
             ]
         },
         {
-            "name": "setReferralFeePercentage",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "tag",
-                    "type": "bytes"
-                },
-                {
-                    "name": "new_percentage",
-                    "type": "u64"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "claimReferralFees",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "getReferralFeePercentage",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "tag",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "u64"
-                }
-            ]
-        },
-        {
-            "name": "getCollectedFeeAmount",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "tag",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
-            "name": "getUserTag",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "user",
-                    "type": "Address"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "bytes"
-                }
-            ]
-        },
-        {
             "name": "getTokenThreshold",
             "mutability": "readonly",
             "inputs": [
@@ -268,6 +180,153 @@
             "outputs": [
                 {
                     "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "registerReferralTag",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimReferralFees",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "updateTier",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "addTierDetails",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tiers",
+                    "type": "variadic<multi<bytes,BigUint,u64>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeTierDetails",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setReferralFeePercentage",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                },
+                {
+                    "name": "new_percentage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeReferralTag",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getCollectedFeeAmount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getUserTag",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getReferralFeePercentage",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getTierDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<TierDetails>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTagAccumulatedVolume",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
                 }
             ]
         },
@@ -380,6 +439,23 @@
                 {
                     "name": "Active",
                     "discriminant": 1
+                }
+            ]
+        },
+        "TierDetails": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "min_volume",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee_percent",
+                    "type": "u64"
                 }
             ]
         }
