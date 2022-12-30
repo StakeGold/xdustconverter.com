@@ -49,5 +49,5 @@ export const useGetReferralTier = (tag: string, feePercentage: number) => {
     getReferralTier();
   }, [feePercentage, tag]);
 
-  return { userTier };
+  return { userTier, refetchUserTier: getReferralTier };
 };

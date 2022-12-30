@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
@@ -18,7 +19,15 @@ export const ReferralAlreadyRegistered = ({
   tag,
   feePercentage
 }: ReferralAlreadyRegisteredProps) => {
-  const { userTier } = useGetReferralTier(tag, feePercentage);
+  const { userTier, refetchUserTier } = useGetReferralTier(tag, feePercentage);
+
+  const { success } = useGetActiveTransactionsStatus();
+
+  useEffect(() => {
+    if (success) {
+      refetchUserTier();
+    }
+  }, [success]);
 
   const referralUrl = `${window.location.origin}?referral=${tag}`;
 

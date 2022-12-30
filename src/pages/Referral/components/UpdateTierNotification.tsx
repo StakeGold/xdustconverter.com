@@ -18,14 +18,8 @@ const UpdateTierNotification = ({
 }: UpdateTierNotificationProps) => {
   const callbackRoute = `${location.pathname}${location.search}`;
 
-  const { success, pending } = useGetActiveTransactionsStatus();
+  const { pending } = useGetActiveTransactionsStatus();
   const [updateAvailable, setUpdateAvailable] = useState(false);
-
-  useEffect(() => {
-    if (success) {
-      setUpdateAvailable(false);
-    }
-  }, [success]);
 
   useEffect(() => {
     setUpdateAvailable(
