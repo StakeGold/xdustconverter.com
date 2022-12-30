@@ -54,7 +54,8 @@ input {
   color: $primary !important;
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: 1.25rem;
   margin: 0;
 }
@@ -73,7 +74,10 @@ h4, .h4 {
   justify-content: center;
   align-items: center;
 
-  &:hover, &:active, &:focus, &.active {
+  &:hover,
+  &:active,
+  &:focus,
+  &.active {
     color: #fff !important;
     background-color: #18191a !important;
   }
@@ -337,31 +341,10 @@ footer {
 /* Referral
 -------------------------------------------------- */
 .claim-rewards-card {
-  color: #18191a;
-  background-color: $primary;
-  position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  &:before {
-    pointer-events: none;
-    content: '';
-    position: absolute;
-    width: 250px;
-    height: 100%;
-    background-image: linear-gradient(
-        120deg,
-        rgba(255,255,255, 0) 20%,
-        rgba(255,255,255, .6),
-        rgba(255,255,255, 0) 80%
-    );
-    top: 0;
-    left: -100px;
-    animation: shine 5s infinite linear;
-  }
 
   .text-secondary {
     color: #18191a !important;
@@ -374,12 +357,49 @@ footer {
   }
 }
 
+.shine {
+  color: #18191a;
+  background-color: $primary;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    pointer-events: none;
+    content: '';
+    position: absolute;
+    width: 250px;
+    height: 100%;
+    background-image: linear-gradient(120deg,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, .6),
+        rgba(255, 255, 255, 0) 80%);
+    top: 0;
+    left: -100px;
+    animation: shine 5s infinite linear;
+  }
+}
+
 @keyframes shine {
-  0% { left: -100px; opacity: 1; }
-  10% { opacity: 0.8 }
-  25% { opacity: 0.2 }
-  30% { left: 100% }
-  100% {left: 100% }
+  0% {
+    left: -100px;
+    opacity: 1;
+  }
+
+  10% {
+    opacity: 0.8
+  }
+
+  25% {
+    opacity: 0.2
+  }
+
+  30% {
+    left: 100%
+  }
+
+  100% {
+    left: 100%
+  }
 }
 
 .referral-info-card {
@@ -394,7 +414,7 @@ footer {
   }
 }
 
-.referral-registered-card{
+.referral-registered-card {
   .btn-copy {
     color: #9ba5b4;
 
@@ -418,6 +438,56 @@ footer {
   &.disabled {
     color: #9ba5b4;
     cursor: default;
+  }
+}
+
+/* Tiers
+-------------------------------------------------- */
+.tier-bronze {
+  background-color: #b1703a;
+}
+
+.tier-silver {
+  background-color: #c7d8df;
+}
+
+.tier-gold {
+  background-color: #ffe449;
+}
+
+.tier-platinum {
+  background-color: #68dfcc;
+}
+
+.tier-card {
+  z-index: 2;
+}
+
+.tier-next-card {
+  width: 90%;
+  margin: 0 auto;
+  z-index: 1;
+  margin-bottom: -1rem;
+  padding: 1rem;
+  padding-bottom: 1.5rem;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.update-tier-card {
+  z-index: 100;
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 400px;
+
+  .btn-logout {
+    width: unset;
+    padding: 1rem;
   }
 }
 
@@ -468,6 +538,10 @@ footer {
     a {
       overflow-wrap: anywhere;
     }
+  }
+
+  .update-tier-card {
+    width: 350px;
   }
 }
 
