@@ -337,14 +337,27 @@ footer {
 /* Referral
 -------------------------------------------------- */
 .claim-rewards-card {
-  color: #18191a;
-  background-color: $primary;
-  position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  .text-secondary {
+    color: #18191a !important;
+    opacity: 0.9;
+  }
+
+  .btn {
+    padding: 1rem;
+    width: unset;
+  }
+}
+
+.shine {
+  color: #18191a;
+  background-color: $primary;
+  position: relative;
+  overflow: hidden;
 
   &:before {
     pointer-events: none;
@@ -361,16 +374,6 @@ footer {
     top: 0;
     left: -100px;
     animation: shine 5s infinite linear;
-  }
-
-  .text-secondary {
-    color: #18191a !important;
-    opacity: 0.9;
-  }
-
-  .btn {
-    padding: 1rem;
-    width: unset;
   }
 }
 
@@ -418,6 +421,43 @@ footer {
   &.disabled {
     color: #9ba5b4;
     cursor: default;
+  }
+}
+
+/* Tiers
+-------------------------------------------------- */
+.tier-bronze {
+  background-color: #b1703a;
+}
+
+.tier-silver {
+  background-color: #c7d8df;
+}
+
+.tier-gold {
+  background-color: #ffe449;
+}
+
+.tier-platinum {
+  background-color: #68dfcc;
+}
+
+.tier-card {
+  z-index: 2;
+}
+
+.tier-next-card {
+  width: 90%;
+  margin: 0 auto;
+  z-index: 1;
+  margin-bottom: -1rem;
+  padding: 1rem;
+  padding-bottom: 1.5rem;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 

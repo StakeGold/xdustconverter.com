@@ -14,22 +14,22 @@ export const SLIPPAGE = 0.01;
 export const TIERS = [
   {
     name: 'Bronze',
-    minVolume: '1000000000000000000',
+    minVolume: '0',
     feePercent: 0.05
   },
   {
     name: 'Silver',
-    minVolume: '10000000000000000000',
+    minVolume: '500000000000000000',
     feePercent: 0.1
   },
   {
     name: 'Gold',
-    minVolume: '100000000000000000000',
+    minVolume: '750000000000000000',
     feePercent: 0.2
   },
   {
-    name: 'Diamond',
-    minVolume: '1000000000000000000000',
-    feePercent: 0.35
+    name: 'Platinum',
+    minVolume: '1000000000000000000',
+    feePercent: 0.3
   }
 ];

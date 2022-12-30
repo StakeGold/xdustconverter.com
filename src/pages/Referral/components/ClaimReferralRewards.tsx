@@ -5,10 +5,16 @@ import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
-import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
+import {
+  useClaimReferralRewards,
+  useGetReferralRewards,
+  useGetReferralTier
+} from '../hooks';
+import { ReferralTier } from './ReferralTier';
 
 export const ClaimReferralRewards = () => {
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
+  const { currentTier, nextTier } = useGetReferralTier();
   const { success, pending } = useGetActiveTransactionsStatus();
 
   const location = useLocation();
@@ -53,32 +59,35 @@ export const ClaimReferralRewards = () => {
   }
 
   return (
-    <div className='card claim-rewards-card mb-4'>
-      <div className='content'>
-        <h4 className='mb-1'>Referral rewards</h4>
-        <span>
-          <TokenAmountWithTooltip
-            value={rewards.egld}
-            decimals={18}
-            egldLabel={'WEGLD'}
-            digits={4}
-          />
-          {rewards.usd && (
-            <small className='d-block text-secondary'>≈ ${rewards.usd}</small>
+    <>
+      <ReferralTier currentTier={currentTier} nextTier={nextTier} />
+      <div className='card claim-rewards-card shine mb-4'>
+        <div className='content'>
+          <h4 className='mb-1'>Referral rewards</h4>
+          <span>
+            <TokenAmountWithTooltip
+              value={rewards.egld}
+              decimals={18}
+              egldLabel={'WEGLD'}
+              digits={4}
+            />
+            {rewards.usd && (
+              <small className='d-block text-secondary'>≈ ${rewards.usd}</small>
+            )}
+          </span>
+        </div>
+        <button
+          className='btn btn-logout'
+          onClick={(e) => handleSubmit(e)}
+          disabled={pending}
+        >
+          {pending ? (
+            <Spinner as='span' animation='border' size='sm' />
+          ) : (
+            <>Claim rewards</>
           )}
-        </span>
+        </button>
       </div>
-      <button
-        className='btn btn-logout'
-        onClick={(e) => handleSubmit(e)}
-        disabled={pending}
-      >
-        {pending ? (
-          <Spinner as='span' animation='border' size='sm' />
-        ) : (
-          <>Claim rewards</>
-        )}
-      </button>
-    </div>
+    </>
   );
 };
