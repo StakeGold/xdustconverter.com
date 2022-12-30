@@ -18,7 +18,7 @@ const UpdateTierNotification = ({
 }: UpdateTierNotificationProps) => {
   const callbackRoute = `${location.pathname}${location.search}`;
 
-  const { pending } = useGetActiveTransactionsStatus();
+  const { success, pending } = useGetActiveTransactionsStatus();
   const [updateAvailable, setUpdateAvailable] = useState(false);
 
   useEffect(() => {
@@ -28,6 +28,12 @@ const UpdateTierNotification = ({
         : false
     );
   }, [nextTier, accumulatedVolume]);
+
+  useEffect(() => {
+    if (success) {
+      window.location.reload();
+    }
+  }, [success]);
 
   const upgradeTier = useUpgradeTier();
 
