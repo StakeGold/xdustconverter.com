@@ -1,27 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormatAmount } from '@elrondnetwork/dapp-core/UI';
 import { ReferralDetails, TierDetails } from 'types';
-import { ClaimReferralRewards } from './ClaimReferralRewards';
-import UpdateTierNotification from './UpdateTierNotification';
+import { ClaimReferralRewards } from '../ClaimReferralRewards';
+import UpdateTierNotification from '../UpdateTierNotification';
+import { Tier } from './Tier';
 
 interface ReferralTiersProps {
   referral?: ReferralDetails;
   tiers: TierDetails[];
 }
 
-export const ReferralTiers = ({ referral }: ReferralTiersProps) => {
-  if (!referral) {
-    // TODO show all tiers
-    return <></>;
-  }
+export const ReferralTiers = ({ referral, tiers }: ReferralTiersProps) => {
+  const [activeTier, setActiveTier] = useState<string>('Bronze');
 
   return (
     <>
-      <UpdateTierNotification
-        nextTier={referral.nextTier}
-        accumulatedVolume={referral.accumulatedVolume}
-      />
-      {referral.nextTier && (
+      {referral && (
+        <UpdateTierNotification
+          nextTier={referral.nextTier}
+          accumulatedVolume={referral.accumulatedVolume}
+        />
+      )}
+      <div className='tier-gallery mb-4'>
+        {tiers.map((tier) => {
+          const isActive = tier.name === activeTier;
+          let isLocked = true;
+          if (!referral && tier.name === tiers[0].name) {
+            isLocked = false;
+          }
+          if (referral && referral.currentTier.name === tier.name) {
+            isLocked = false;
+          }
+
+          return (
+            <Tier
+              key={tier.name}
+              tier={tier}
+              isActive={isActive}
+              isLocked={isLocked}
+              setActiveTier={() => setActiveTier(tier.name)}
+            />
+          );
+        })}
+      </div>
+      {referral?.nextTier && (
         <div
           className={`card tier-next-card shine tier-${referral.nextTier.name.toLowerCase()}`}
         >
@@ -53,7 +75,7 @@ export const ReferralTiers = ({ referral }: ReferralTiersProps) => {
           </div>
         </div>
       )}
-      {referral.currentTier && (
+      {referral?.currentTier && (
         <div
           className={`card tier-card shine tier-${referral.currentTier.name.toLowerCase()} mb-4`}
         >

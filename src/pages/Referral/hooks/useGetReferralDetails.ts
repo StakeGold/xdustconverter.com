@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks';
+import * as apiCalls from 'apiCalls';
 import { ReferralDetails, TierDetails } from 'types';
 
 export const useGetReferralDetails = () => {
-  // const { network } = useGetNetworkConfig();
+  const { network } = useGetNetworkConfig();
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>();
@@ -15,10 +17,10 @@ export const useGetReferralDetails = () => {
     try {
       setIsLoading(true);
 
-      // TODO
-      setTiers([]);
+      const allTiers = await apiCalls.getTiers(network.apiAddress);
+      setTiers(allTiers);
 
-      // TODO
+      // TODO get tag
       setReferralDetails(undefined);
     } catch (err: any) {
       console.error(error);

@@ -7,6 +7,7 @@ import { TokenAmountWithTooltip } from 'components';
 import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
 
 export const ClaimReferralRewards = () => {
+  // TODO refactoring
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
 
