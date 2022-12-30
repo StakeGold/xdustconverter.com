@@ -18,7 +18,7 @@ export const ReferralAlreadyRegistered = ({
   tag,
   feePercentage
 }: ReferralAlreadyRegisteredProps) => {
-  const { userTier } = useGetReferralTier(tag);
+  const { userTier } = useGetReferralTier(tag, feePercentage);
 
   const referralUrl = `${window.location.origin}?referral=${tag}`;
 

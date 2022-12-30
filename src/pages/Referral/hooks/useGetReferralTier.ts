@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js';
 import { getTagAccumulatedVolume, getTiers } from 'apiCalls';
 import { TierDetails } from 'types';
 
-export const useGetReferralTier = (tag: string) => {
+export const useGetReferralTier = (tag: string, feePercentage: number) => {
   const { network } = useGetNetworkConfig();
 
   const [userTier, setUserTier] = useState<{
@@ -22,8 +22,12 @@ export const useGetReferralTier = (tag: string) => {
       const tiers = await getTiers(network.apiAddress);
 
       let currentTierIndex = 0;
+
       for (let i = 1; i < tiers.length; i++) {
-        if (tagAccumulatedVolume.isGreaterThanOrEqualTo(tiers[i].minVolume)) {
+        if (
+          tagAccumulatedVolume.isGreaterThanOrEqualTo(tiers[i].minVolume) &&
+          feePercentage >= tiers[i].feePercent
+        ) {
           currentTierIndex = i;
         }
       }
@@ -43,7 +47,7 @@ export const useGetReferralTier = (tag: string) => {
 
   useEffect(() => {
     getReferralTier();
-  }, []);
+  }, [feePercentage, tag]);
 
   return { userTier };
 };

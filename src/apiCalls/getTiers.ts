@@ -7,7 +7,7 @@ import { TierDetails } from 'types';
 const resultsParser = new ResultsParser();
 const endpoint = 'getTierDetails';
 
-export const getTiers = async (apiAddress: string) => {
+export const getTiers = async (apiAddress: string): Promise<TierDetails[]> => {
   try {
     const proxy = new ProxyNetworkProvider(apiAddress);
 
@@ -37,5 +37,6 @@ export const getTiers = async (apiAddress: string) => {
     return tiers ?? [];
   } catch (err) {
     console.error('Unable to call getTiers', err);
+    return [];
   }
 };
