@@ -1,26 +1,49 @@
+import { useEffect, useState } from 'react';
+import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks';
 import BigNumber from 'bignumber.js';
-import { TIERS } from 'config';
+import { getTagAccumulatedVolume, getTiers } from 'apiCalls';
+import { TierDetails } from 'types';
 
-export const useGetReferralTier = (): {
-  currentTier: any;
-  nextTier: any | undefined;
-} => {
-  const collectedFees = new BigNumber('2000000'); // TODO;
+export const useGetReferralTier = (tag: string) => {
+  const { network } = useGetNetworkConfig();
 
-  const tiers = TIERS.sort((a, b) => a.feePercent - b.feePercent);
+  const [userTier, setUserTier] = useState<{
+    currentTier: TierDetails;
+    tagAccumulatedVolume: BigNumber;
+    nextTier: TierDetails | undefined;
+  }>();
 
-  let currentTierIndex = 0;
-  for (let i = 1; i < tiers.length; i++) {
-    if (collectedFees.isGreaterThanOrEqualTo(tiers[i].minVolume)) {
-      currentTierIndex = i;
+  const getReferralTier = async () => {
+    try {
+      const tagAccumulatedVolume = await getTagAccumulatedVolume(
+        network.apiAddress,
+        tag
+      );
+      const tiers = await getTiers(network.apiAddress);
+
+      let currentTierIndex = 0;
+      for (let i = 1; i < tiers.length; i++) {
+        if (tagAccumulatedVolume.isGreaterThanOrEqualTo(tiers[i].minVolume)) {
+          currentTierIndex = i;
+        }
+      }
+
+      setUserTier({
+        currentTier: tiers[currentTierIndex],
+        tagAccumulatedVolume,
+        nextTier:
+          currentTierIndex < tiers.length - 1
+            ? tiers[currentTierIndex + 1]
+            : undefined
+      });
+    } catch (err) {
+      console.error(err);
     }
-  }
-
-  return {
-    currentTier: tiers[currentTierIndex],
-    nextTier:
-      currentTierIndex < tiers.length - 1
-        ? tiers[currentTierIndex + 1]
-        : undefined
   };
+
+  useEffect(() => {
+    getReferralTier();
+  }, []);
+
+  return { userTier };
 };

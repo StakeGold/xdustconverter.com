@@ -12,25 +12,3 @@ export const X_EXCHANGE_URL =
   'https://devnet-graphql-next.maiar.exchange/graphql';
 export const MIN_AMOUNT = 0.01;
 export const SLIPPAGE = 0.005;
-export const TIERS = [
-  {
-    name: 'Bronze',
-    minVolume: '0',
-    feePercent: 0.05
-  },
-  {
-    name: 'Silver',
-    minVolume: '500000000000000000',
-    feePercent: 0.1
-  },
-  {
-    name: 'Gold',
-    minVolume: '750000000000000000',
-    feePercent: 0.2
-  },
-  {
-    name: 'Platinum',
-    minVolume: '1000000000000000000',
-    feePercent: 0.3
-  }
-];
