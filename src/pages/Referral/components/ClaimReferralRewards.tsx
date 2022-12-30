@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';

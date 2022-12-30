@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
 import { sendAndSignTransactions } from 'apiCalls';
