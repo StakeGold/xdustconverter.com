@@ -1,35 +1,41 @@
 import React from 'react';
 import { FormatAmount } from '@elrondnetwork/dapp-core/UI';
-import BigNumber from 'bignumber.js';
+import { ReferralDetails, TierDetails } from 'types';
+import { ClaimReferralRewards } from './ClaimReferralRewards';
+import UpdateTierNotification from './UpdateTierNotification';
 
-interface ReferralTierProps {
-  currentTier: any;
-  accumulatedVolume: BigNumber;
-  nextTier: any | undefined;
+interface ReferralTiersProps {
+  referral?: ReferralDetails;
+  tiers: TierDetails[];
 }
 
-export const ReferralTier = ({
-  currentTier,
-  nextTier,
-  accumulatedVolume
-}: ReferralTierProps) => {
+export const ReferralTiers = ({ referral }: ReferralTiersProps) => {
+  if (!referral) {
+    // TODO show all tiers
+    return <></>;
+  }
+
   return (
     <>
-      {nextTier && (
+      <UpdateTierNotification
+        nextTier={referral.nextTier}
+        accumulatedVolume={referral.accumulatedVolume}
+      />
+      {referral.nextTier && (
         <div
-          className={`card tier-next-card shine tier-${nextTier.name.toLowerCase()}`}
+          className={`card tier-next-card shine tier-${referral.nextTier.name.toLowerCase()}`}
         >
           <div className='content'>
             <h4>
               Next Tier:{' '}
-              <span className='font-weight-bold'>{nextTier.name}</span>
+              <span className='font-weight-bold'>{referral.nextTier.name}</span>
             </h4>
             <div className='info'>
               <div>
                 Referral volume: {'>'}{' '}
                 <span className='font-weight-bold'>
                   <FormatAmount
-                    value={nextTier.minVolume}
+                    value={referral.nextTier.minVolume.toFixed()}
                     decimals={18}
                     showLabel={true}
                     digits={4}
@@ -39,27 +45,31 @@ export const ReferralTier = ({
               </div>
               <div>
                 Referral fees:{' '}
-                <span className='font-weight-bold'>{nextTier.feePercent}%</span>
+                <span className='font-weight-bold'>
+                  {referral.nextTier.feePercent}%
+                </span>
               </div>
             </div>
           </div>
         </div>
       )}
-      {currentTier && (
+      {referral.currentTier && (
         <div
-          className={`card tier-card shine tier-${currentTier.name.toLowerCase()} mb-4`}
+          className={`card tier-card shine tier-${referral.currentTier.name.toLowerCase()} mb-4`}
         >
           <div className='content d-flex justify-content-between align-items-center'>
             <h4 className='mb-1'>
               Current tier:{' '}
-              <span className='font-weight-bold'>{currentTier.name}</span>
+              <span className='font-weight-bold'>
+                {referral.currentTier.name}
+              </span>
             </h4>
             <div className='info'>
               <div>
                 Accumulated volume:{' '}
                 <span className='font-weight-bold'>
                   <FormatAmount
-                    value={accumulatedVolume.toFixed()}
+                    value={referral.accumulatedVolume.toFixed()}
                     decimals={18}
                     showLabel={true}
                     digits={4}
@@ -70,13 +80,14 @@ export const ReferralTier = ({
               <div>
                 Referral fees:{' '}
                 <span className='font-weight-bold'>
-                  {currentTier.feePercent}%
+                  {referral.currentTier.feePercent}%
                 </span>
               </div>
             </div>
           </div>
         </div>
       )}
+      <ClaimReferralRewards />
     </>
   );
 };

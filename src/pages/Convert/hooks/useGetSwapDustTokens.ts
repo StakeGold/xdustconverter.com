@@ -15,13 +15,19 @@ import { AccountToken } from 'types';
 export const useGetSwapDustTokens = () => {
   const { address } = useGetAccount();
 
+  const displayInfo = {
+    processingMessage: 'Converting small amounts',
+    errorMessage: 'An error has occurred while converting small amounts',
+    successMessage: 'Converting small amounts succeeded'
+  };
+
   const swapDustTokens = (
     totalWegld: BigNumber,
     tokens: AccountToken[],
     referralTag: string | null
-  ): Transaction | undefined => {
+  ): { transaction?: Transaction; displayInfo: any } => {
     if (tokens.length === 0) {
-      return undefined;
+      return { displayInfo };
     }
 
     try {
@@ -51,10 +57,13 @@ export const useGetSwapDustTokens = () => {
             Address.fromString(address)
           );
 
-      return interaction.buildTransaction();
+      return {
+        transaction: interaction.buildTransaction(),
+        displayInfo
+      };
     } catch (err) {
       console.error('Unable to call swapDustTokens transaction', err);
-      return undefined;
+      return { displayInfo };
     }
   };
 

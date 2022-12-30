@@ -22,30 +22,19 @@ export const ClaimReferralRewards = () => {
     }
   }, [success]);
 
-  const processClaimRewardsTransaction = async (
-    transaction: Transaction | undefined
-  ) => {
+  const handleSubmit = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
     try {
-      if (transaction === undefined) {
+      const { transaction, displayInfo } = claimReferralRewards();
+      if (!transaction) {
         return;
       }
 
-      const displayInfo = {
-        processingMessage: 'Claim referral rewards',
-        errorMessage: 'An error has occurred while claiming referral rewards',
-        successMessage: 'referral rewards claimed '
-      };
       await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
-  };
-
-  const handleSubmit = (event: React.MouseEvent) => {
-    event.preventDefault();
-
-    const transaction = claimReferralRewards();
-    processClaimRewardsTransaction(transaction);
   };
 
   if (rewards.egld === '0') {

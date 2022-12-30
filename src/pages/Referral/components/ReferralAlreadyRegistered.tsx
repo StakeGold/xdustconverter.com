@@ -1,35 +1,21 @@
-import React, { useEffect } from 'react';
-import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
+import React from 'react';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
-import { useGetReferralTier } from '../hooks';
-import { ClaimReferralRewards } from './ClaimReferralRewards';
+import { ReferralDetails, TierDetails } from 'types';
 import { InfoTooltip } from './InfoTooltip';
 import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
-import { ReferralTier } from './ReferralTier';
-import UpdateTierNotification from './UpdateTierNotification';
+import { ReferralTiers } from './ReferralTiers';
 
 export interface ReferralAlreadyRegisteredProps {
-  tag: string;
-  feePercentage: number;
+  referral: ReferralDetails;
+  tiers: TierDetails[];
 }
 
 export const ReferralAlreadyRegistered = ({
-  tag,
-  feePercentage
+  referral,
+  tiers
 }: ReferralAlreadyRegisteredProps) => {
-  const { userTier, refetchUserTier } = useGetReferralTier(tag, feePercentage);
-
-  const { success } = useGetActiveTransactionsStatus();
-
-  useEffect(() => {
-    if (success) {
-      refetchUserTier();
-    }
-  }, [success]);
-
-  const referralUrl = `${window.location.origin}?referral=${tag}`;
+  const referralUrl = `${window.location.origin}?referral=${referral.tag}`;
 
   const handleCopyReferralUrl = () => {
     navigator.clipboard.writeText(referralUrl);
@@ -37,16 +23,7 @@ export const ReferralAlreadyRegistered = ({
 
   return (
     <>
-      <UpdateTierNotification
-        nextTier={userTier?.nextTier}
-        accumulatedVolume={userTier?.tagAccumulatedVolume ?? new BigNumber(0)}
-      />
-      <ReferralTier
-        currentTier={userTier?.currentTier}
-        accumulatedVolume={userTier?.tagAccumulatedVolume ?? new BigNumber(0)}
-        nextTier={userTier?.nextTier}
-      />
-      <ClaimReferralRewards />
+      <ReferralTiers referral={referral} tiers={tiers} />
       <div className='card referral-registered-card mb-4'>
         <h4 className='mb-4'>
           Share your tag with the community{' '}
@@ -59,13 +36,15 @@ export const ReferralAlreadyRegistered = ({
         </h4>
         <div className='mb-4'>
           <label>Your referral tag</label>
-          <div className='referral-tag-input disabled'>{tag}</div>
+          <div className='referral-tag-input disabled'>{referral.tag}</div>
         </div>
         <div className='mb-4'>
           <label>
             Referral rewards percent <ReferralRewardsPercentTooltip />
           </label>
-          <div className='referral-tag-input disabled'>{feePercentage}%</div>
+          <div className='referral-tag-input disabled'>
+            {referral.feePercentage}%
+          </div>
         </div>
         <div>
           <label>Your referral link</label>

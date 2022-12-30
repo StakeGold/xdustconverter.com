@@ -5,7 +5,6 @@ import {
 } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { useLocation, useSearchParams } from 'react-router-dom';
@@ -49,25 +48,6 @@ const ConvertPage = () => {
 
   const hasTokens = checkedTokens.length > 0;
 
-  const processConvertTransaction = async (
-    transaction: Transaction | undefined
-  ) => {
-    try {
-      if (transaction === undefined) {
-        return;
-      }
-
-      const displayInfo = {
-        processingMessage: 'Converting small amounts',
-        errorMessage: 'An error has occurred while converting small amounts',
-        successMessage: 'Converting small amounts succeeded'
-      };
-      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
-    } catch (err: any) {
-      console.log('processConvertTransaction error', err);
-    }
-  };
-
   useEffect(() => {
     if (success) {
       reloadTokens();
@@ -109,15 +89,23 @@ const ConvertPage = () => {
     SLIPPAGE
   );
 
-  const handleSubmit = (event: React.MouseEvent) => {
+  const handleSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
 
-    const transaction = swapDustTokens(
-      totalWegldAfterFees,
-      checkedTokens,
-      referralTag
-    );
-    processConvertTransaction(transaction);
+    try {
+      const { transaction, displayInfo } = swapDustTokens(
+        totalWegldAfterFees,
+        checkedTokens,
+        referralTag
+      );
+      if (!transaction) {
+        return;
+      }
+
+      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
+    } catch (err) {
+      console.log('processConvertTransaction error', err);
+    }
   };
 
   return (
