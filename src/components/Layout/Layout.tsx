@@ -30,9 +30,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    const newQueryParameters = new URLSearchParams();
-    newQueryParameters.append(referralKey, referralTag);
-    setSearchParams(newQueryParameters);
+    setSearchParams({ referral: referralTag });
   }, [referralTag, hasPendingTransactions]);
 
   let pageComponent = children;

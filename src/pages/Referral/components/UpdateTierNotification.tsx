@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
@@ -19,14 +19,10 @@ const UpdateTierNotification = ({
   const callbackRoute = `${location.pathname}${location.search}`;
 
   const { success, pending } = useGetActiveTransactionsStatus();
-  const [updateAvailable, setUpdateAvailable] = useState(false);
-
-  useEffect(() => {
-    setUpdateAvailable(
-      nextTier
-        ? accumulatedVolume.isGreaterThanOrEqualTo(nextTier.minVolume)
-        : false
-    );
+  const updateAvailable = useMemo(() => {
+    return nextTier
+      ? accumulatedVolume.isGreaterThanOrEqualTo(nextTier.minVolume)
+      : false;
   }, [nextTier, accumulatedVolume]);
 
   useEffect(() => {
