@@ -6,7 +6,11 @@ import {
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import ActionOrConnect from 'components/ActionOrConnect';
-import { ReferralAlreadyRegistered, ReferralLayout } from './components';
+import {
+  ReferralAlreadyRegistered,
+  ReferralLayout,
+  ReferralTiers
+} from './components';
 import { ReferralRegister } from './components/ReferralRegister';
 import { useGetReferralDetails } from './hooks';
 
@@ -27,11 +31,14 @@ const ReferralPage = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className='card mb-4'>
-        <ActionOrConnect>
-          <></>
-        </ActionOrConnect>
-      </div>
+      <>
+        <div className='card mb-4'>
+          <ActionOrConnect>
+            <></>
+          </ActionOrConnect>
+        </div>
+        <ReferralTiers tiers={tiers} />
+      </>
     );
   }
 

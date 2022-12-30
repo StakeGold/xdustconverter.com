@@ -6,3 +6,5 @@ export * from './transactions';
 export * from './dustSmartContract';
 export * from './getTiers';
 export * from './getTagAccumulatedVolume';
+export * from './getReferralTag';
+export * from './getReferralFeePercentage';

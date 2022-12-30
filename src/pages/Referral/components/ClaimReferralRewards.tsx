@@ -4,9 +4,14 @@ import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
+import { TierDetails } from 'types';
 import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
 
-export const ClaimReferralRewards = () => {
+interface ClaimReferralRewardsProps {
+  tier: TierDetails;
+}
+
+export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
   // TODO refactoring
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
@@ -43,7 +48,9 @@ export const ClaimReferralRewards = () => {
 
   return (
     <>
-      <div className='card claim-rewards-card shine mb-4'>
+      <div
+        className={`card claim-rewards-card shine tier-${tier.name.toLowerCase()} mb-4`}
+      >
         <div className='content'>
           <h4 className='mb-1'>Referral rewards</h4>
           <span>

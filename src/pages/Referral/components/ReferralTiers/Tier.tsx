@@ -2,21 +2,31 @@ import React from 'react';
 import { FormatAmount } from '@elrondnetwork/dapp-core/UI';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TierDetails } from 'types';
+import { ReferralDetails, TierDetails } from 'types';
 
 interface TierProps {
-  isActive: boolean;
-  isLocked: boolean;
-  setActiveTier: () => void;
   tier: TierDetails;
+  defaultTier: TierDetails;
+  referral?: ReferralDetails;
+  isActive: boolean;
+  setActiveTier: () => void;
 }
 
 export const Tier = ({
   tier,
+  defaultTier,
+  referral,
   isActive,
-  isLocked,
   setActiveTier
 }: TierProps) => {
+  let isLocked = true;
+  if (!referral && tier.name === defaultTier.name) {
+    isLocked = false;
+  }
+  if (referral && referral.currentTier.name === tier.name) {
+    isLocked = false;
+  }
+
   const activeClass = isActive ? 'active' : '';
   const lockedClass = isLocked ? 'locked' : '';
 
@@ -35,21 +45,35 @@ export const Tier = ({
         {isLocked && <FontAwesomeIcon icon={faLock} className='icon' />}
       </div>
       <div className='body'>
+        {referral?.currentTier.name === tier.name ? (
+          <div>
+            Accumulated volume:{' '}
+            <span className='font-weight-bold'>
+              <FormatAmount
+                value={referral?.accumulatedVolume.toFixed() ?? '0'}
+                decimals={18}
+                showLabel={true}
+                digits={4}
+                showLastNonZeroDecimal={false}
+              />
+            </span>
+          </div>
+        ) : (
+          <div>
+            Volume: {'>'}{' '}
+            <span className='font-weight-bold'>
+              <FormatAmount
+                value={tier.minVolume.toFixed()}
+                decimals={18}
+                showLabel={true}
+                digits={4}
+                showLastNonZeroDecimal={false}
+              />
+            </span>
+          </div>
+        )}
         <div>
-          {/* // TODO your volume */}
-          Referral volume: {'>'}{' '}
-          <span className='font-weight-bold'>
-            <FormatAmount
-              value={tier.minVolume.toFixed()}
-              decimals={18}
-              showLabel={true}
-              digits={4}
-              showLastNonZeroDecimal={false}
-            />
-          </span>
-        </div>
-        <div>
-          Referral fees:{' '}
+          Rewards percent:{' '}
           <span className='font-weight-bold'>{tier.feePercent}%</span>
         </div>
       </div>
