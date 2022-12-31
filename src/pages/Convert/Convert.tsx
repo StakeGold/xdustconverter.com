@@ -7,7 +7,7 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
 import { AccountToken } from 'types';
@@ -24,8 +24,7 @@ import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const ConvertPage = () => {
-  const [searchParams] = useSearchParams();
-  const referralTag = searchParams.get('referral');
+  const referralTag = localStorage.getItem('xdc_ref');
 
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);

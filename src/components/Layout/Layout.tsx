@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useGetPendingTransactions } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faSadTear } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
@@ -13,27 +12,20 @@ import { Footer } from './Footer';
 import { Navbar } from './Navbar';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const referralKey = 'referral';
   const [searchParams] = useSearchParams();
-  const referralTag = searchParams.get(referralKey);
-  const { hasPendingTransactions } = useGetPendingTransactions();
+  const referralTag = searchParams.get('referral');
+  const contractState = useGetContractState();
 
   const notifications = [
     // <NoFeeNotification key='no-fee' />,
     <ReferralNotification key='referral' />
   ];
 
-  const contractState = useGetContractState();
-
   useEffect(() => {
-    if (referralTag === null || !hasPendingTransactions) {
-      return;
+    if (referralTag) {
+      localStorage.setItem('xdc_ref', referralTag);
     }
-
-    console.log({ referral: referralTag });
-
-    // setSearchParams({ referral: referralTag });
-  }, [referralTag, hasPendingTransactions]);
+  }, [referralTag]);
 
   let pageComponent = children;
   if (contractState === undefined) {
