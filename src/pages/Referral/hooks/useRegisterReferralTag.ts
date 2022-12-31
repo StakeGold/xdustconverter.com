@@ -15,7 +15,7 @@ export const useRegisterReferralTag = () => {
     try {
       const interaction = dustSmartContract.methodsExplicit
         .registerReferralTag([new BytesValue(Buffer.from(tag, 'utf-8'))])
-        .withGasLimit(10_000_000)
+        .withGasLimit(5_000_000)
         .withChainID(getChainID());
 
       return {

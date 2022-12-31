@@ -13,7 +13,7 @@ export const useUpgradeTier = () => {
     try {
       const interaction = dustSmartContract.methodsExplicit
         .updateTier()
-        .withGasLimit(10_000_000)
+        .withGasLimit(5_000_000)
         .withChainID(getChainID());
 
       return {

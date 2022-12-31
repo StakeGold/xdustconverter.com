@@ -27,7 +27,6 @@ export const ReferralTiers = ({ referral, tiers }: ReferralTiersProps) => {
           <Tier
             key={tier.name}
             tier={tier}
-            defaultTier={tiers[0]}
             referral={referral}
             isActive={tier.name === activeTier}
             setActiveTier={() => setActiveTier(tier.name)}
