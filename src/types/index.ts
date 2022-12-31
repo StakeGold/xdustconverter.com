@@ -1,3 +1,4 @@
 export * from './AccountToken';
-export * from './XExchangeToken';
+export * from './ReferralDetails';
 export * from './TierDetails';
+export * from './XExchangeToken';

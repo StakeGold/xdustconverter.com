@@ -8,7 +8,7 @@ export const ReferralRewardsPercentTooltip = () => {
       placement='top'
       overlay={(props) => (
         <Tooltip {...props}>
-          {/* TODO */}
+          {/* TODO write text */}
           <p> </p>
         </Tooltip>
       )}

@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
+import { TierDetails } from 'types';
 import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
 
-export const ClaimReferralRewards = () => {
+interface ClaimReferralRewardsProps {
+  tier: TierDetails;
+}
+
+export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
+  // TODO refactoring
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
 
@@ -22,30 +27,19 @@ export const ClaimReferralRewards = () => {
     }
   }, [success]);
 
-  const processClaimRewardsTransaction = async (
-    transaction: Transaction | undefined
-  ) => {
+  const handleSubmit = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
     try {
-      if (transaction === undefined) {
+      const { transaction, displayInfo } = claimReferralRewards();
+      if (!transaction) {
         return;
       }
 
-      const displayInfo = {
-        processingMessage: 'Claim referral rewards',
-        errorMessage: 'An error has occurred while claiming referral rewards',
-        successMessage: 'referral rewards claimed '
-      };
       await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
-  };
-
-  const handleSubmit = (event: React.MouseEvent) => {
-    event.preventDefault();
-
-    const transaction = claimReferralRewards();
-    processClaimRewardsTransaction(transaction);
   };
 
   if (rewards.egld === '0') {
@@ -54,7 +48,9 @@ export const ClaimReferralRewards = () => {
 
   return (
     <>
-      <div className='card claim-rewards-card shine mb-4'>
+      <div
+        className={`card claim-rewards-card shine tier-${tier.name.toLowerCase()} mb-4`}
+      >
         <div className='content'>
           <h4 className='mb-1'>Referral rewards</h4>
           <span>

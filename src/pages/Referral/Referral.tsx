@@ -6,32 +6,39 @@ import {
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import ActionOrConnect from 'components/ActionOrConnect';
-import { ReferralAlreadyRegistered, ReferralLayout } from './components';
+import {
+  ReferralAlreadyRegistered,
+  ReferralLayout,
+  ReferralTiers
+} from './components';
 import { ReferralRegister } from './components/ReferralRegister';
-import { useGetReferralFeePercentage, useGetUserReferralTag } from './hooks';
+import { useGetReferralDetails } from './hooks';
 
 const ReferralPage = () => {
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
-  const { tag, isLoading, error, reloadTag } = useGetUserReferralTag();
-  const referralFeePercentage = useGetReferralFeePercentage(tag);
+  const { referralDetails, tiers, isLoading, error, refetchReferralDetails } =
+    useGetReferralDetails();
 
   const { success } = useGetActiveTransactionsStatus();
 
   useEffect(() => {
     if (success) {
-      reloadTag();
+      refetchReferralDetails();
     }
   }, [success]);
 
   if (!isLoggedIn) {
     return (
-      <div className='card mb-4'>
-        <ActionOrConnect>
-          <></>
-        </ActionOrConnect>
-      </div>
+      <>
+        <div className='card mb-4'>
+          <ActionOrConnect>
+            <></>
+          </ActionOrConnect>
+        </div>
+        <ReferralTiers tiers={tiers} />
+      </>
     );
   }
 
@@ -55,15 +62,12 @@ const ReferralPage = () => {
     );
   }
 
-  if (tag) {
+  if (referralDetails) {
     return (
-      <ReferralAlreadyRegistered
-        tag={tag}
-        feePercentage={referralFeePercentage}
-      />
+      <ReferralAlreadyRegistered referral={referralDetails} tiers={tiers} />
     );
   }
-  return <ReferralRegister />;
+  return <ReferralRegister tiers={tiers} />;
 };
 
 export const Referral = () => (

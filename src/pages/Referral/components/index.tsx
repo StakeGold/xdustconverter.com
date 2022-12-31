@@ -5,4 +5,4 @@ export * from './ReferralInfo';
 export * from './ReferralLayout';
 export * from './ReferralRewardsPercentTooltip';
 export * from './InfoTooltip';
-export * from './ReferralTier';
+export * from './ReferralTiers';

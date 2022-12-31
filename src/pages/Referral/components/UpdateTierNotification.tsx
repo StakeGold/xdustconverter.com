@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
 import { sendAndSignTransactions } from 'apiCalls';
@@ -33,30 +32,19 @@ const UpdateTierNotification = ({
 
   const upgradeTier = useUpgradeTier();
 
-  const processUpgradeTierTransaction = async (
-    transaction: Transaction | undefined
-  ) => {
+  const handleSubmit = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
     try {
-      if (transaction === undefined) {
+      const { transaction, displayInfo } = upgradeTier();
+      if (!transaction) {
         return;
       }
 
-      const displayInfo = {
-        processingMessage: 'Upgrade tier',
-        errorMessage: 'An error has occurred while upgrading tier',
-        successMessage: 'Tier upgraded'
-      };
       await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
-  };
-
-  const handleSubmit = (event: React.MouseEvent) => {
-    event.preventDefault();
-
-    const transaction = upgradeTier();
-    processUpgradeTierTransaction(transaction);
   };
 
   return updateAvailable ? (
