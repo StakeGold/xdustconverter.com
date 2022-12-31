@@ -14,7 +14,7 @@ import { Navbar } from './Navbar';
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const referralKey = 'referral';
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const referralTag = searchParams.get(referralKey);
   const { hasPendingTransactions } = useGetPendingTransactions();
 
