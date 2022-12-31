@@ -27,10 +27,9 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
   }, [isLoggedIn]);
 
   const location = useLocation();
-  const callbackRoute = `${location.pathname}${location.search}`;
 
   const props = {
-    callbackRoute,
+    callbackRoute: location.pathname,
     nativeAuth: true
   };
 

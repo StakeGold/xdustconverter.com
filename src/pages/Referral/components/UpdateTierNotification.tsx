@@ -15,8 +15,6 @@ const UpdateTierNotification = ({
   nextTier,
   accumulatedVolume
 }: UpdateTierNotificationProps) => {
-  const callbackRoute = `${location.pathname}${location.search}`;
-
   const { success, pending } = useGetActiveTransactionsStatus();
   const updateAvailable = useMemo(() => {
     return nextTier
@@ -41,7 +39,7 @@ const UpdateTierNotification = ({
         return;
       }
 
-      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
+      await sendAndSignTransactions([transaction], displayInfo);
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }

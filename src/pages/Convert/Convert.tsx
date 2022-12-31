@@ -7,7 +7,6 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
 import { AccountToken } from 'types';
@@ -28,9 +27,6 @@ const ConvertPage = () => {
 
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
-
-  const location = useLocation();
-  const callbackRoute = `${location.pathname}${location.search}`;
 
   const {
     tokens: accountTokens,
@@ -101,7 +97,7 @@ const ConvertPage = () => {
         return;
       }
 
-      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
+      await sendAndSignTransactions([transaction], displayInfo);
     } catch (err) {
       console.log('processConvertTransaction error', err);
     }

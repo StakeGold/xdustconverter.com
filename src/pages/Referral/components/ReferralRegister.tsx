@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Spinner } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TierDetails } from 'types';
 import { useRegisterReferralTag } from '../hooks';
@@ -15,9 +14,6 @@ interface ReferralRegisterProps {
 
 export const ReferralRegister = ({ tiers }: ReferralRegisterProps) => {
   const registerReferralTag = useRegisterReferralTag();
-
-  const location = useLocation();
-  const callbackRoute = `${location.pathname}${location.search}`;
 
   const [tag, setTag] = useState('');
 
@@ -36,7 +32,7 @@ export const ReferralRegister = ({ tiers }: ReferralRegisterProps) => {
         return;
       }
 
-      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
+      await sendAndSignTransactions([transaction], displayInfo);
     } catch (err: any) {
       console.log('processRegisterTagTransaction error', err);
     }

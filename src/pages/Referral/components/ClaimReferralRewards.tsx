@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Spinner } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
 import { TierDetails } from 'types';
@@ -15,9 +14,6 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
   // TODO refactoring
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
-
-  const location = useLocation();
-  const callbackRoute = `${location.pathname}${location.search}`;
 
   const claimReferralRewards = useClaimReferralRewards();
 
@@ -36,7 +32,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
         return;
       }
 
-      await sendAndSignTransactions([transaction], displayInfo, callbackRoute);
+      await sendAndSignTransactions([transaction], displayInfo);
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
