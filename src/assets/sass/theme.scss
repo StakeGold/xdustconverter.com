@@ -628,6 +628,10 @@ footer {
   .update-tier-card {
     width: 350px;
   }
+
+  .tier-item.locked::after {
+    margin: -1rem;
+  }
 }
 
 @media (max-width: 576px) {
