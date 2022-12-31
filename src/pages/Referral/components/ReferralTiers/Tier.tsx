@@ -6,7 +6,6 @@ import { ReferralDetails, TierDetails } from 'types';
 
 interface TierProps {
   tier: TierDetails;
-  defaultTier: TierDetails;
   referral?: ReferralDetails;
   isActive: boolean;
   setActiveTier: () => void;
@@ -14,15 +13,11 @@ interface TierProps {
 
 export const Tier = ({
   tier,
-  defaultTier,
   referral,
   isActive,
   setActiveTier
 }: TierProps) => {
   let isLocked = true;
-  if (!referral && tier.name === defaultTier.name) {
-    isLocked = false;
-  }
   if (referral && referral.currentTier.name === tier.name) {
     isLocked = false;
   }
