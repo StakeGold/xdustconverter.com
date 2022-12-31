@@ -26,11 +26,13 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const contractState = useGetContractState();
 
   useEffect(() => {
-    if (referralTag == null || !hasPendingTransactions) {
+    if (referralTag === null || !hasPendingTransactions) {
       return;
     }
 
-    setSearchParams({ referral: referralTag });
+    console.log({ referral: referralTag });
+
+    // setSearchParams({ referral: referralTag });
   }, [referralTag, hasPendingTransactions]);
 
   let pageComponent = children;
