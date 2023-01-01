@@ -18,7 +18,7 @@ export const ReferralRewardsPercentTooltip = ({
         <Tooltip {...props}>
           <p>
             For a transaction of 1 EGLD, total protocol fee is{' '}
-            {protocolFee / 100} from which you will receive{' '}
+            {protocolFee / 100} EGLD from which you will receive{' '}
             {((protocolFee / 100) * referralFee) / 100} EGLD. ({referralFee}% of
             protocol fee)
           </p>
