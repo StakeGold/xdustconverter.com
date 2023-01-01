@@ -9,6 +9,7 @@ import {
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 interface ConnectModalProps {
   show: boolean;
@@ -25,6 +26,13 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
     }
   }, [isLoggedIn]);
 
+  const location = useLocation();
+
+  const props = {
+    callbackRoute: location.pathname,
+    nativeAuth: true
+  };
+
   return (
     <Modal show={show} onHide={onHide} className='login-modal'>
       <Modal.Header>
@@ -34,26 +42,10 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
         </span>
       </Modal.Header>
       <Modal.Body className='d-flex flex-column'>
-        <ExtensionLoginButton
-          callbackRoute={'/'}
-          loginButtonText='Maiar DeFi Wallet'
-          nativeAuth={true}
-        />
-        <WalletConnectLoginButton
-          callbackRoute={'/'}
-          loginButtonText='Maiar App'
-          nativeAuth={true}
-        />
-        <WebWalletLoginButton
-          callbackRoute={'/'}
-          loginButtonText='Elrond Web Wallet'
-          nativeAuth={true}
-        />
-        <LedgerLoginButton
-          callbackRoute={'/'}
-          loginButtonText='Ledger'
-          nativeAuth={true}
-        />
+        <ExtensionLoginButton loginButtonText='Maiar DeFi Wallet' {...props} />
+        <WalletConnectLoginButton loginButtonText='Maiar App' {...props} />
+        <WebWalletLoginButton loginButtonText='Elrond Web Wallet' {...props} />
+        <LedgerLoginButton loginButtonText='Ledger' {...props} />
       </Modal.Body>
     </Modal>
   );

@@ -5,7 +5,6 @@ import { Transaction } from '@elrondnetwork/erdjs/out';
 export const sendAndSignTransactions = async (
   transactions: Transaction[],
   transactionsDisplayInfo: TransactionsDisplayInfoType,
-  callbackRoute?: string,
   minGasLimit = 20000000
 ): Promise<{
   success: boolean;
@@ -17,8 +16,6 @@ export const sendAndSignTransactions = async (
     const { sessionId, error } = await sendTransactions({
       transactions: transactions,
       transactionsDisplayInfo,
-      callbackRoute: callbackRoute,
-      redirectAfterSign: callbackRoute,
       minGasLimit
     });
     await refreshAccount();

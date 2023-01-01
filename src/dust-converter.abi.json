@@ -1,11 +1,11 @@
 {
     "buildInfo": {
         "rustc": {
-            "version": "1.66.0-nightly",
-            "commitHash": "b8c35ca26b191bb9a9ac669a4b3f4d3d52d97fb1",
-            "commitDate": "2022-10-15",
+            "version": "1.67.0-nightly",
+            "commitHash": "ff8c8dfbe66701531e3e5e335c28c544d0fbc945",
+            "commitDate": "2022-11-22",
             "channel": "Nightly",
-            "short": "rustc 1.66.0-nightly (b8c35ca26 2022-10-15)"
+            "short": "rustc 1.67.0-nightly (ff8c8dfbe 2022-11-22)"
         },
         "contractCrate": {
             "name": "dust-converter",
@@ -45,6 +45,11 @@
                 {
                     "name": "amount_out_min",
                     "type": "BigUint"
+                },
+                {
+                    "name": "tag",
+                    "type": "optional<bytes>",
+                    "multi_arg": true
                 }
             ],
             "outputs": []
@@ -179,6 +184,153 @@
             ]
         },
         {
+            "name": "registerReferralTag",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimReferralFees",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "updateTier",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "addTierDetails",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tiers",
+                    "type": "variadic<multi<bytes,BigUint,u64>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeTierDetails",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setReferralFeePercentage",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                },
+                {
+                    "name": "new_percentage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeReferralTag",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getCollectedFeeAmount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getUserTag",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getReferralFeePercentage",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getTierDetails",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<TierDetails>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTagAccumulatedVolume",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "tag",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
             "name": "addAdmin",
             "mutability": "mutable",
             "inputs": [
@@ -287,6 +439,23 @@
                 {
                     "name": "Active",
                     "discriminant": 1
+                }
+            ]
+        },
+        "TierDetails": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "min_volume",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee_percent",
+                    "type": "u64"
                 }
             ]
         }

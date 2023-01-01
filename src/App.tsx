@@ -9,10 +9,10 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
-import NoFeeNotification from 'components/NoFeeNotification';
 import UpdateNotification from 'components/UpdateNotification';
 import { API_TIMEOUT, ENVIRONMENT, WALLET_CONNECT_V2_PROJECT_ID } from 'config';
 import { Convert } from 'pages';
+import routes from 'routes';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyARYfACpXSYBf43zq9RHDGxisJD1Xj5nfs',
@@ -33,7 +33,6 @@ logEvent(analytics, 'notification_received');
 export const App = () => {
   return (
     <>
-      <NoFeeNotification />
       <UpdateNotification />
       <Router>
         <DappProvider
@@ -49,6 +48,13 @@ export const App = () => {
             <NotificationModal />
             <SignTransactionsModals className='custom-class-for-modals' />
             <Routes>
+              {routes.map((route: any, index: number) => (
+                <Route
+                  path={route.path}
+                  key={'route-key-' + index}
+                  element={<route.component />}
+                />
+              ))}
               <Route path='*' element={<Convert />} />
             </Routes>
           </Layout>
