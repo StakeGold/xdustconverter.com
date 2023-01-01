@@ -358,7 +358,19 @@ footer {
 
   .btn {
     padding: 1rem;
-    width: unset;
+    width: 150px;
+  }
+  
+  .action {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+    align-items: flex-end;
+
+    i {
+      font-size: 0.75rem;
+    }
   }
 }
 

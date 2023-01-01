@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
+import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
 import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
@@ -11,6 +12,8 @@ interface ClaimReferralRewardsProps {
 }
 
 export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
+  const minimumClaimAmount = 0.1;
+
   // TODO refactoring
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
@@ -22,6 +25,12 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
       reloadReferralRewards();
     }
   }, [success]);
+
+  const isLowerThanMinimum = useMemo(() => {
+    return new BigNumber(rewards.egld)
+      .shiftedBy(-18)
+      .isLessThan(minimumClaimAmount);
+  }, [rewards]);
 
   const handleSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -61,17 +70,22 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
             )}
           </span>
         </div>
-        <button
-          className='btn btn-logout'
-          onClick={(e) => handleSubmit(e)}
-          disabled={pending}
-        >
-          {pending ? (
-            <Spinner as='span' animation='border' size='sm' />
-          ) : (
-            <>Claim rewards</>
+        <div className='action'>
+          <button
+            className='btn btn-logout'
+            onClick={(e) => handleSubmit(e)}
+            disabled={pending || isLowerThanMinimum}
+          >
+            {pending ? (
+              <Spinner as='span' animation='border' size='sm' />
+            ) : (
+              <>Claim rewards</>
+            )}
+          </button>
+          {isLowerThanMinimum && (
+            <i className='mt-1'>Minimum amount is {minimumClaimAmount} EGLD</i>
           )}
-        </button>
+        </div>
       </div>
     </>
   );
