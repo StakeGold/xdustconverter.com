@@ -5,8 +5,7 @@ import {
 } from '@elrondnetwork/dapp-core/hooks';
 import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
-import { faClose, faSadTear } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
@@ -19,11 +18,13 @@ import {
 } from './components';
 import { TransactionsSignedInfo } from './components/TransactionsSignedInfo';
 import { computeValueAfterFees } from './helpers';
-import { useGetContractState, useGetProtocolFee } from './hooks';
+import { useGetProtocolFee } from './hooks';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const ConvertPage = () => {
+  const referralTag = localStorage.getItem('xdc_ref');
+
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
@@ -35,7 +36,6 @@ const ConvertPage = () => {
   } = useGetAccountTokens();
   const swapDustTokens = useGetSwapDustTokens();
 
-  const contractState = useGetContractState();
   const protocolFee = useGetProtocolFee();
   const { success, pending } = useGetActiveTransactionsStatus();
 
@@ -43,32 +43,13 @@ const ConvertPage = () => {
 
   const hasTokens = checkedTokens.length > 0;
 
-  const processConvertTransaction = async (
-    transaction: Transaction | undefined
-  ) => {
-    try {
-      if (transaction === undefined) {
-        return;
-      }
-
-      const displayInfo = {
-        processingMessage: 'Converting small amounts',
-        errorMessage: 'An error has occurred while converting small amounts',
-        successMessage: 'Converting small amounts succeeded'
-      };
-      await sendAndSignTransactions([transaction], displayInfo);
-    } catch (err: any) {
-      console.log('processConvertTransaction error', err);
-    }
-  };
-
   useEffect(() => {
     if (success) {
       reloadTokens();
     }
   }, [success]);
 
-  if (isLoading || contractState === undefined) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -79,18 +60,6 @@ const ConvertPage = () => {
           icon={faClose}
           className='text-muted'
           title='Unable to load.'
-        />
-      </div>
-    );
-  }
-
-  if (contractState === 'Inactive') {
-    return (
-      <div className='my-5'>
-        <PageState
-          icon={faSadTear}
-          className='text-muted'
-          title={'xDustConverter is under maintenance'}
         />
       </div>
     );
@@ -115,11 +84,23 @@ const ConvertPage = () => {
     SLIPPAGE
   );
 
-  const handleSubmit = (event: React.MouseEvent) => {
+  const handleSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
 
-    const transaction = swapDustTokens(totalWegldAfterFees, checkedTokens);
-    processConvertTransaction(transaction);
+    try {
+      const { transaction, displayInfo } = swapDustTokens(
+        totalWegldAfterFees,
+        checkedTokens,
+        referralTag
+      );
+      if (!transaction) {
+        return;
+      }
+
+      await sendAndSignTransactions([transaction], displayInfo);
+    } catch (err) {
+      console.log('processConvertTransaction error', err);
+    }
   };
 
   return (

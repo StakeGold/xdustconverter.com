@@ -3,22 +3,31 @@ import { getChainID } from '@elrondnetwork/dapp-core/utils';
 import {
   Address,
   BigUIntValue,
+  BytesValue,
   TokenPayment,
-  Transaction
+  Transaction,
+  TypedValue
 } from '@elrondnetwork/erdjs/out';
 import { BigNumber } from 'bignumber.js';
+import { dustSmartContract } from 'apiCalls';
 import { AccountToken } from 'types';
-import { dustSmartContract } from '../helpers';
 
 export const useGetSwapDustTokens = () => {
   const { address } = useGetAccount();
 
+  const displayInfo = {
+    processingMessage: 'Converting small amounts',
+    errorMessage: 'An error has occurred while converting small amounts',
+    successMessage: 'Converting small amounts succeeded'
+  };
+
   const swapDustTokens = (
     totalWegld: BigNumber,
-    tokens: AccountToken[]
-  ): Transaction | undefined => {
+    tokens: AccountToken[],
+    referralTag: string | null
+  ): { transaction?: Transaction; displayInfo: any } => {
     if (tokens.length === 0) {
-      return undefined;
+      return { displayInfo };
     }
 
     try {
@@ -29,10 +38,15 @@ export const useGetSwapDustTokens = () => {
         );
       });
 
+      const endpointArgs: TypedValue[] = [
+        new BigUIntValue(totalWegld.shiftedBy(18).decimalPlaces(18))
+      ];
+      if (referralTag) {
+        endpointArgs.push(new BytesValue(Buffer.from(referralTag, 'utf-8')));
+      }
+
       const interaction = dustSmartContract.methodsExplicit
-        .swapDustTokens([
-          new BigUIntValue(totalWegld.shiftedBy(18).decimalPlaces(18))
-        ])
+        .swapDustTokens(endpointArgs)
         .withGasLimit(args.length * 10000000)
         .withChainID(getChainID());
 
@@ -43,10 +57,13 @@ export const useGetSwapDustTokens = () => {
             Address.fromString(address)
           );
 
-      return interaction.buildTransaction();
+      return {
+        transaction: interaction.buildTransaction(),
+        displayInfo
+      };
     } catch (err) {
       console.error('Unable to call swapDustTokens transaction', err);
-      return undefined;
+      return { displayInfo };
     }
   };
 

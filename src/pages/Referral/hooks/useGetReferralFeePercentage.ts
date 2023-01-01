@@ -2,23 +2,31 @@ import { useEffect, useState } from 'react';
 import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks';
 import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import { ResultsParser } from '@elrondnetwork/erdjs/out';
-import { ContractFunction } from '@elrondnetwork/erdjs/out/smartcontracts';
+import {
+  BytesValue,
+  ContractFunction
+} from '@elrondnetwork/erdjs/out/smartcontracts';
 import { BigNumber } from 'bignumber.js';
 import { dustSmartContract } from 'apiCalls';
 
 const resultsParser = new ResultsParser();
-const endpoint = 'getProtocolFeePercent';
+const endpoint = 'getReferralFeePercentage';
 
-export const useGetProtocolFee = () => {
+export const useGetReferralFeePercentage = (tag: string | undefined) => {
   const { network } = useGetNetworkConfig();
-  const [feePercent, setFeePercent] = useState<number | undefined>();
+  const [feePercent, setFeePercent] = useState<number>(-1);
 
   const proxy = new ProxyNetworkProvider(network.apiAddress);
 
-  const getProtocolFee = async () => {
+  const getReferralFeePercentage = async () => {
+    if (!tag) {
+      return -1;
+    }
+
     try {
       const query = dustSmartContract.createQuery({
-        func: new ContractFunction(endpoint)
+        func: new ContractFunction(endpoint),
+        args: [new BytesValue(Buffer.from(tag, 'utf-8'))]
       });
       const queryResponse = await proxy.queryContract(query);
 
@@ -35,13 +43,13 @@ export const useGetProtocolFee = () => {
 
       setFeePercent(feeNumber);
     } catch (err) {
-      console.error('Unable to call getProtocolFeePercent', err);
+      console.error('Unable to call useGetReferralFeePercentage', err);
     }
   };
 
   useEffect(() => {
-    getProtocolFee();
-  }, []);
+    getReferralFeePercentage();
+  }, [tag]);
 
   return feePercent;
 };
