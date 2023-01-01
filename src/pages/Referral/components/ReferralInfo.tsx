@@ -24,24 +24,31 @@ export const ReferralInfo = () => {
         <div className='card card-info mt-4'>
           <ol className='m-0'>
             <li>
-              <h5>Create tag</h5>
+              {/* <h5>Create tag</h5> */}
               <p>
-                Create your own referral tag by setting a unique descriptive
-                name for your tag.
+                <span className='title'>Create</span> your own referral tag by
+                setting a unique descriptive name for your tag.
               </p>
             </li>
             <li>
-              <h5>Share</h5>
+              {/* <h5>Share</h5> */}
               <p>
-                Share your tag with the community and earn rewards by bringing
-                new users to our platform.
+                <span className='title'>Share</span> your tag with the community
+                and earn a percentage of the protocol fee by bringing new users.
               </p>
             </li>
             <li>
-              <h5>Claim</h5>
+              {/* <h5>Claim</h5> */}
               <p>
-                Claim your rewards accumulated from the transactions made by the
-                users on our platform.
+                <span className='title'>Claim</span> your rewards accumulated
+                from the transactions made by the users.
+              </p>
+            </li>
+            <li>
+              {/* <h5>Upgrade tier</h5> */}
+              <p>
+                <span className='title'>Upgrade</span> your tier when you become
+                eligible to the next tier.
               </p>
             </li>
           </ol>

@@ -158,6 +158,11 @@ h4,
 .card-info {
   background-color: #18191a;
   padding: 1.5rem;
+
+  .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
 }
 
 .token-table {

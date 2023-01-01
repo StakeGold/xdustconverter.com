@@ -5,7 +5,6 @@ import { sendAndSignTransactions } from 'apiCalls';
 import { TierDetails } from 'types';
 import { useRegisterReferralTag } from '../hooks';
 import { InfoTooltip } from './InfoTooltip';
-import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
 import { ReferralTiers } from './ReferralTiers';
 
 interface ReferralRegisterProps {
@@ -62,12 +61,12 @@ export const ReferralRegister = ({ tiers }: ReferralRegisterProps) => {
             onChange={(e) => setTag(e.target.value)}
           />
         </div>
-        <div className='mb-4'>
+        {/* <div className='mb-4'>
           <label>
             Default referral rewards percent <ReferralRewardsPercentTooltip />
           </label>
           <div className='referral-tag-input disabled'>5%</div>
-        </div>
+        </div> */}
         <button
           className='btn btn-primary btn-connect'
           onClick={(e) => handleSubmit(e)}

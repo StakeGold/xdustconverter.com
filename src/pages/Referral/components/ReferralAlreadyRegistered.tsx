@@ -1,6 +1,7 @@
 import React from 'react';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetProtocolFee } from 'pages/Convert/hooks';
 import { ReferralDetails, TierDetails } from 'types';
 import { InfoTooltip } from './InfoTooltip';
 import { ReferralRewardsPercentTooltip } from './ReferralRewardsPercentTooltip';
@@ -15,6 +16,8 @@ export const ReferralAlreadyRegistered = ({
   referral,
   tiers
 }: ReferralAlreadyRegisteredProps) => {
+  const protocolFee = useGetProtocolFee();
+
   const referralUrl = `${window.location.origin}?referral=${referral.tag}`;
 
   const handleCopyReferralUrl = () => {
@@ -30,7 +33,7 @@ export const ReferralAlreadyRegistered = ({
           <InfoTooltip>
             <p>
               Share your tag with the community and earn rewards by bringing new
-              users to our platform.
+              users.
             </p>
           </InfoTooltip>
         </h4>
@@ -40,7 +43,11 @@ export const ReferralAlreadyRegistered = ({
         </div>
         <div className='mb-4'>
           <label>
-            Referral rewards percent <ReferralRewardsPercentTooltip />
+            Referral rewards percent{' '}
+            <ReferralRewardsPercentTooltip
+              protocolFee={protocolFee ?? 5}
+              referralFee={referral.feePercentage}
+            />
           </label>
           <div className='referral-tag-input disabled'>
             {referral.feePercentage}%
