@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { AccountToken } from 'types';
 import { TokenHeader } from './TokenHeader';
@@ -10,6 +11,9 @@ export interface TokenTableProps {
 }
 
 export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
+  const { address } = useGetAccount();
+  const isLoggedIn = Boolean(address);
+
   const [checkedState, setCheckedState] = useState<boolean[]>([]);
 
   useEffect(() => {
@@ -47,7 +51,7 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
         selectedAll={selectedAll}
         handleSelectAll={handleSelectAll}
       />
-      <div className='card table-body'>
+      <div className={`card table-body ${isLoggedIn ? '' : 'grid'}`}>
         {tokens.length > 0 ? (
           tokens.map((token, index) => (
             <TokenRow
