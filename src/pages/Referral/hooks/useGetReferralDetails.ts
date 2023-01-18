@@ -1,75 +1,33 @@
-import { useEffect, useState } from 'react';
-import {
-  useGetAccount,
-  useGetNetworkConfig
-} from '@elrondnetwork/dapp-core/hooks';
-import * as apiCalls from 'apiCalls';
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks';
+import { REFERRAL_INFO } from 'api/queries';
 import { ReferralDetails, TierDetails } from 'types';
 
 export const useGetReferralDetails = () => {
-  const { network } = useGetNetworkConfig();
-  const { address } = useGetAccount();
+  const login = useGetLoginInfo();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string>();
-  const [referralDetails, setReferralDetails] = useState<
-    ReferralDetails | undefined
-  >(undefined);
-  const [tiers, setTiers] = useState<TierDetails[]>([]);
-
-  const refetchReferralDetails = async () => {
-    try {
-      setIsLoading(true);
-
-      const allTiers = await apiCalls.getTiers(network.apiAddress);
-      setTiers(allTiers);
-
-      const tag = await apiCalls.getReferralTag(network.apiAddress, address);
-      if (!tag) {
-        setReferralDetails(undefined);
-        return;
-      }
-
-      const [feePercentage, accumulatedVolume] = await Promise.all([
-        apiCalls.getReferralFeePercentage(network.apiAddress, tag),
-        apiCalls.getTagAccumulatedVolume(network.apiAddress, tag)
-      ]);
-
-      let currentTierIndex = 0;
-
-      for (let i = 1; i < allTiers.length; i++) {
-        if (
-          accumulatedVolume.isGreaterThanOrEqualTo(allTiers[i].minVolume) &&
-          feePercentage >= allTiers[i].feePercent
-        ) {
-          currentTierIndex = i;
-        }
-      }
-
-      const currentTier = allTiers[currentTierIndex];
-      const nextTier =
-        currentTierIndex < allTiers.length - 1
-          ? allTiers[currentTierIndex + 1]
-          : undefined;
-
-      setReferralDetails({
-        tag,
-        feePercentage,
-        accumulatedVolume,
-        currentTier,
-        nextTier
-      });
-    } catch (err: any) {
-      console.error(error);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
+  const { data, loading, error, refetch } = useQuery(REFERRAL_INFO, {
+    context: {
+      headers: { authorization: `Bearer ${login.tokenLogin?.nativeAuthToken}` }
     }
-  };
+  });
 
-  useEffect(() => {
-    refetchReferralDetails();
-  }, [address]);
-
-  return { referralDetails, tiers, isLoading, error, refetchReferralDetails };
+  return React.useMemo(() => {
+    const referralDetails =
+      data && data.accountReferralInfo
+        ? ReferralDetails.fromResponse(data.accountReferralInfo)
+        : undefined;
+    const tiers =
+      data && data.allTiers
+        ? data?.allTiers.map(TierDetails.fromResponse)
+        : undefined;
+    return {
+      referralDetails,
+      tiers,
+      isLoading: loading,
+      error,
+      refetchReferralDetails: refetch
+    };
+  }, [data, loading, error]);
 };

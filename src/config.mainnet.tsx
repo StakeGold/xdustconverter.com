@@ -11,3 +11,5 @@ export const USDC_ID = 'USDC-c76f1f';
 export const X_EXCHANGE_URL = 'https://graph.maiar.exchange/graphql';
 export const MIN_AMOUNT = 0.01;
 export const SLIPPAGE = 0.01;
+
+export const sampleAuthenticatedDomains = ['http://localhost:3000'];

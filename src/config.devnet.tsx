@@ -14,4 +14,6 @@ export const MIN_AMOUNT = 0.01;
 export const SLIPPAGE = 0.005;
 
 //test api
-export const API_GRAPHQL = 'https://testnet-api.exrond.com/graphql';
+export const API_GRAPHQL = 'http://localhost:3000/graphql';
+
+export const sampleAuthenticatedDomains = ['http://localhost/'];

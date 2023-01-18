@@ -6,11 +6,28 @@ export const REFERRAL_INFO = gql`
       tag
       feePercentage
       accumulatedVolume
-      currentTier
-      nextTier
-      referralRewards
+      currentTier {
+        name
+        minVolume
+        feePercent
+      }
+      nextTier {
+        name
+        minVolume
+        feePercent
+      }
+      referralRewards {
+        balance
+        valueUsd
+      }
+    }
+
+    allTiers {
+      name
+      minVolume
+      feePercent
     }
   }
 `;
 
-// query for accountReferralInfo
+// query for accountReferralInfo + allTiers
