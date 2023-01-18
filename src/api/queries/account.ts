@@ -5,7 +5,16 @@ export const ACCOUNT_DETAILS = gql`
     accountDetails {
       address
       balance
-      tokens
+      tokens {
+        identifier
+        name
+        ticker
+        decimals
+        balance
+        valueUsd
+        valueWegld
+        svgUrl
+      }
     }
   }
 `;
