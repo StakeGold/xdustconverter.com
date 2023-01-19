@@ -1,55 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks';
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
-import { ResultsParser } from '@elrondnetwork/erdjs/out';
-import {
-  BytesValue,
-  ContractFunction
-} from '@elrondnetwork/erdjs/out/smartcontracts';
-import { BigNumber } from 'bignumber.js';
-import { dustSmartContract } from 'apiCalls';
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { REFERRAL_INFO } from 'api/queries';
 
-const resultsParser = new ResultsParser();
-const endpoint = 'getReferralFeePercentage';
+export const useGetReferralFeePercentage = () => {
+  const { data } = useQuery(REFERRAL_INFO);
 
-export const useGetReferralFeePercentage = (tag: string | undefined) => {
-  const { network } = useGetNetworkConfig();
-  const [feePercent, setFeePercent] = useState<number>(-1);
-
-  const proxy = new ProxyNetworkProvider(network.apiAddress);
-
-  const getReferralFeePercentage = async () => {
-    if (!tag) {
-      return -1;
-    }
-
-    try {
-      const query = dustSmartContract.createQuery({
-        func: new ContractFunction(endpoint),
-        args: [new BytesValue(Buffer.from(tag, 'utf-8'))]
-      });
-      const queryResponse = await proxy.queryContract(query);
-
-      const endpointDefinition = dustSmartContract.getEndpoint(endpoint);
-
-      const { firstValue: fee } = resultsParser.parseQueryResponse(
-        queryResponse,
-        endpointDefinition
-      );
-
-      const feeNumber = new BigNumber(fee?.valueOf() ?? 0)
-        .shiftedBy(-2)
-        .toNumber();
-
-      setFeePercent(feeNumber);
-    } catch (err) {
-      console.error('Unable to call useGetReferralFeePercentage', err);
-    }
-  };
-
-  useEffect(() => {
-    getReferralFeePercentage();
-  }, [tag]);
-
-  return feePercent;
+  return React.useMemo(() => {
+    const feePercent = data.accountReferralInfo.feePercentage;
+    return {
+      feePercent
+    };
+  }, [data]);
 };
