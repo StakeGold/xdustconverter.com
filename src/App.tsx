@@ -12,6 +12,7 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
+import { ApolloWrapper } from 'components/ApolloWrapper';
 import UpdateNotification from 'components/UpdateNotification';
 import {
   API_TIMEOUT,
@@ -54,7 +55,7 @@ export const App = () => {
               walletConnectV2ProjectId: WALLET_CONNECT_V2_PROJECT_ID
             }}
           >
-            <>
+            <ApolloWrapper>
               <AxiosInterceptorContext.Listener />
               <Layout>
                 <TransactionsToastList />
@@ -71,7 +72,7 @@ export const App = () => {
                   <Route path='*' element={<Convert />} />
                 </Routes>
               </Layout>
-            </>
+            </ApolloWrapper>
           </DappProvider>
         </Router>
       </AxiosInterceptorContext.Interceptor>

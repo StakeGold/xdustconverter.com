@@ -1,17 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks';
 import { REFERRAL_INFO } from 'api/queries';
 import { ReferralDetails, TierDetails } from 'types';
 
 export const useGetReferralDetails = () => {
-  const login = useGetLoginInfo();
-
-  const { data, loading, error, refetch } = useQuery(REFERRAL_INFO, {
-    context: {
-      headers: { authorization: `Bearer ${login.tokenLogin?.nativeAuthToken}` }
-    }
-  });
+  const { data, loading, error, refetch } = useQuery(REFERRAL_INFO);
 
   return React.useMemo(() => {
     const referralDetails =
