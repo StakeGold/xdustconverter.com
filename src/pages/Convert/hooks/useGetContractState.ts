@@ -6,10 +6,8 @@ export const useGetContractState = (): 'Active' | 'Inactive' | undefined => {
   const { data, loading, error } = useQuery(CONTRACT_STATUS);
 
   return React.useMemo(() => {
-    const contractState = data?.contractStatus?.contractActive;
-
-    return contractState !== null
-      ? contractState
+    return data?.contractActive !== null
+      ? data?.contractActive
         ? 'Active'
         : 'Inactive'
       : undefined;
