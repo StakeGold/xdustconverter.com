@@ -8,7 +8,7 @@ export const CONTRACT_ADDRESS =
 export const WALLET_CONNECT_V2_PROJECT_ID = '9c1851da02319e1280cbbf2de5d8ee46';
 export const WEGLD_ID = 'WEGLD-bd4d79';
 export const USDC_ID = 'USDC-c76f1f';
-export const X_EXCHANGE_URL = 'https://graph.maiar.exchange/graphql';
+export const X_EXCHANGE_URL = 'https://graph.xexchange.com/graphql';
 export const MIN_AMOUNT = 0.01;
 export const SLIPPAGE = 0.01;
 
