@@ -1,30 +1,24 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
+import { useMutation } from '@apollo/client';
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import { dustSmartContract } from 'apiCalls';
+import { CLAIM_FEES } from 'api/mutations';
 
 export const useClaimReferralRewards = () => {
-  const displayInfo = {
-    processingMessage: 'Claim referral rewards',
-    errorMessage: 'An error has occurred while claiming referral rewards',
-    successMessage: 'referral rewards claimed '
-  };
+  const [mutate, { data, error }] = useMutation(CLAIM_FEES);
 
   const claimReferralRewards = (): {
     transaction?: Transaction;
     displayInfo: any;
   } => {
-    try {
-      const interaction = dustSmartContract.methodsExplicit
-        .claimReferralFees()
-        .withGasLimit(5_000_000)
-        .withChainID(getChainID());
+    const displayInfo = {
+      processingMessage: 'Claim referral rewards',
+      errorMessage: 'An error has occurred while claiming referral rewards',
+      successMessage: 'referral rewards claimed '
+    };
 
-      return {
-        transaction: interaction.buildTransaction(),
-        displayInfo
-      };
-    } catch (err) {
-      console.error('Unable to call claimReferralRewards transaction', err);
+    if (data != null) {
+      return mutate(), { displayInfo };
+    } else {
+      console.error('Unable to call claimReferralRewards transaction', error);
       return { displayInfo };
     }
   };
