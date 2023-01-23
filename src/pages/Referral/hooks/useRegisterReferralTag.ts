@@ -1,8 +1,10 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
-import { BytesValue, Transaction } from '@elrondnetwork/erdjs/out';
-import { dustSmartContract } from 'apiCalls';
+import { useMutation } from '@apollo/client';
+import { Transaction } from '@elrondnetwork/erdjs/out';
+import { REGISTER_REFERRAL } from 'api/mutations';
 
 export const useRegisterReferralTag = () => {
+  const [mutate, { data, error }] = useMutation(REGISTER_REFERRAL);
+
   const registerReferralTag = (
     tag: string
   ): { transaction?: Transaction; displayInfo: any } => {
@@ -12,17 +14,16 @@ export const useRegisterReferralTag = () => {
       successMessage: 'The referral tag has been registered successfully'
     };
 
-    try {
-      const interaction = dustSmartContract.methodsExplicit
-        .registerReferralTag([new BytesValue(Buffer.from(tag, 'utf-8'))])
-        .withGasLimit(5_000_000)
-        .withChainID(getChainID());
-
-      return {
-        transaction: interaction.buildTransaction(),
-        displayInfo
-      };
-    } catch (error) {
+    if (data != null) {
+      return (
+        mutate({
+          variables: {
+            tag
+          }
+        }),
+        { displayInfo }
+      );
+    } else {
       console.error('Unable to call registerReferralTag transaction', error);
       return { displayInfo };
     }
