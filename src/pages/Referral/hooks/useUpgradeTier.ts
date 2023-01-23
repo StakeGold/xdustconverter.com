@@ -1,27 +1,24 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
+import { useMutation } from '@apollo/client';
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import { dustSmartContract } from 'apiCalls';
+import { UPDATE_TIER } from 'api/mutations';
 
 export const useUpgradeTier = () => {
-  const displayInfo = {
-    processingMessage: 'Upgrade tier',
-    errorMessage: 'An error has occurred while upgrading tier',
-    successMessage: 'Tier upgraded'
-  };
+  const [mutate, { data, error }] = useMutation(UPDATE_TIER);
 
-  const upgradeTier = (): { transaction?: Transaction; displayInfo: any } => {
-    try {
-      const interaction = dustSmartContract.methodsExplicit
-        .updateTier()
-        .withGasLimit(5_000_000)
-        .withChainID(getChainID());
+  const upgradeTier = (): {
+    transaction?: Transaction;
+    displayInfo: any;
+  } => {
+    const displayInfo = {
+      processingMessage: 'Upgrade tier',
+      errorMessage: 'An error has occurred while upgrading tier',
+      successMessage: 'Tier upgraded'
+    };
 
-      return {
-        transaction: interaction.buildTransaction(),
-        displayInfo
-      };
-    } catch (err) {
-      console.error('Unable to call useUpgradeTier transaction', err);
+    if (data != null) {
+      return mutate(), { displayInfo };
+    } else {
+      console.error('Unable to call useUpgradeTier transaction', error);
       return { displayInfo };
     }
   };
