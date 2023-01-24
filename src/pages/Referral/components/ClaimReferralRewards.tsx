@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
-import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
 import { TierDetails } from 'types';
 import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
@@ -71,9 +70,9 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
           <button
             className='btn btn-logout'
             onClick={(e) => handleSubmit(e)}
-            disabled={pending || isLowerThanMinimum}
+            disabled={pending || isLowerThanMinimum || loading}
           >
-            {pending ? (
+            {pending || loading ? (
               <Spinner as='span' animation='border' size='sm' />
             ) : (
               <>Claim rewards</>
