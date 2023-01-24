@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
-import { sendAndSignTransactions } from 'apiCalls';
 import { TierDetails } from 'types';
 import { useUpgradeTier } from '../hooks';
 
@@ -28,18 +27,13 @@ const UpdateTierNotification = ({
     }
   }, [success]);
 
-  const upgradeTier = useUpgradeTier();
+  const { upgradeTier, loading } = useUpgradeTier();
 
   const handleSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
 
     try {
-      const { transaction, displayInfo } = upgradeTier();
-      if (!transaction) {
-        return;
-      }
-
-      await sendAndSignTransactions([transaction], displayInfo);
+      upgradeTier();
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
@@ -57,9 +51,9 @@ const UpdateTierNotification = ({
         <button
           className='btn btn-logout mt-2'
           onClick={handleSubmit}
-          disabled={pending}
+          disabled={pending || loading}
         >
-          {pending ? (
+          {pending || loading ? (
             <Spinner as='span' animation='border' size='sm' />
           ) : (
             <>Upgrade</>
