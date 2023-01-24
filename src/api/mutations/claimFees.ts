@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const CLAIM_FEES = gql`
   mutation claimReferralFees {
-    claimReferralFees {
+    transactions: claimReferralFees {
       nonce
       value
       receiver
