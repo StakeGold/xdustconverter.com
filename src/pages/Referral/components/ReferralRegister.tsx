@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Spinner } from 'react-bootstrap';
-import { sendAndSignTransactions } from 'apiCalls';
 import { TierDetails } from 'types';
 import { useRegisterReferralTag } from '../hooks';
 import { InfoTooltip } from './InfoTooltip';

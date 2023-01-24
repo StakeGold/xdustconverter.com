@@ -18,7 +18,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
 
-  const claimReferralRewards = useClaimReferralRewards();
+  const { claimReferralRewards, loading } = useClaimReferralRewards();
 
   useEffect(() => {
     if (success) {
@@ -36,12 +36,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
     event.preventDefault();
 
     try {
-      const { transaction, displayInfo } = claimReferralRewards();
-      if (!transaction) {
-        return;
-      }
-
-      await sendAndSignTransactions([transaction], displayInfo);
+      claimReferralRewards();
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
