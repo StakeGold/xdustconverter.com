@@ -7,7 +7,5 @@ export interface AccountToken {
   price: number;
   valueUsd: string;
   valueWegld: string;
-  assets: {
-    svgUrl: string;
-  };
+  svgUrl?: string;
 }
