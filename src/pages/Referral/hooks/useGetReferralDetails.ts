@@ -11,10 +11,12 @@ export const useGetReferralDetails = () => {
       data && data.accountReferralInfo
         ? ReferralDetails.fromResponse(data.accountReferralInfo)
         : undefined;
+
     const tiers =
       data && data.allTiers
         ? data?.allTiers.map(TierDetails.fromResponse)
         : undefined;
+
     return {
       referralDetails,
       tiers,

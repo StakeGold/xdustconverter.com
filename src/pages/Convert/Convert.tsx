@@ -7,7 +7,6 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
 import { AccountToken } from 'types';
 import {
@@ -34,7 +33,7 @@ const ConvertPage = () => {
     error,
     reloadTokens
   } = useGetAccountTokens();
-  const swapDustTokens = useGetSwapDustTokens();
+  const { swapDustTokens, loading: txLoading } = useGetSwapDustTokens();
 
   const protocolFee = useGetProtocolFee();
   const { success, pending } = useGetActiveTransactionsStatus();
@@ -88,16 +87,7 @@ const ConvertPage = () => {
     event.preventDefault();
 
     try {
-      const { transaction, displayInfo } = swapDustTokens(
-        totalWegldAfterFees,
-        checkedTokens,
-        referralTag
-      );
-      if (!transaction) {
-        return;
-      }
-
-      await sendAndSignTransactions([transaction], displayInfo);
+      swapDustTokens(totalWegldAfterFees.toFixed(), checkedTokens, referralTag);
     } catch (err) {
       console.log('processConvertTransaction error', err);
     }
@@ -115,8 +105,8 @@ const ConvertPage = () => {
       )}
       <ConvertButton
         handleSubmit={handleSubmit}
-        disabled={!hasTokens || pending}
-        loading={pending}
+        disabled={!hasTokens || pending || txLoading}
+        loading={pending || txLoading}
       />
       {getIsLoggedIn() && hasTokens && (
         <TransactionsSignedInfo transactions={1} />
