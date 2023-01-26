@@ -17,5 +17,3 @@ export const CLAIM_FEES = gql`
     }
   }
 `;
-
-// call mutation claimReferralFees

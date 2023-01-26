@@ -5,5 +5,3 @@ export const CONTRACT_STATUS = gql`
     contractActive
   }
 `;
-
-// query for contractActive

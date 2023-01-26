@@ -29,5 +29,3 @@ export const REFERRAL_INFO = gql`
     }
   }
 `;
-
-// query for accountReferralInfo + allTiers

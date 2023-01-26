@@ -17,5 +17,3 @@ export const UPDATE_TIER = gql`
     }
   }
 `;
-
-// call mutation updateTier

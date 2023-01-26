@@ -17,5 +17,3 @@ export const REGISTER_REFERRAL = gql`
     }
   }
 `;
-
-// call mutation registerReferralTag

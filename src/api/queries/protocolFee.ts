@@ -5,5 +5,3 @@ export const PROTOCOL_FEE = gql`
     protocolFeePercent
   }
 `;
-
-// query for protocolFeePercent

@@ -19,5 +19,3 @@ export const ACCOUNT_DETAILS = gql`
     }
   }
 `;
-
-// query for accountDetails
