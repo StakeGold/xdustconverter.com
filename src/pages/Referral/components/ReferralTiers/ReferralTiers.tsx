@@ -23,7 +23,7 @@ export const ReferralTiers = ({ referral, tiers }: ReferralTiersProps) => {
   return (
     <>
       <div className='tier-gallery mb-4'>
-        {tiers.map((tier) => (
+        {tiers?.map((tier) => (
           <Tier
             key={tier.name}
             tier={tier}

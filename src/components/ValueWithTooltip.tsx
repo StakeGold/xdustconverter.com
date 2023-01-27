@@ -1,7 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { MIN_AMOUNT } from 'config';
+import { useGetDappConfig } from 'hooks/useGetDappConfig';
 
 export interface ValueWithTooltipProps {
   formattedValue: string;
@@ -12,7 +12,15 @@ export const ValueWithTooltip = ({
   formattedValue,
   value
 }: ValueWithTooltipProps) => {
+  const { dappConfig } = useGetDappConfig();
+
   const valueBig = new BigNumber(value);
+
+  if (!dappConfig) {
+    return <></>;
+  }
+
+  const minAmount = dappConfig.minAmount;
 
   return (
     <OverlayTrigger
@@ -24,8 +32,8 @@ export const ValueWithTooltip = ({
       )}
     >
       <span>
-        {valueBig.isLessThanOrEqualTo(MIN_AMOUNT) && !valueBig.isEqualTo(0) ? (
-          <>{`< ${MIN_AMOUNT}`}</>
+        {valueBig.isLessThanOrEqualTo(minAmount) && !valueBig.isEqualTo(0) ? (
+          <>{`< ${minAmount}`}</>
         ) : (
           formattedValue
         )}
