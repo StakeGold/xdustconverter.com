@@ -13,9 +13,7 @@ export const useGetReferralDetails = () => {
         : undefined;
 
     const tiers =
-      data && data.allTiers
-        ? data?.allTiers.map(TierDetails.fromResponse)
-        : undefined;
+      data && data.allTiers ? data?.allTiers.map(TierDetails.fromResponse) : [];
 
     return {
       referralDetails,

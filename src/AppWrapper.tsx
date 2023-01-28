@@ -24,18 +24,24 @@ export const AppWrapper = () => {
 
   if (loading || !dappConfig) {
     return (
-      <div className='center-screen'>
-        <div className='card col-12 col-md-12 col-lg-9 col-xl-8 mx-auto text-center my-spacer'>
-          {loading ? (
-            <Loader />
-          ) : (
-            <PageState
-              icon={faSadTear}
-              className='text-muted'
-              title='xDustConverter will be back soon'
-            />
-          )}
-        </div>
+      <div className='d-flex flex-column flex-fill wrapper'>
+        <main className='d-flex flex-column flex-grow-1'>
+          <div className='container m-auto'>
+            <div className='row'>
+              <div className='card col-12 col-md-12 col-lg-9 col-xl-8 mx-auto text-center my-spacer'>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <PageState
+                    icon={faSadTear}
+                    className='text-muted'
+                    title='xDustConverter will be back soon'
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
