@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
-import { sendAndSignTransactions } from 'apiCalls';
 import { TokenAmountWithTooltip } from 'components';
 import { TierDetails } from 'types';
 import { useClaimReferralRewards, useGetReferralRewards } from '../hooks';
@@ -18,7 +17,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
   const { rewards, reloadReferralRewards } = useGetReferralRewards();
   const { success, pending } = useGetActiveTransactionsStatus();
 
-  const claimReferralRewards = useClaimReferralRewards();
+  const { claimReferralRewards, loading } = useClaimReferralRewards();
 
   useEffect(() => {
     if (success) {
@@ -27,7 +26,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
   }, [success]);
 
   const isLowerThanMinimum = useMemo(() => {
-    return new BigNumber(rewards.egld)
+    return new BigNumber(rewards.balance)
       .shiftedBy(-18)
       .isLessThan(minimumClaimAmount);
   }, [rewards]);
@@ -36,18 +35,13 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
     event.preventDefault();
 
     try {
-      const { transaction, displayInfo } = claimReferralRewards();
-      if (!transaction) {
-        return;
-      }
-
-      await sendAndSignTransactions([transaction], displayInfo);
+      claimReferralRewards();
     } catch (err: any) {
       console.log('processClaimRewardsTransaction error', err);
     }
   };
 
-  if (rewards.egld === '0') {
+  if (rewards.balance === '0') {
     return <></>;
   }
 
@@ -60,13 +54,15 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
           <h4 className='mb-1'>Referral rewards</h4>
           <span>
             <TokenAmountWithTooltip
-              value={rewards.egld}
+              value={rewards.balance}
               decimals={18}
               egldLabel={'WEGLD'}
               digits={4}
             />
-            {rewards.usd && (
-              <small className='d-block text-secondary'>≈ ${rewards.usd}</small>
+            {rewards.valueUsd && (
+              <small className='d-block text-secondary'>
+                ≈ ${rewards.valueUsd}
+              </small>
             )}
           </span>
         </div>
@@ -74,9 +70,9 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
           <button
             className='btn btn-logout'
             onClick={(e) => handleSubmit(e)}
-            disabled={pending || isLowerThanMinimum}
+            disabled={pending || isLowerThanMinimum || loading}
           >
-            {pending ? (
+            {pending || loading ? (
               <Spinner as='span' animation='border' size='sm' />
             ) : (
               <>Claim rewards</>

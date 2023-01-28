@@ -1,6 +1,5 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
-import { dustSmartContract } from 'apiCalls';
+import { UPDATE_TIER } from 'api/mutations';
+import useGetAndSendTransactions from 'utils/useGetAndSendTransactions';
 
 export const useUpgradeTier = () => {
   const displayInfo = {
@@ -9,22 +8,16 @@ export const useUpgradeTier = () => {
     successMessage: 'Tier upgraded'
   };
 
-  const upgradeTier = (): { transaction?: Transaction; displayInfo: any } => {
-    try {
-      const interaction = dustSmartContract.methodsExplicit
-        .updateTier()
-        .withGasLimit(5_000_000)
-        .withChainID(getChainID());
+  const [mutateTier, loading] = useGetAndSendTransactions(
+    UPDATE_TIER,
+    displayInfo
+  );
 
-      return {
-        transaction: interaction.buildTransaction(),
-        displayInfo
-      };
-    } catch (err) {
-      console.error('Unable to call useUpgradeTier transaction', err);
-      return { displayInfo };
-    }
+  const upgradeTier = () => {
+    mutateTier({
+      variables: {}
+    });
   };
 
-  return upgradeTier;
+  return { upgradeTier, loading };
 };

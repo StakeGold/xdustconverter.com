@@ -1,49 +1,28 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
 import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks/useGetNetworkConfig';
-import { AxiosError } from 'axios';
-import {
-  getWhitelistedAccountTokens,
-  getWhitelistedDashboardTokens
-} from 'apiCalls';
+import { ACCOUNT_DETAILS, WHITELISTED_TOKENS } from 'api/queries';
 import { AccountToken } from 'types';
 
 export const useGetAccountTokens = () => {
-  const {
-    network: { apiAddress }
-  } = useGetNetworkConfig();
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
-  const [tokens, setTokens] = useState<AccountToken[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string>();
-
-  const fetchAccountTokens = async () => {
-    try {
-      setIsLoading(true);
-
-      let allTokens: AccountToken[] = [];
-      if (isLoggedIn) {
-        allTokens = await getWhitelistedAccountTokens(apiAddress, address);
-      } else {
-        allTokens = await getWhitelistedDashboardTokens(apiAddress);
-      }
-
-      setTokens(allTokens);
-    } catch (err) {
-      console.error(error);
-
-      const { message } = err as AxiosError;
-      setError(message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    data,
+    loading: isLoading,
+    error,
+    refetch
+  } = useQuery(isLoggedIn ? ACCOUNT_DETAILS : WHITELISTED_TOKENS);
 
   useEffect(() => {
-    fetchAccountTokens();
+    refetch();
   }, [isLoggedIn]);
 
-  return { tokens, isLoading, error, reloadTokens: fetchAccountTokens };
+  return React.useMemo(() => {
+    const tokens = (data?.accountDetails?.tokens ??
+      data?.whitelistedTokens) as AccountToken[];
+
+    return { tokens, isLoading, error, reloadTokens: refetch };
+  }, [data]);
 };
