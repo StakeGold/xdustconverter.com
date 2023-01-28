@@ -40,3 +40,8 @@ export const useApolloClient = () => {
 
   return { client: clientRef.current };
 };
+
+export const unauthenticatedClient = new ApolloClient({
+  uri: API_GRAPHQL,
+  cache: new InMemoryCache()
+});

@@ -7,7 +7,7 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import { SLIPPAGE } from 'config';
+import { useGetDappConfig } from 'hooks/useGetDappConfig';
 import { AccountToken } from 'types';
 import {
   ConvertInfo,
@@ -22,6 +22,8 @@ import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const ConvertPage = () => {
+  const { dappConfig, loading: configLoading } = useGetDappConfig();
+
   const referralTag = localStorage.getItem('xdc_ref');
 
   const { address } = useGetAccount();
@@ -48,11 +50,11 @@ const ConvertPage = () => {
     }
   }, [success]);
 
-  if (isLoading) {
+  if (isLoading || configLoading) {
     return <Loader />;
   }
 
-  if (error || protocolFee === undefined) {
+  if (error || protocolFee === undefined || !dappConfig) {
     return (
       <div className='my-5'>
         <PageState
@@ -75,12 +77,12 @@ const ConvertPage = () => {
   const totalWegldAfterFees = computeValueAfterFees(
     totalWegld,
     protocolFee,
-    SLIPPAGE
+    dappConfig.slippage
   );
   const totalUsdAfterFees = computeValueAfterFees(
     totalUsd,
     protocolFee,
-    SLIPPAGE
+    dappConfig.slippage
   );
 
   const handleSubmit = async (event: React.MouseEvent) => {
@@ -101,6 +103,7 @@ const ConvertPage = () => {
           totalWegld={totalWegldAfterFees}
           totalUsd={totalUsdAfterFees}
           protocolFee={protocolFee}
+          slippage={dappConfig.slippage}
         />
       )}
       <ConvertButton
