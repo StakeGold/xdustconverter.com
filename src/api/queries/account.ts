@@ -14,9 +14,8 @@ export const ACCOUNT_DETAILS = gql`
         valueUsd
         valueWegld
         svgUrl
+        pngUrl
       }
     }
   }
 `;
-
-// query for accountDetails

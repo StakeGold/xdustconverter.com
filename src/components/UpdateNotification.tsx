@@ -2,11 +2,13 @@ import React from 'react';
 import { useCheckVersion } from '@buidly/dapp-core/dist/hooks';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { UPDATE_REFRESH_RATE } from 'config';
+import { useGetDappConfig } from 'hooks/useGetDappConfig';
 
 const UpdateNotification = () => {
+  const { dappConfig } = useGetDappConfig();
+
   const [updateAvailable, refreshPage] = useCheckVersion({
-    refreshRate: UPDATE_REFRESH_RATE
+    refreshRate: dappConfig?.updateRefreshRate ?? 60000
   });
 
   return updateAvailable ? (

@@ -391,7 +391,7 @@ footer {
     padding: 1rem;
     width: 150px;
   }
-  
+
   .action {
     display: flex;
     justify-content: flex-end;
@@ -561,7 +561,7 @@ footer {
     display: none;
     justify-content: space-between;
   }
-  
+
   .body {
     display: none;
     flex-direction: column;
@@ -570,7 +570,7 @@ footer {
   }
 
   &.locked::after {
-    content: "";
+    content: '';
     background-color: #24252680;
     pointer-events: none;
     content: '';
@@ -586,7 +586,7 @@ footer {
     align-items: center;
     justify-content: space-between;
     flex: 1;
-  
+
     .title {
       writing-mode: vertical-rl;
       transform: rotate(180deg);
@@ -607,7 +607,8 @@ footer {
       display: none;
     }
 
-    .body, .header {
+    .body,
+    .header {
       display: flex;
     }
   }

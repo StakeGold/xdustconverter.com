@@ -11,5 +11,3 @@ export const WHITELISTED_TOKENS = gql`
     }
   }
 `;
-
-// query for whitelistedTokens

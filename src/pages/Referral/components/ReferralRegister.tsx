@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
 import { Spinner } from 'react-bootstrap';
-import { sendAndSignTransactions } from 'apiCalls';
 import { TierDetails } from 'types';
 import { useRegisterReferralTag } from '../hooks';
 import { InfoTooltip } from './InfoTooltip';
@@ -12,7 +11,7 @@ interface ReferralRegisterProps {
 }
 
 export const ReferralRegister = ({ tiers }: ReferralRegisterProps) => {
-  const registerReferralTag = useRegisterReferralTag();
+  const { registerReferralTag, loading: txLoading } = useRegisterReferralTag();
 
   const [tag, setTag] = useState('');
 
@@ -26,12 +25,7 @@ export const ReferralRegister = ({ tiers }: ReferralRegisterProps) => {
     event.preventDefault();
 
     try {
-      const { transaction, displayInfo } = registerReferralTag(tag);
-      if (!transaction) {
-        return;
-      }
-
-      await sendAndSignTransactions([transaction], displayInfo);
+      registerReferralTag(tag);
     } catch (err: any) {
       console.log('processRegisterTagTransaction error', err);
     }
@@ -70,9 +64,9 @@ export const ReferralRegister = ({ tiers }: ReferralRegisterProps) => {
         <button
           className='btn btn-primary btn-connect'
           onClick={(e) => handleSubmit(e)}
-          disabled={pending || isDisabled}
+          disabled={pending || isDisabled || txLoading}
         >
-          {pending ? (
+          {pending || txLoading ? (
             <Spinner as='span' animation='border' size='sm' />
           ) : (
             'Create referral tag'

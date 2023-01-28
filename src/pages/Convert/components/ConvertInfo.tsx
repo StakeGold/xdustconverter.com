@@ -1,18 +1,19 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import { ValueWithTooltip } from 'components';
-import { SLIPPAGE } from 'config';
 
 export interface ConvertInfoProps {
   totalWegld: BigNumber;
   totalUsd: BigNumber;
   protocolFee: number;
+  slippage: number;
 }
 
 export const ConvertInfo = ({
   totalWegld,
   totalUsd,
-  protocolFee
+  protocolFee,
+  slippage
 }: ConvertInfoProps) => {
   const formattedTotalWegld = totalWegld
     .decimalPlaces(6, BigNumber.ROUND_DOWN)
@@ -44,7 +45,7 @@ export const ConvertInfo = ({
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Slippage</div>
-        <span className='text-main'>{SLIPPAGE * 100}%</span>
+        <span className='text-main'>{slippage * 100}%</span>
       </div>
     </div>
   );

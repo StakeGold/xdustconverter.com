@@ -1,6 +1,5 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
-import { dustSmartContract } from 'apiCalls';
+import { CLAIM_FEES } from 'api/mutations';
+import useGetAndSendTransactions from 'utils/useGetAndSendTransactions';
 
 export const useClaimReferralRewards = () => {
   const displayInfo = {
@@ -9,25 +8,16 @@ export const useClaimReferralRewards = () => {
     successMessage: 'referral rewards claimed '
   };
 
-  const claimReferralRewards = (): {
-    transaction?: Transaction;
-    displayInfo: any;
-  } => {
-    try {
-      const interaction = dustSmartContract.methodsExplicit
-        .claimReferralFees()
-        .withGasLimit(5_000_000)
-        .withChainID(getChainID());
+  const [claimMutation, { loading }] = useGetAndSendTransactions(
+    CLAIM_FEES,
+    displayInfo
+  );
 
-      return {
-        transaction: interaction.buildTransaction(),
-        displayInfo
-      };
-    } catch (err) {
-      console.error('Unable to call claimReferralRewards transaction', err);
-      return { displayInfo };
-    }
+  const claimReferralRewards = () => {
+    claimMutation({
+      variables: {}
+    });
   };
 
-  return claimReferralRewards;
+  return { claimReferralRewards, loading };
 };

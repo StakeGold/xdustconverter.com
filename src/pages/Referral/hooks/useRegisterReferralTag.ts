@@ -1,32 +1,25 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
-import { BytesValue, Transaction } from '@elrondnetwork/erdjs/out';
-import { dustSmartContract } from 'apiCalls';
+import { REGISTER_REFERRAL } from 'api/mutations';
+import useGetAndSendTransactions from 'utils/useGetAndSendTransactions';
 
 export const useRegisterReferralTag = () => {
-  const registerReferralTag = (
-    tag: string
-  ): { transaction?: Transaction; displayInfo: any } => {
-    const displayInfo = {
-      processingMessage: 'Registering referral tag',
-      errorMessage: 'An error has occurred while registering referral tag',
-      successMessage: 'The referral tag has been registered successfully'
-    };
-
-    try {
-      const interaction = dustSmartContract.methodsExplicit
-        .registerReferralTag([new BytesValue(Buffer.from(tag, 'utf-8'))])
-        .withGasLimit(5_000_000)
-        .withChainID(getChainID());
-
-      return {
-        transaction: interaction.buildTransaction(),
-        displayInfo
-      };
-    } catch (error) {
-      console.error('Unable to call registerReferralTag transaction', error);
-      return { displayInfo };
-    }
+  const displayInfo = {
+    processingMessage: 'Registering referral tag',
+    errorMessage: 'An error has occurred while registering referral tag',
+    successMessage: 'The referral tag has been registered successfully'
   };
 
-  return registerReferralTag;
+  const [mutate, { loading }] = useGetAndSendTransactions(
+    REGISTER_REFERRAL,
+    displayInfo
+  );
+
+  const registerReferralTag = (tag: string) => {
+    mutate({
+      variables: {
+        tag
+      }
+    });
+  };
+
+  return { registerReferralTag, loading };
 };

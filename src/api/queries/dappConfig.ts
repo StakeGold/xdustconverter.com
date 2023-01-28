@@ -12,5 +12,3 @@ export const DAPP_CONFIG = gql`
     }
   }
 `;
-
-// query for dappConfig

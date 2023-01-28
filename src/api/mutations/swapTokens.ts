@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const SWAP_TOKENS = gql`
   mutation swapDustTokens($input: SwapDustTokensArgs!) {
-    swapDustTokens(input: $input) {
+    transactions: swapDustTokens(input: $input) {
       nonce
       value
       receiver
@@ -17,5 +17,3 @@ export const SWAP_TOKENS = gql`
     }
   }
 `;
-
-// call mutation swapDustTokens

@@ -7,8 +7,7 @@ import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
 import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
-import { sendAndSignTransactions } from 'apiCalls';
-import { SLIPPAGE } from 'config';
+import { useGetDappConfig } from 'hooks/useGetDappConfig';
 import { AccountToken } from 'types';
 import {
   ConvertInfo,
@@ -23,6 +22,8 @@ import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const ConvertPage = () => {
+  const { dappConfig, loading: configLoading } = useGetDappConfig();
+
   const referralTag = localStorage.getItem('xdc_ref');
 
   const { address } = useGetAccount();
@@ -34,7 +35,7 @@ const ConvertPage = () => {
     error,
     reloadTokens
   } = useGetAccountTokens();
-  const swapDustTokens = useGetSwapDustTokens();
+  const { swapDustTokens, loading: txLoading } = useGetSwapDustTokens();
 
   const protocolFee = useGetProtocolFee();
   const { success, pending } = useGetActiveTransactionsStatus();
@@ -49,11 +50,11 @@ const ConvertPage = () => {
     }
   }, [success]);
 
-  if (isLoading) {
+  if (isLoading || configLoading) {
     return <Loader />;
   }
 
-  if (error || protocolFee === undefined) {
+  if (error || protocolFee === undefined || !dappConfig) {
     return (
       <div className='my-5'>
         <PageState
@@ -76,28 +77,19 @@ const ConvertPage = () => {
   const totalWegldAfterFees = computeValueAfterFees(
     totalWegld,
     protocolFee,
-    SLIPPAGE
+    dappConfig.slippage
   );
   const totalUsdAfterFees = computeValueAfterFees(
     totalUsd,
     protocolFee,
-    SLIPPAGE
+    dappConfig.slippage
   );
 
   const handleSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
 
     try {
-      const { transaction, displayInfo } = swapDustTokens(
-        totalWegldAfterFees,
-        checkedTokens,
-        referralTag
-      );
-      if (!transaction) {
-        return;
-      }
-
-      await sendAndSignTransactions([transaction], displayInfo);
+      swapDustTokens(totalWegldAfterFees.toFixed(), checkedTokens, referralTag);
     } catch (err) {
       console.log('processConvertTransaction error', err);
     }
@@ -111,12 +103,13 @@ const ConvertPage = () => {
           totalWegld={totalWegldAfterFees}
           totalUsd={totalUsdAfterFees}
           protocolFee={protocolFee}
+          slippage={dappConfig.slippage}
         />
       )}
       <ConvertButton
         handleSubmit={handleSubmit}
-        disabled={!hasTokens || pending}
-        loading={pending}
+        disabled={!hasTokens || pending || txLoading}
+        loading={pending || txLoading}
       />
       {getIsLoggedIn() && hasTokens && (
         <TransactionsSignedInfo transactions={1} />

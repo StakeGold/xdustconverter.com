@@ -5,9 +5,16 @@ import {
 } from '@elrondnetwork/dapp-core/UI';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { MIN_AMOUNT } from 'config';
+import { useGetDappConfig } from 'hooks/useGetDappConfig';
 
 export const TokenAmountWithTooltip = ({ ...props }: FormatAmountPropsType) => {
+  const { dappConfig } = useGetDappConfig();
+
+  if (!dappConfig) {
+    return <></>;
+  }
+
+  const minAmount = dappConfig.minAmount;
   const valueBig = new BigNumber(props.value).shiftedBy(-(props.decimals ?? 0));
 
   return (
@@ -26,8 +33,8 @@ export const TokenAmountWithTooltip = ({ ...props }: FormatAmountPropsType) => {
       )}
     >
       <span>
-        {valueBig.isLessThanOrEqualTo(MIN_AMOUNT) && !valueBig.isEqualTo(0) ? (
-          <>{`< ${MIN_AMOUNT} ${props.egldLabel}`}</>
+        {valueBig.isLessThanOrEqualTo(minAmount) && !valueBig.isEqualTo(0) ? (
+          <>{`< ${minAmount} ${props.egldLabel}`}</>
         ) : (
           <FormatAmount
             value={props.value}

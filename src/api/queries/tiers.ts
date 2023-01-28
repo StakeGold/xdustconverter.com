@@ -9,5 +9,3 @@ export const TIERS = gql`
     }
   }
 `;
-
-// query for allTiers
