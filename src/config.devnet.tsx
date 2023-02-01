@@ -1,4 +1,3 @@
-//test api
-export const API_GRAPHQL = 'http://localhost:3000/graphql';
+export const API_GRAPHQL = 'https://devnet-api.xdustconverter.com/graphql';
 
 export const sampleAuthenticatedDomains = ['http://localhost/'];
