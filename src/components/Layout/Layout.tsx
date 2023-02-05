@@ -4,7 +4,6 @@ import { faSadTear } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'react-router-dom';
 import logo from 'assets/img/xdustconverter.png';
 import { LinkWithQuery } from 'components';
-import { ReferralNotification } from 'components/Notifications';
 import { Welcome } from 'components/Welcome';
 import { useGetContractState } from 'pages/Convert/hooks';
 import { routeNames } from 'routes';
@@ -16,9 +15,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const referralTag = searchParams.get('referral');
   const contractState = useGetContractState();
 
-  const notifications = [
+  const notifications: JSX.Element[] = [
     // <NoFeeNotification key='no-fee' />,
-    <ReferralNotification key='referral' />
+    // <ReferralNotification key='referral' />
   ];
 
   useEffect(() => {
