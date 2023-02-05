@@ -4,7 +4,6 @@ import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { AppWrapper } from 'AppWrapper';
 import { UnauthenticatedApolloWrapper } from 'components/ApolloWrapper';
-import { sampleAuthenticatedDomains } from 'config';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyARYfACpXSYBf43zq9RHDGxisJD1Xj5nfs',
@@ -25,9 +24,7 @@ logEvent(analytics, 'notification_received');
 export const App = () => {
   return (
     <AxiosInterceptorContext.Provider>
-      <AxiosInterceptorContext.Interceptor
-        authenticatedDomanis={sampleAuthenticatedDomains}
-      >
+      <AxiosInterceptorContext.Interceptor authenticatedDomanis={[]}>
         <UnauthenticatedApolloWrapper>
           <AppWrapper />
         </UnauthenticatedApolloWrapper>
