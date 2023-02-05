@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { SWAP_TOKENS } from 'api/mutations';
 import { AccountToken } from 'types';
 import useGetAndSendTransactions from 'utils/useGetAndSendTransactions';
@@ -23,7 +24,7 @@ export const useGetSwapDustTokens = () => {
     mutate({
       variables: {
         input: {
-          totalWegld,
+          totalWegld: new BigNumber(totalWegld).shiftedBy(18).toFixed(),
           tokens: tokens.map((token: AccountToken) => {
             return {
               identifier: token.identifier,

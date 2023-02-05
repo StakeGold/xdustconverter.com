@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { from, HttpLink, ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks';
-import { API_GRAPHQL } from 'config.devnet';
+import { API_GRAPHQL } from 'config';
 
 export const useApolloClient = () => {
   const httpLink = from([new HttpLink({ uri: API_GRAPHQL })]);

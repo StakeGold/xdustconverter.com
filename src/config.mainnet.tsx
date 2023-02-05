@@ -1,1 +1,1 @@
-export const API_GRAPHQL = 'https://devnet-api.xdustconverter.com/graphql';
+export const API_GRAPHQL = 'https://api.xdustconverter.com/graphql';
