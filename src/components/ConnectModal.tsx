@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 import {
   ExtensionLoginButton,
   WebWalletLoginButton,
   LedgerLoginButton,
   WalletConnectLoginButton
-} from '@elrondnetwork/dapp-core/UI';
+} from '@multiversx/sdk-dapp/UI';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';

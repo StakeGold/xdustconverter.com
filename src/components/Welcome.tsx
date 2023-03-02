@@ -1,7 +1,7 @@
 import React from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { ExplorerLink } from '@elrondnetwork/dapp-core/UI';
-import { logout } from '@elrondnetwork/dapp-core/utils';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
+import { ExplorerLink } from '@multiversx/sdk-dapp/UI';
+import { logout } from '@multiversx/sdk-dapp/utils';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

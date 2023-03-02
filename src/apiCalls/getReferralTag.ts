@@ -1,10 +1,10 @@
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import {
   Address,
   AddressValue,
   ContractFunction,
   ResultsParser
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
+import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { dustSmartContract } from 'apiCalls';
 
 const resultsParser = new ResultsParser();

@@ -1,4 +1,4 @@
-import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
+import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 
 export const ENVIRONMENT = EnvironmentsEnum.mainnet;
 export const UPDATE_REFRESH_RATE = 60000;

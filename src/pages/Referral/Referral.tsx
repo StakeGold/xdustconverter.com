@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import {
   useGetAccount,
   useGetActiveTransactionsStatus
-} from '@elrondnetwork/dapp-core/hooks';
-import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
+} from '@multiversx/sdk-dapp/hooks';
+import { Loader, PageState } from '@multiversx/sdk-dapp/UI';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import ActionOrConnect from 'components/ActionOrConnect';
 import {

@@ -1,9 +1,9 @@
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import {
   BytesValue,
   ContractFunction,
   ResultsParser
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
+import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import BigNumber from 'bignumber.js';
 import { dustSmartContract } from 'apiCalls';
 

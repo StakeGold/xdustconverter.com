@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { getIsLoggedIn } from '@elrondnetwork/dapp-core/utils';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
+import { getIsLoggedIn } from '@multiversx/sdk-dapp/utils';
 import { AccountToken } from 'types';
 import { TokenHeader } from './TokenHeader';
 import { TokenRow } from './TokenRow';
