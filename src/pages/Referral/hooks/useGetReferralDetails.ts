@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  useGetAccount,
-  useGetNetworkConfig
-} from '@multiversx/sdk-dapp/hooks';
+import { useGetAccount, useGetNetworkConfig } from '@multiversx/sdk-dapp/hooks';
 import * as apiCalls from 'apiCalls';
 import { ReferralDetails, TierDetails } from 'types';
 
