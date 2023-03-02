@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import {
   useGetAccount,
   useGetActiveTransactionsStatus
 } from '@multiversx/sdk-dapp/hooks';
 import { Loader, PageState } from '@multiversx/sdk-dapp/UI';
 import { getIsLoggedIn } from '@multiversx/sdk-dapp/utils';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { sendAndSignTransactions } from 'apiCalls';
 import { SLIPPAGE } from 'config';
