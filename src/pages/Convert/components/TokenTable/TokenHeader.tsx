@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 
 export interface TokenHeaderProps {
   selectedAll: boolean;

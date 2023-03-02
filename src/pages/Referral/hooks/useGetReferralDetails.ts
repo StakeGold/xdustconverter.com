@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   useGetAccount,
   useGetNetworkConfig
-} from '@elrondnetwork/dapp-core/hooks';
+} from '@multiversx/sdk-dapp/hooks';
 import * as apiCalls from 'apiCalls';
 import { ReferralDetails, TierDetails } from 'types';
 

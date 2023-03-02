@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks/useGetNetworkConfig';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
+import { useGetNetworkConfig } from '@multiversx/sdk-dapp/hooks/useGetNetworkConfig';
 import { AxiosError } from 'axios';
 import {
   getWhitelistedAccountTokens,

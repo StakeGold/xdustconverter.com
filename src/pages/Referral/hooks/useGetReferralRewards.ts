@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
 import {
-  useGetAccount,
-  useGetNetworkConfig
-} from '@elrondnetwork/dapp-core/hooks';
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
-import {
   Address,
   AddressValue,
   ContractFunction,
   ResultsParser
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
+import { useGetAccount, useGetNetworkConfig } from '@multiversx/sdk-dapp/hooks';
+import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import BigNumber from 'bignumber.js';
 import { dustSmartContract, getXExchangePrices } from 'apiCalls';
 import { WEGLD_ID } from 'config';

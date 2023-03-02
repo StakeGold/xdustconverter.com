@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
 import { TokenAmountWithTooltip, ValueWithTooltip } from 'components';
 import { AccountToken } from 'types';

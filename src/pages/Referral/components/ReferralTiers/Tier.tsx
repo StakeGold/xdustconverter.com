@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormatAmount } from '@elrondnetwork/dapp-core/UI';
+import { FormatAmount } from '@multiversx/sdk-dapp/UI';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReferralDetails, TierDetails } from 'types';

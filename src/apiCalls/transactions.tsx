@@ -1,7 +1,7 @@
-import { sendTransactions } from '@elrondnetwork/dapp-core/services';
-import { TransactionsDisplayInfoType } from '@elrondnetwork/dapp-core/types';
-import { refreshAccount } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/types';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
 export const sendAndSignTransactions = async (
   transactions: Transaction[],
   transactionsDisplayInfo: TransactionsDisplayInfoType,

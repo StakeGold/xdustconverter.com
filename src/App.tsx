@@ -3,8 +3,8 @@ import {
   TransactionsToastList,
   SignTransactionsModals,
   NotificationModal
-} from '@elrondnetwork/dapp-core/UI';
-import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
+} from '@multiversx/sdk-dapp/UI';
+import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
@@ -37,6 +37,9 @@ export const App = () => {
       <Router>
         <DappProvider
           environment={ENVIRONMENT}
+          dappConfig={{
+            shouldUseWebViewProvider: true
+          }}
           customNetworkConfig={{
             name: 'customConfig',
             apiTimeout: API_TIMEOUT,

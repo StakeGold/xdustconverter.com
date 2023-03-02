@@ -1,5 +1,5 @@
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
+import { getChainID } from '@multiversx/sdk-dapp/utils';
 import { dustSmartContract } from 'apiCalls';
 
 export const useClaimReferralRewards = () => {
