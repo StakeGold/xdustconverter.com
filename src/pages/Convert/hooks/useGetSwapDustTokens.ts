@@ -47,7 +47,7 @@ export const useGetSwapDustTokens = () => {
 
       const interaction = dustSmartContract.methodsExplicit
         .swapDustTokens(endpointArgs)
-        .withGasLimit(args.length * 10000000)
+        .withGasLimit(4_000_000 + args.length * 6_000_000)
         .withChainID(getChainID());
 
       args.length === 1
