@@ -3,6 +3,9 @@ import BigNumber from 'bignumber.js';
 import { ValueWithTooltip } from 'components';
 
 export interface ConvertInfoProps {
+  token: string;
+  allTokens: string[];
+  onTokenChange: (token: string) => void;
   totalWegld: BigNumber;
   totalUsd: BigNumber;
   protocolFee: number;
@@ -10,6 +13,9 @@ export interface ConvertInfoProps {
 }
 
 export const ConvertInfo = ({
+  token,
+  allTokens,
+  onTokenChange,
   totalWegld,
   totalUsd,
   protocolFee,
@@ -24,6 +30,20 @@ export const ConvertInfo = ({
 
   return (
     <div className='card card-info my-spacer'>
+      <div className='d-flex justify-content-between flex-wrap mb-2'>
+        <div className='text-secondary mr-2'>Token</div>
+        <span className='text-main'>
+          <select onChange={(e) => onTokenChange(e.target.value)}>
+            {allTokens.map((t, index) => {
+              return (
+                <option key={index} value={t}>
+                  {t}
+                </option>
+              );
+            })}
+          </select>
+        </span>
+      </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Minimum converted</div>
         <div className='d-flex flex-column'>

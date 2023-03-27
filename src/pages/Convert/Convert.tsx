@@ -17,7 +17,7 @@ import {
 } from './components';
 import { TransactionsSignedInfo } from './components/TransactionsSignedInfo';
 import { computeValueAfterFees } from './helpers';
-import { useGetProtocolFee } from './hooks';
+import { useGetConvertTokens, useGetProtocolFee } from './hooks';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
@@ -35,12 +35,20 @@ const ConvertPage = () => {
     error,
     reloadTokens
   } = useGetAccountTokens();
+  const {
+    tokens: convertTokens,
+    loading: convertTokensLoading,
+    error: convertTokensError
+  } = useGetConvertTokens();
   const { swapDustTokens, loading: txLoading } = useGetSwapDustTokens();
 
   const protocolFee = useGetProtocolFee();
   const { success, pending } = useGetActiveTransactionsStatus();
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
+  const [convertToken, setConvertToken] = useState(
+    convertTokens.length > 0 ? convertTokens[0] : ''
+  );
 
   const hasTokens = checkedTokens.length > 0;
 
@@ -100,6 +108,9 @@ const ConvertPage = () => {
       <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
       {isLoggedIn && (
         <ConvertInfo
+          token={convertToken}
+          allTokens={convertTokens}
+          onTokenChange={setConvertToken}
           totalWegld={totalWegldAfterFees}
           totalUsd={totalUsdAfterFees}
           protocolFee={protocolFee}
