@@ -97,6 +97,7 @@ const ConvertPage = () => {
     event.preventDefault();
 
     try {
+      // TODO insert token
       swapDustTokens(totalWegldAfterFees.toFixed(), checkedTokens, referralTag);
     } catch (err) {
       console.log('processConvertTransaction error', err);
