@@ -10,10 +10,10 @@ import BigNumber from 'bignumber.js';
 import { useGetDappConfig } from 'hooks/useGetDappConfig';
 import { AccountToken } from 'types';
 import {
+  ConvertButton,
   ConvertInfo,
   ConvertLayout,
-  TokenTable,
-  ConvertButton
+  TokenTable
 } from './components';
 import { TransactionsSignedInfo } from './components/TransactionsSignedInfo';
 import { computeValueAfterFees } from './helpers';
@@ -98,7 +98,12 @@ const ConvertPage = () => {
 
     try {
       // TODO insert token
-      swapDustTokens(totalWegldAfterFees.toFixed(), checkedTokens, referralTag);
+      swapDustTokens(
+        totalWegldAfterFees.toFixed(),
+        checkedTokens,
+        convertToken,
+        referralTag
+      );
     } catch (err) {
       console.log('processConvertTransaction error', err);
     }

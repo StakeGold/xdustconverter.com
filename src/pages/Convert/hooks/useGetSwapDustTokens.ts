@@ -18,6 +18,7 @@ export const useGetSwapDustTokens = () => {
   const swapDustTokens = (
     totalWegld: string,
     tokens: AccountToken[],
+    tokenWanted: string,
     referralTag: string | null
   ) => {
     mutate({
@@ -30,6 +31,7 @@ export const useGetSwapDustTokens = () => {
               amount: token.balance
             } as TokenArgs;
           }),
+          tokenWanted,
           referralTag
         }
       }
