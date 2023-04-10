@@ -1,18 +1,18 @@
 import React from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
-import { PROTOCOL_FEE } from '../../../api/queries';
+import { CUSTOM_CONVERT_TOKENS } from '../../../api/queries/convertTokens';
+import { AccountToken } from '../../../types';
 
 export const useGetConvertTokens = (): {
   tokens: string[];
   loading: boolean;
   error?: ApolloError;
 } => {
-  // TODO
-  const { data, loading, error } = useQuery(PROTOCOL_FEE);
+  const { data, loading, error } = useQuery(CUSTOM_CONVERT_TOKENS);
 
   return React.useMemo(() => {
     return {
-      tokens: ['WEGLD', 'USDC'],
+      tokens: data ? data.map((token: AccountToken) => token.identifier) : [],
       loading,
       error
     };

@@ -56,7 +56,7 @@ export const AppWrapper = () => {
             name: 'customConfig',
             apiTimeout: dappConfig.apiTimeout,
             walletConnectV2ProjectId: dappConfig.walletConnectV2ProjectId,
-            apiAddress: 'https://devnet-api.multiversx.com',
+            apiAddress: 'https://devnet-api.multiversx.com'
           }}
         >
           <ApolloWrapper>
