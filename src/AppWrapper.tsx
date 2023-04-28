@@ -1,16 +1,16 @@
 import React from 'react';
+import { faSadTear } from '@fortawesome/free-solid-svg-icons';
 import {
-  TransactionsToastList,
-  SignTransactionsModals,
+  Loader,
   NotificationModal,
   PageState,
-  Loader
-} from '@elrondnetwork/dapp-core/UI';
+  SignTransactionsModals,
+  TransactionsToastList
+} from '@multiversx/sdk-dapp/UI';
 import {
-  AxiosInterceptorContext,
-  DappProvider
-} from '@elrondnetwork/dapp-core/wrappers';
-import { faSadTear } from '@fortawesome/free-solid-svg-icons';
+  DappProvider,
+  AxiosInterceptorContext
+} from '@multiversx/sdk-dapp/wrappers';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'components';
 import { ApolloWrapper } from 'components/ApolloWrapper';

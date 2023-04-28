@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 import { ACCOUNT_DETAILS, WHITELISTED_TOKENS } from 'api/queries';
 import { AccountToken } from 'types';
 

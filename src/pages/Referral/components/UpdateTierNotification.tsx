@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useGetActiveTransactionsStatus } from '@elrondnetwork/dapp-core/hooks';
+import { useGetActiveTransactionsStatus } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
 import { Spinner } from 'react-bootstrap';
 import { TierDetails } from 'types';

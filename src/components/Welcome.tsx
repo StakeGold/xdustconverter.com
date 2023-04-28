@@ -1,9 +1,9 @@
 import React from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { ExplorerLink } from '@elrondnetwork/dapp-core/UI';
-import { logout } from '@elrondnetwork/dapp-core/utils';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
+import { ExplorerLink } from '@multiversx/sdk-dapp/UI';
+import { logout } from '@multiversx/sdk-dapp/utils';
 
 export const Welcome = () => {
   const { address, username } = useGetAccount();

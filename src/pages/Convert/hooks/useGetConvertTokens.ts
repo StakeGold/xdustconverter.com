@@ -12,7 +12,10 @@ export const useGetConvertTokens = (): {
 
   return React.useMemo(() => {
     return {
-      tokens: data ? data.map((token: AccountToken) => token.identifier) : [],
+      tokens:
+        data?.customConvertTokens?.map(
+          (token: AccountToken) => token.identifier
+        ) ?? [],
       loading,
       error
     };

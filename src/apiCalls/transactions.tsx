@@ -1,7 +1,8 @@
-import { sendTransactions } from '@elrondnetwork/dapp-core/services';
-import { TransactionsDisplayInfoType } from '@elrondnetwork/dapp-core/types';
-import { refreshAccount } from '@elrondnetwork/dapp-core/utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/types';
+import { refreshAccount } from '@multiversx/sdk-dapp/utils';
+
 export const sendAndSignTransactions = async (
   transactions: Transaction[],
   transactionsDisplayInfo: TransactionsDisplayInfoType,
@@ -13,11 +14,15 @@ export const sendAndSignTransactions = async (
 }> => {
   try {
     await refreshAccount();
+
+    const parsedTransactions = transactions.map((t) => t.toPlainObject());
+
     const { sessionId, error } = await sendTransactions({
-      transactions: transactions,
+      transactions: parsedTransactions,
       transactionsDisplayInfo,
       minGasLimit
     });
+
     await refreshAccount();
     return { success: error !== undefined, error: error ?? '', sessionId };
   } catch (error: any) {

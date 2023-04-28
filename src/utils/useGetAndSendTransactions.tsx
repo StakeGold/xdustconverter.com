@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DocumentNode, useMutation } from '@apollo/client';
-import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks';
+import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { sendAndSignTransactions } from 'apiCalls';
 
 const useGetAndSendTransactions = (

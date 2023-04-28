@@ -1,4 +1,4 @@
-import { EnvironmentsEnum } from '@elrondnetwork/dapp-core/types';
+import { EnvironmentsEnum } from '@multiversx/sdk-dapp/types';
 
 export class DappConfig {
   environment!: EnvironmentsEnum;

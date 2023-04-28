@@ -1,44 +1,46 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { from, HttpLink, ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { useGetLoginInfo } from '@elrondnetwork/dapp-core/hooks';
+import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
 import { API_GRAPHQL } from 'config';
 
 export const useApolloClient = () => {
-  const loginInfo = useGetLoginInfo();
-  const bearerToken = loginInfo?.tokenLogin?.nativeAuthToken;
-
-  const authMiddleware = setContext(async (_req, { headers }) => {
-    let authorization = {};
-
-    if (bearerToken) {
-      authorization = { Authorization: `Bearer ${bearerToken}` };
-    }
-
-    return {
-      headers: {
-        ...headers,
-        ...authorization
-      }
-    };
-  });
-
   const httpLink = from([new HttpLink({ uri: API_GRAPHQL })]);
 
-  const getNewClient = () => {
-    return new ApolloClient({
-      cache: new InMemoryCache(),
-      link: authMiddleware.concat(httpLink)
+  const authMiddleware = (bearerToken?: string) => {
+    return setContext(async (_req, { headers }) => {
+      let authorization = {};
+
+      if (bearerToken) {
+        authorization = { Authorization: `Bearer ${bearerToken}` };
+      }
+
+      return {
+        headers: {
+          ...headers,
+          ...authorization
+        }
+      };
     });
   };
 
-  const clientRef = useRef(getNewClient());
+  const getNewClient = (bearerToken?: string) => {
+    return new ApolloClient({
+      cache: new InMemoryCache(),
+      link: authMiddleware(bearerToken).concat(httpLink)
+    });
+  };
+
+  const loginInfo = useGetLoginInfo();
+  const [client, setClient] = useState(getNewClient());
 
   useEffect(() => {
-    clientRef.current = getNewClient();
+    const nativeAuthToken = loginInfo.tokenLogin?.nativeAuthToken;
+    const newClient = getNewClient(nativeAuthToken);
+    setClient(newClient);
   }, [loginInfo.isLoggedIn, loginInfo.tokenLogin?.nativeAuthToken]);
 
-  return { client: clientRef.current };
+  return { client };
 };
 
 export const unauthenticatedClient = new ApolloClient({

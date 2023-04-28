@@ -1,5 +1,5 @@
 import React from 'react';
-import { AxiosInterceptorContext } from '@elrondnetwork/dapp-core/wrappers';
+import { AxiosInterceptorContext } from '@multiversx/sdk-dapp/wrappers';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { AppWrapper } from 'AppWrapper';
