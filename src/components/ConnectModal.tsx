@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 import {
   ExtensionLoginButton,
   WebWalletLoginButton,
   LedgerLoginButton,
   WalletConnectLoginButton
-} from '@elrondnetwork/dapp-core/UI';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+} from '@multiversx/sdk-dapp/UI';
 import { Modal } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
@@ -42,9 +42,19 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
         </span>
       </Modal.Header>
       <Modal.Body className='d-flex flex-column'>
-        <ExtensionLoginButton loginButtonText='Maiar DeFi Wallet' {...props} />
-        <WalletConnectLoginButton loginButtonText='Maiar App' {...props} />
-        <WebWalletLoginButton loginButtonText='Elrond Web Wallet' {...props} />
+        <ExtensionLoginButton
+          loginButtonText='MultiversX DeFi Wallet'
+          {...props}
+        />
+        <WalletConnectLoginButton
+          loginButtonText='xPortal App'
+          isWalletConnectV2={true}
+          {...props}
+        />
+        <WebWalletLoginButton
+          loginButtonText='MultiversX Web Wallet'
+          {...props}
+        />
         <LedgerLoginButton loginButtonText='Ledger' {...props} />
       </Modal.Body>
     </Modal>

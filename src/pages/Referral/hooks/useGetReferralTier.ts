@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks';
+import { useGetNetworkConfig } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
 import { getTagAccumulatedVolume, getTiers } from 'apiCalls';
 import { TierDetails } from 'types';

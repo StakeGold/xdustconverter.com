@@ -3,7 +3,7 @@ import {
   SmartContractAbi,
   SmartContract,
   Address
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
 import { CONTRACT_ADDRESS } from 'config';
 import json from 'dust-converter.abi.json';
 

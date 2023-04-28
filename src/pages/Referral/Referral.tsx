@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import {
   useGetAccount,
   useGetActiveTransactionsStatus
-} from '@elrondnetwork/dapp-core/hooks';
-import { Loader, PageState } from '@elrondnetwork/dapp-core/UI';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+} from '@multiversx/sdk-dapp/hooks';
+import { Loader, PageState } from '@multiversx/sdk-dapp/UI';
 import ActionOrConnect from 'components/ActionOrConnect';
 import {
   ReferralAlreadyRegistered,

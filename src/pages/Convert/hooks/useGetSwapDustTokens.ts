@@ -1,5 +1,3 @@
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
-import { getChainID } from '@elrondnetwork/dapp-core/utils';
 import {
   Address,
   BigUIntValue,
@@ -7,7 +5,9 @@ import {
   TokenPayment,
   Transaction,
   TypedValue
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
+import { getChainID } from '@multiversx/sdk-dapp/utils';
 import { BigNumber } from 'bignumber.js';
 import { dustSmartContract } from 'apiCalls';
 import { AccountToken } from 'types';
@@ -47,7 +47,7 @@ export const useGetSwapDustTokens = () => {
 
       const interaction = dustSmartContract.methodsExplicit
         .swapDustTokens(endpointArgs)
-        .withGasLimit(args.length * 10000000)
+        .withGasLimit(4_000_000 + args.length * 6_000_000)
         .withChainID(getChainID());
 
       args.length === 1

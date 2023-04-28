@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useGetAccount } from '@elrondnetwork/dapp-core/hooks';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 
 export const ReferralInfo = () => {
   const { address } = useGetAccount();

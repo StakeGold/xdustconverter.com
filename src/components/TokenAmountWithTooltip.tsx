@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  FormatAmount,
-  FormatAmountPropsType
-} from '@elrondnetwork/dapp-core/UI';
+import { FormatAmount, FormatAmountPropsType } from '@multiversx/sdk-dapp/UI';
 import BigNumber from 'bignumber.js';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MIN_AMOUNT } from 'config';

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useGetNetworkConfig } from '@elrondnetwork/dapp-core/hooks';
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
-import { ResultsParser } from '@elrondnetwork/erdjs/out';
+import { ResultsParser } from '@multiversx/sdk-core/out';
 import {
   BytesValue,
   ContractFunction
-} from '@elrondnetwork/erdjs/out/smartcontracts';
+} from '@multiversx/sdk-core/out/smartcontracts';
+import { useGetNetworkConfig } from '@multiversx/sdk-dapp/hooks';
+import { ProxyNetworkProvider } from '@multiversx/sdk-network-providers/out';
 import { BigNumber } from 'bignumber.js';
 import { dustSmartContract } from 'apiCalls';
 
