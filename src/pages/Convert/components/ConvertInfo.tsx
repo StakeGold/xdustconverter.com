@@ -33,7 +33,10 @@ export const ConvertInfo = ({
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Token</div>
         <span className='text-main'>
-          <select onChange={(e) => onTokenChange(e.target.value)}>
+          <select
+            className='token-select'
+            onChange={(e) => onTokenChange(e.target.value)}
+          >
             {allTokens.map((t, index) => {
               return (
                 <option key={index} value={t}>
