@@ -15,10 +15,8 @@ export const sendAndSignTransactions = async (
   try {
     await refreshAccount();
 
-    const parsedTransactions = transactions.map((t) => t.toPlainObject());
-
     const { sessionId, error } = await sendTransactions({
-      transactions: parsedTransactions,
+      transactions,
       transactionsDisplayInfo,
       minGasLimit
     });
