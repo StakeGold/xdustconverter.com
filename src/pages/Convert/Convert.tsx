@@ -9,6 +9,7 @@ import { getIsLoggedIn } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import { useGetDappConfig } from 'hooks/useGetDappConfig';
 import { AccountToken } from 'types';
+import { ConvertToken } from 'types/ConvertToken';
 import {
   ConvertButton,
   ConvertInfo,
@@ -47,7 +48,7 @@ const ConvertPage = () => {
   const { success, pending } = useGetActiveTransactionsStatus();
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
-  const [convertToken, setConvertToken] = useState<AccountToken | undefined>();
+  const [convertToken, setConvertToken] = useState<ConvertToken | undefined>();
 
   useEffect(() => {
     if (convertTokens.length > 0) {
@@ -100,6 +101,9 @@ const ConvertPage = () => {
     protocolFee,
     dappConfig.slippage
   );
+  const totalTokenAfterFees = new BigNumber(totalWegldAfterFees).dividedBy(
+    convertToken?.priceWEGLD ?? '0'
+  );
   const totalUsdAfterFees = computeValueAfterFees(
     totalUsd,
     protocolFee,
@@ -130,7 +134,7 @@ const ConvertPage = () => {
           token={convertToken}
           allTokens={convertTokens}
           onTokenChange={setConvertToken}
-          totalWegld={totalWegldAfterFees}
+          totalToken={totalTokenAfterFees}
           totalUsd={totalUsdAfterFees}
           protocolFee={protocolFee}
           slippage={dappConfig.slippage}

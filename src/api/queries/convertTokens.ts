@@ -8,6 +8,8 @@ export const CUSTOM_CONVERT_TOKENS = gql`
       ticker
       decimals
       svgUrl
+      price
+      priceWEGLD
     }
   }
 `;
