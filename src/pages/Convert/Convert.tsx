@@ -8,8 +8,7 @@ import { Loader, PageState } from '@multiversx/sdk-dapp/UI';
 import { getIsLoggedIn } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import { useGetDappConfig } from 'hooks/useGetDappConfig';
-import { AccountToken } from 'types';
-import { ConvertToken } from 'types/ConvertToken';
+import { AccountToken, ConvertToken } from 'types';
 import {
   ConvertButton,
   ConvertInfo,
@@ -102,7 +101,7 @@ const ConvertPage = () => {
     dappConfig.slippage
   );
   const totalTokenAfterFees = new BigNumber(totalWegldAfterFees).dividedBy(
-    convertToken?.priceWEGLD ?? '0'
+    convertToken?.priceWEGLD ?? '1'
   );
   const totalUsdAfterFees = computeValueAfterFees(
     totalUsd,
@@ -128,7 +127,11 @@ const ConvertPage = () => {
 
   return (
     <div>
-      <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
+      <TokenTable
+        tokens={accountTokens}
+        convertToken={convertToken}
+        setCheckedTokens={setCheckedTokens}
+      />
       {isLoggedIn && (
         <ConvertInfo
           token={convertToken}

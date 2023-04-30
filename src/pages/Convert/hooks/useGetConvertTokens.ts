@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
-import { ConvertToken } from 'types/ConvertToken';
+import { ConvertToken } from 'types';
 import { CUSTOM_CONVERT_TOKENS } from '../../../api/queries/convertTokens';
 
 export const useGetConvertTokens = (): {

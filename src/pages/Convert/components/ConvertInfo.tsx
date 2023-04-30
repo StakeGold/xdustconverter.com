@@ -2,7 +2,7 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import Select from 'react-select';
 import { ValueWithTooltip } from 'components';
-import { ConvertToken } from 'types/ConvertToken';
+import { ConvertToken } from 'types';
 import { accountTokensStyles } from './accountTokensStyles';
 import './AccountTokens.scss';
 
