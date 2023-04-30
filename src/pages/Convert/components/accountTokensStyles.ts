@@ -24,6 +24,7 @@ export const accountTokensStyles = {
   menu: (provided: any, state: any) => ({
     ...provided,
     width: 'max-content',
+    minWidth: '100%',
     color: state.selectProps.menuColor,
     padding: 0,
     backgroundColor: '#242526'
