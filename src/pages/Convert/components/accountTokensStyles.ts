@@ -1,24 +1,24 @@
 export const accountTokensStyles = {
   control: (provided: any, state: any) => ({
     ...provided,
-    backgroundColor: state.isFocused ? '#242526' : '#1e1e1f',
+    backgroundColor: '#242526',
     borderRadius: '8px',
-    borderColor: state.isFocused ? '#242526' : '#1e1e1f',
+    borderColor: state.isFocused ? '#9ba5b4' : '#242526',
     boxShadow: state.isFocused ? '0 0 0 1px #242526' : 'none',
     '&:hover': {
-      borderColor: state.isFocused ? '#242526' : '#1e1e1f'
+      borderColor: '#9ba5b4'
     }
   }),
   option: (provided: any, state: any) => ({
     ...provided,
     padding: 6,
     fontSize: 14,
-    color: '#444',
+    color: '#9ba5b4',
     cursor: 'pointer',
     border: 'none',
-    backgroundColor: state.isSelected ? '#242526' : '#1e1e1f',
+    backgroundColor: state.isSelected ? '#1e1e1f' : '#242526',
     '&:hover': {
-      backgroundColor: '#242526'
+      backgroundColor: '#1e1e1f'
     }
   }),
   menu: (provided: any, state: any) => ({
@@ -27,7 +27,7 @@ export const accountTokensStyles = {
     minWidth: '100%',
     color: state.selectProps.menuColor,
     padding: 10,
-    backgroundColor: '#1e1e1f'
+    backgroundColor: '#242526'
   }),
   singleValue: (provided: any) => ({
     ...provided,

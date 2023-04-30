@@ -41,8 +41,6 @@ export const ConvertInfo = ({
     );
   };
 
-  console.log({ token });
-
   return (
     <div className='card card-info my-spacer'>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
@@ -54,6 +52,7 @@ export const ConvertInfo = ({
             formatOptionLabel={(option) => formatAccountToken(option)}
             styles={accountTokensStyles}
             placeholder='Select token'
+            isSearchable={false}
             value={token}
             getOptionValue={(option) => option.identifier}
             onChange={(selected) => {
