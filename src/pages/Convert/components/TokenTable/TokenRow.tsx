@@ -2,19 +2,34 @@ import React from 'react';
 import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
 import { TokenAmountWithTooltip, ValueWithTooltip } from 'components';
-import { AccountToken } from 'types';
+import { AccountToken, ConvertToken } from 'types';
 
 export interface TokenRowProps {
   token: AccountToken;
+  convertToken?: ConvertToken;
   checked: boolean;
   handleCheck: () => void;
 }
 
-export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
+export const TokenRow = ({
+  token,
+  checked,
+  convertToken,
+  handleCheck
+}: TokenRowProps) => {
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
+  const valueToken = new BigNumber(token.valueWegld)
+    .dividedBy(convertToken?.priceWEGLD ?? '1')
+    .toFixed();
+
   const formattedTokenValueWegld = new BigNumber(token.valueWegld)
+    .decimalPlaces(6)
+    .toFixed();
+
+  const formattedTokenValueToken = new BigNumber(token.valueWegld)
+    .dividedBy(convertToken?.priceWEGLD ?? '1')
     .decimalPlaces(6)
     .toFixed();
 
@@ -64,10 +79,14 @@ export const TokenRow = ({ token, checked, handleCheck }: TokenRowProps) => {
         {isLoggedIn && (
           <>
             <ValueWithTooltip
-              formattedValue={formattedTokenValueWegld}
-              value={token.valueWegld}
+              formattedValue={
+                convertToken
+                  ? formattedTokenValueToken
+                  : formattedTokenValueWegld
+              }
+              value={convertToken ? valueToken : token.valueWegld}
             />{' '}
-            WEGLD
+            {convertToken?.ticker ?? 'WEGLD'}
           </>
         )}
       </div>

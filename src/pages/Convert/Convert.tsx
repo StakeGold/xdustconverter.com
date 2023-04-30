@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocalStorage } from '@buidly/dapp-core/dist/hooks';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -9,7 +9,7 @@ import { Loader, PageState } from '@multiversx/sdk-dapp/UI';
 import { getIsLoggedIn } from '@multiversx/sdk-dapp/utils';
 import BigNumber from 'bignumber.js';
 import { useGetDappConfig } from 'hooks/useGetDappConfig';
-import { AccountToken } from 'types';
+import { AccountToken, ConvertToken } from 'types';
 import {
   ConvertButton,
   ConvertInfo,
@@ -49,7 +49,7 @@ const ConvertPage = () => {
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
   const [convertToken, setConvertToken] = useLocalStorage<
-    AccountToken | undefined
+    ConvertToken | undefined
   >('xdc_token', undefined);
 
   useEffect(() => {
@@ -68,6 +68,12 @@ const ConvertPage = () => {
       reloadTokens();
     }
   }, [success]);
+
+  const tokens = useMemo(() => {
+    return accountTokens?.filter(
+      (token) => token.identifier !== convertToken?.identifier
+    );
+  }, [accountTokens, convertToken]);
 
   if (isLoading || convertTokensLoading || configLoading) {
     return <Loader />;
@@ -103,6 +109,9 @@ const ConvertPage = () => {
     protocolFee,
     dappConfig.slippage
   );
+  const totalTokenAfterFees = new BigNumber(totalWegldAfterFees).dividedBy(
+    convertToken?.priceWEGLD ?? '1'
+  );
   const totalUsdAfterFees = computeValueAfterFees(
     totalUsd,
     protocolFee,
@@ -127,13 +136,17 @@ const ConvertPage = () => {
 
   return (
     <div>
-      <TokenTable tokens={accountTokens} setCheckedTokens={setCheckedTokens} />
+      <TokenTable
+        tokens={tokens}
+        convertToken={convertToken}
+        setCheckedTokens={setCheckedTokens}
+      />
       {isLoggedIn && (
         <ConvertInfo
           token={convertToken}
           allTokens={convertTokens}
           onTokenChange={setConvertToken}
-          totalWegld={totalWegldAfterFees}
+          totalToken={totalTokenAfterFees}
           totalUsd={totalUsdAfterFees}
           protocolFee={protocolFee}
           slippage={dappConfig.slippage}

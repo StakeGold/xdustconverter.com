@@ -1,10 +1,10 @@
 import React from 'react';
 import { ApolloError, useQuery } from '@apollo/client';
+import { ConvertToken } from 'types';
 import { CUSTOM_CONVERT_TOKENS } from '../../../api/queries/convertTokens';
-import { AccountToken } from '../../../types';
 
 export const useGetConvertTokens = (): {
-  tokens: AccountToken[];
+  tokens: ConvertToken[];
   loading: boolean;
   error?: ApolloError;
 } => {
@@ -12,7 +12,7 @@ export const useGetConvertTokens = (): {
 
   return React.useMemo(() => {
     return {
-      tokens: (data?.customConvertTokens ?? []) as AccountToken[],
+      tokens: (data?.customConvertTokens ?? []) as ConvertToken[],
       loading,
       error
     };

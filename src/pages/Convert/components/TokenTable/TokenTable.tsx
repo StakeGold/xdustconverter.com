@@ -1,16 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
 import { getIsLoggedIn } from '@multiversx/sdk-dapp/utils';
-import { AccountToken } from 'types';
+import { AccountToken, ConvertToken } from 'types';
 import { TokenHeader } from './TokenHeader';
 import { TokenRow } from './TokenRow';
 
 export interface TokenTableProps {
   tokens: AccountToken[];
+  convertToken?: ConvertToken;
   setCheckedTokens: (tokens: AccountToken[]) => void;
 }
 
-export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
+export const TokenTable = ({
+  tokens,
+  convertToken,
+  setCheckedTokens
+}: TokenTableProps) => {
   const { address } = useGetAccount();
   const isLoggedIn = Boolean(address);
 
@@ -56,6 +61,7 @@ export const TokenTable = ({ tokens, setCheckedTokens }: TokenTableProps) => {
           tokens.map((token, index) => (
             <TokenRow
               key={token.identifier}
+              convertToken={convertToken}
               token={token}
               checked={checkedState[index]}
               handleCheck={() => handleOnChange(index)}

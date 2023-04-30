@@ -2,15 +2,15 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import Select from 'react-select';
 import { ValueWithTooltip } from 'components';
-import { AccountToken } from 'types';
+import { ConvertToken } from 'types';
 import { accountTokensStyles } from './accountTokensStyles';
 import './AccountTokens.scss';
 
 export interface ConvertInfoProps {
-  token: AccountToken | undefined;
-  allTokens: AccountToken[];
-  onTokenChange: (token: AccountToken) => void;
-  totalWegld: BigNumber;
+  token: ConvertToken | undefined;
+  allTokens: ConvertToken[];
+  onTokenChange: (token: ConvertToken) => void;
+  totalToken: BigNumber;
   totalUsd: BigNumber;
   protocolFee: number;
   slippage: number;
@@ -20,19 +20,19 @@ export const ConvertInfo = ({
   token,
   allTokens,
   onTokenChange,
-  totalWegld,
+  totalToken,
   totalUsd,
   protocolFee,
   slippage
 }: ConvertInfoProps) => {
-  const formattedTotalWegld = totalWegld
+  const formattedTotalInToken = totalToken
     .decimalPlaces(6, BigNumber.ROUND_DOWN)
     .toFixed();
-  const formattedTotalUsd = totalUsd
+  const formattedTotalInUsd = totalUsd
     .decimalPlaces(2, BigNumber.ROUND_DOWN)
     .toFixed();
 
-  const formatAccountToken = (data: AccountToken) => {
+  const formatAccountToken = (data: ConvertToken) => {
     return (
       <div className='d-flex flex-row align-items-center xdc__select__option'>
         <img className='mr-2' src={data.svgUrl} alt={data.ticker} />
@@ -66,13 +66,13 @@ export const ConvertInfo = ({
         <div className='d-flex flex-column'>
           <span className='text-main'>
             <ValueWithTooltip
-              formattedValue={formattedTotalWegld}
-              value={totalWegld.toFixed()}
+              formattedValue={formattedTotalInToken}
+              value={totalToken.toFixed()}
             />{' '}
-            WEGLD
+            {token?.ticker}
           </span>
           <small className='text-secondary text-right'>
-            ≈ ${formattedTotalUsd}
+            ≈ ${formattedTotalInUsd}
           </small>
         </div>
       </div>
