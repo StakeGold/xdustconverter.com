@@ -24,6 +24,7 @@
     "react-bootstrap": "2.1.2",
     "react-dom": "18.2.0",
     "react-router-dom": "6.4.2",
+    "react-select": "^5.7.2",
     "web-vitals": "1.0.1"
   },
   "scripts": {
