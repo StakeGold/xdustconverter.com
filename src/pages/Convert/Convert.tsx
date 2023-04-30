@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import {
   useGetAccount,
@@ -66,6 +66,12 @@ const ConvertPage = () => {
     }
   }, [success]);
 
+  const tokens = useMemo(() => {
+    return accountTokens?.filter(
+      (token) => token.identifier !== convertToken?.identifier
+    );
+  }, [accountTokens, convertToken]);
+
   if (isLoading || convertTokensLoading || configLoading) {
     return <Loader />;
   }
@@ -128,7 +134,7 @@ const ConvertPage = () => {
   return (
     <div>
       <TokenTable
-        tokens={accountTokens}
+        tokens={tokens}
         convertToken={convertToken}
         setCheckedTokens={setCheckedTokens}
       />
