@@ -40,15 +40,23 @@ const ConvertPage = () => {
     loading: convertTokensLoading,
     error: convertTokensError
   } = useGetConvertTokens();
+
   const { swapDustTokens, loading: txLoading } = useGetSwapDustTokens();
 
   const protocolFee = useGetProtocolFee();
   const { success, pending } = useGetActiveTransactionsStatus();
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
-  const [convertToken, setConvertToken] = useState(
-    convertTokens.length > 0 ? convertTokens[0] : ''
-  );
+  const [convertToken, setConvertToken] = useState<AccountToken | undefined>();
+
+  useEffect(() => {
+    if (convertTokens.length > 0) {
+      setConvertToken(
+        convertTokens.find((t) => t.identifier.includes('WEGLD')) ??
+          convertTokens[0]
+      );
+    }
+  }, [convertTokens]);
 
   const hasTokens = checkedTokens.length > 0;
 
@@ -58,11 +66,16 @@ const ConvertPage = () => {
     }
   }, [success]);
 
-  if (isLoading || configLoading) {
+  if (isLoading || convertTokensLoading || configLoading) {
     return <Loader />;
   }
 
-  if (error || protocolFee === undefined || !dappConfig) {
+  if (
+    error ||
+    protocolFee === undefined ||
+    dappConfig === undefined ||
+    convertTokensError
+  ) {
     return (
       <div className='my-5'>
         <PageState
@@ -101,7 +114,7 @@ const ConvertPage = () => {
       swapDustTokens(
         totalWegldAfterFees.toFixed(),
         checkedTokens,
-        convertToken,
+        convertToken?.identifier ?? '',
         referralTag
       );
     } catch (err) {

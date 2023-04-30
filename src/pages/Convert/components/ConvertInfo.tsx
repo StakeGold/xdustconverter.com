@@ -1,11 +1,15 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
+import Select from 'react-select';
 import { ValueWithTooltip } from 'components';
+import { AccountToken } from 'types';
+import { accountTokensStyles } from './accountTokensStyles';
+import './AccountTokens.scss';
 
 export interface ConvertInfoProps {
-  token: string;
-  allTokens: string[];
-  onTokenChange: (token: string) => void;
+  token: AccountToken | undefined;
+  allTokens: AccountToken[];
+  onTokenChange: (token: AccountToken) => void;
   totalWegld: BigNumber;
   totalUsd: BigNumber;
   protocolFee: number;
@@ -28,23 +32,33 @@ export const ConvertInfo = ({
     .decimalPlaces(2, BigNumber.ROUND_DOWN)
     .toFixed();
 
+  const formatAccountToken = (data: AccountToken) => {
+    return (
+      <div className='d-flex flex-row align-items-center xdc__select__option'>
+        <img className='mr-2' src={data.svgUrl} alt={data.ticker} />
+        <span>{data.ticker}</span>
+      </div>
+    );
+  };
+
   return (
     <div className='card card-info my-spacer'>
       <div className='d-flex justify-content-between flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Token</div>
         <span className='text-main'>
-          <select
-            className='token-select'
-            onChange={(e) => onTokenChange(e.target.value)}
-          >
-            {allTokens.map((t, index) => {
-              return (
-                <option key={index} value={t}>
-                  {t}
-                </option>
-              );
-            })}
-          </select>
+          <Select
+            className='xdc__select'
+            options={allTokens}
+            formatOptionLabel={(option) => formatAccountToken(option)}
+            styles={accountTokensStyles}
+            placeholder='Select token'
+            isSearchable={false}
+            value={token}
+            getOptionValue={(option) => option.identifier}
+            onChange={(selected) => {
+              selected && onTokenChange(selected);
+            }}
+          />
         </span>
       </div>
       <div className='d-flex justify-content-between flex-wrap mb-2'>

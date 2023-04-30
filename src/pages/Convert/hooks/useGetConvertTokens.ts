@@ -4,7 +4,7 @@ import { CUSTOM_CONVERT_TOKENS } from '../../../api/queries/convertTokens';
 import { AccountToken } from '../../../types';
 
 export const useGetConvertTokens = (): {
-  tokens: string[];
+  tokens: AccountToken[];
   loading: boolean;
   error?: ApolloError;
 } => {
@@ -12,10 +12,7 @@ export const useGetConvertTokens = (): {
 
   return React.useMemo(() => {
     return {
-      tokens:
-        data?.customConvertTokens?.map(
-          (token: AccountToken) => token.identifier
-        ) ?? [],
+      tokens: (data?.customConvertTokens ?? []) as AccountToken[],
       loading,
       error
     };
