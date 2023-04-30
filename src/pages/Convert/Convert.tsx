@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useLocalStorage } from '@buidly/dapp-core/dist/hooks';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import {
   useGetAccount,
@@ -47,10 +48,12 @@ const ConvertPage = () => {
   const { success, pending } = useGetActiveTransactionsStatus();
 
   const [checkedTokens, setCheckedTokens] = useState<AccountToken[]>([]);
-  const [convertToken, setConvertToken] = useState<ConvertToken | undefined>();
+  const [convertToken, setConvertToken] = useLocalStorage<
+    ConvertToken | undefined
+  >('xdc_token', undefined);
 
   useEffect(() => {
-    if (convertTokens.length > 0) {
+    if (convertTokens.length > 0 && convertToken === undefined) {
       setConvertToken(
         convertTokens.find((t) => t.identifier.includes('WEGLD')) ??
           convertTokens[0]
