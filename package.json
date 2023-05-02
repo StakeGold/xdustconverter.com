@@ -1,6 +1,6 @@
 {
   "name": "@buidly/xdustconverter",
-  "description": "xDustConverter - Convert small ESDT amounts to WEGLD",
+  "description": "xDustConverter - Convert small ESDT amounts",
   "version": "1.0.0",
   "author": "buidly",
   "license": "GPL-3.0-or-later",

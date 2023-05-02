@@ -62,7 +62,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                   </h1>
                 </LinkWithQuery>
                 <h3 className='page-description font-weight-light text-secondary'>
-                  Convert small token amounts to WEGLD
+                  Convert small token amounts
                 </h3>
               </div>
             </div>
