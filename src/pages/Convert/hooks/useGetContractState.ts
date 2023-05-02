@@ -29,7 +29,7 @@ export const useGetContractState = (): 'Active' | 'Inactive' | undefined => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      setContractState(state.name);
+      setContractState('Inactive');
     } catch (err) {
       setContractState('Inactive');
     }
