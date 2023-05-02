@@ -22,6 +22,8 @@ export const useGetContractState = (): 'Active' | 'Inactive' | undefined => {
       const queryResponse = await proxy.queryContract(query);
 
       const endpointDefinition = dustSmartContract.getEndpoint(endpoint);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { firstValue: state } = resultsParser.parseQueryResponse(
         queryResponse,
         endpointDefinition
