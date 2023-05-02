@@ -124,7 +124,7 @@ const ConvertPage = () => {
     try {
       // TODO insert token
       swapDustTokens(
-        totalWegldAfterFees.toFixed(),
+        new BigNumber(totalWegldAfterFees).shiftedBy(18).toFixed(),
         checkedTokens,
         convertToken?.identifier ?? '',
         referralTag
