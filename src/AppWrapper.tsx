@@ -55,8 +55,7 @@ export const AppWrapper = () => {
           customNetworkConfig={{
             name: 'customConfig',
             apiTimeout: dappConfig.apiTimeout,
-            walletConnectV2ProjectId: dappConfig.walletConnectV2ProjectId,
-            apiAddress: 'https://devnet-api.multiversx.com'
+            walletConnectV2ProjectId: dappConfig.walletConnectV2ProjectId
           }}
         >
           <ApolloWrapper>
