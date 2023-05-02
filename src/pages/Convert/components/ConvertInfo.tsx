@@ -6,12 +6,15 @@ import { ConvertToken } from 'types';
 import { accountTokensStyles } from './accountTokensStyles';
 import './AccountTokens.scss';
 
+export const WEGLD_ID = 'WEGLD';
+
 export interface ConvertInfoProps {
   token: ConvertToken | undefined;
   allTokens: ConvertToken[];
   onTokenChange: (token: ConvertToken) => void;
   totalToken: BigNumber;
   totalUsd: BigNumber;
+  totalWegld: BigNumber;
   protocolFee: number;
   slippage: number;
 }
@@ -22,6 +25,7 @@ export const ConvertInfo = ({
   onTokenChange,
   totalToken,
   totalUsd,
+  totalWegld,
   protocolFee,
   slippage
 }: ConvertInfoProps) => {
@@ -30,6 +34,9 @@ export const ConvertInfo = ({
     .toFixed();
   const formattedTotalInUsd = totalUsd
     .decimalPlaces(2, BigNumber.ROUND_DOWN)
+    .toFixed();
+  const formattedTotalInWegld = totalWegld
+    .decimalPlaces(6, BigNumber.ROUND_DOWN)
     .toFixed();
 
   const formatAccountToken = (data: ConvertToken) => {
@@ -70,6 +77,17 @@ export const ConvertInfo = ({
               value={totalToken.toFixed()}
             />{' '}
             {token?.ticker}
+            {!token?.identifier?.includes(WEGLD_ID) && (
+              <>
+                {' '}
+                ≈{' '}
+                <ValueWithTooltip
+                  formattedValue={formattedTotalInWegld}
+                  value={totalWegld.toFixed()}
+                />{' '}
+                WEGLD
+              </>
+            )}
           </span>
           <small className='text-secondary text-right'>
             ≈ ${formattedTotalInUsd}

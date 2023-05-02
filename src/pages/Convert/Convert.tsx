@@ -148,6 +148,7 @@ const ConvertPage = () => {
           onTokenChange={setConvertToken}
           totalToken={totalTokenAfterFees}
           totalUsd={totalUsdAfterFees}
+          totalWegld={totalWegldAfterFees}
           protocolFee={protocolFee}
           slippage={dappConfig.slippage}
         />
