@@ -41,7 +41,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
     }
   };
 
-  if (rewards.balance === '0') {
+  if (rewards === undefined || rewards?.balance === '0') {
     return <></>;
   }
 
