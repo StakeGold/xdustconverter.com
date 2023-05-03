@@ -108,7 +108,7 @@ const ConvertPage = () => {
       setSlippage(DEFAULT_SLIPPAGE);
     } else if (
       totalWegldAfterFees.isLessThanOrEqualTo(MIN_AMOUNT) &&
-      slippage !== SUGGESTED_SLIPPAGE
+      slippage < SUGGESTED_SLIPPAGE
     ) {
       setSlippage(SUGGESTED_SLIPPAGE);
     }
