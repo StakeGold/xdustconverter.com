@@ -26,7 +26,7 @@ export const ClaimReferralRewards = ({ tier }: ClaimReferralRewardsProps) => {
   }, [success]);
 
   const isLowerThanMinimum = useMemo(() => {
-    return new BigNumber(rewards.balance)
+    return new BigNumber(rewards?.balance ?? 0)
       .shiftedBy(-18)
       .isLessThan(minimumClaimAmount);
   }, [rewards]);
