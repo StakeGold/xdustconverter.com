@@ -24,6 +24,7 @@ import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
 const MIN_AMOUNT = 0.01;
 const SUGGESTED_SLIPPAGE = 0.02;
+const DEFAULT_SLIPPAGE = 0.01;
 
 const ConvertPage = () => {
   const { dappConfig, loading: configLoading } = useGetDappConfig();
@@ -56,7 +57,10 @@ const ConvertPage = () => {
   >('xdc_token', undefined);
 
   const [manualSlippageChange, setManualSlippageChange] = useState(false);
-  const [slippage, setSlippage] = useLocalStorage<number>('slippage', 0.01);
+  const [slippage, setSlippage] = useLocalStorage<number>(
+    'xdc_slippage',
+    DEFAULT_SLIPPAGE
+  );
 
   const totalWegld = checkedTokens.reduce((value, token) => {
     return value.plus(new BigNumber(token.valueWegld));
@@ -93,15 +97,21 @@ const ConvertPage = () => {
   };
 
   useEffect(() => {
-    if (
-      manualSlippageChange ||
-      totalWegldAfterFees.isGreaterThan(MIN_AMOUNT) ||
-      totalWegldAfterFees.isZero()
-    ) {
+    if (manualSlippageChange || totalWegldAfterFees.isZero()) {
       return;
     }
 
-    setSlippage(SUGGESTED_SLIPPAGE);
+    if (
+      totalWegldAfterFees.isGreaterThan(MIN_AMOUNT) &&
+      slippage === SUGGESTED_SLIPPAGE
+    ) {
+      setSlippage(DEFAULT_SLIPPAGE);
+    } else if (
+      totalWegldAfterFees.isLessThanOrEqualTo(MIN_AMOUNT) &&
+      slippage < SUGGESTED_SLIPPAGE
+    ) {
+      setSlippage(SUGGESTED_SLIPPAGE);
+    }
   }, [totalWegldAfterFees, manualSlippageChange]);
 
   useEffect(() => {
