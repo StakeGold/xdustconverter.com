@@ -22,6 +22,9 @@ import { useGetConvertTokens, useGetProtocolFee } from './hooks';
 import { useGetAccountTokens } from './hooks/useGetAccountTokens';
 import { useGetSwapDustTokens } from './hooks/useGetSwapDustTokens';
 
+const MIN_AMOUNT = 0.01;
+const SUGGESTED_SLIPPAGE = 0.02;
+
 const ConvertPage = () => {
   const { dappConfig, loading: configLoading } = useGetDappConfig();
 
@@ -52,7 +55,54 @@ const ConvertPage = () => {
     ConvertToken | undefined
   >('xdc_token', undefined);
 
+  const [manualSlippageChange, setManualSlippageChange] = useState(false);
   const [slippage, setSlippage] = useLocalStorage<number>('slippage', 0.01);
+
+  const totalWegld = checkedTokens.reduce((value, token) => {
+    return value.plus(new BigNumber(token.valueWegld));
+  }, new BigNumber(0));
+
+  const totalUsd = checkedTokens.reduce((value, token) => {
+    return value.plus(new BigNumber(token.valueUsd));
+  }, new BigNumber(0));
+
+  const totalWegldAfterFees = computeValueAfterFees(
+    totalWegld,
+    protocolFee,
+    slippage
+  );
+
+  const totalTokenAfterFees = new BigNumber(totalWegldAfterFees).dividedBy(
+    convertToken?.priceWEGLD ?? '1'
+  );
+
+  const totalUsdAfterFees = computeValueAfterFees(
+    totalUsd,
+    protocolFee,
+    slippage
+  );
+
+  const handleCheckedTokens = (newCheckedTokens: AccountToken[]) => {
+    setCheckedTokens(newCheckedTokens);
+    setManualSlippageChange(false);
+  };
+
+  const handleChangedSlippage = (newSlippage: number) => {
+    setSlippage(newSlippage);
+    setManualSlippageChange(true);
+  };
+
+  useEffect(() => {
+    if (
+      manualSlippageChange ||
+      totalWegldAfterFees.isGreaterThan(MIN_AMOUNT) ||
+      totalWegldAfterFees.isZero()
+    ) {
+      return;
+    }
+
+    setSlippage(SUGGESTED_SLIPPAGE);
+  }, [totalWegldAfterFees, manualSlippageChange]);
 
   useEffect(() => {
     if (convertTokens.length > 0 && convertToken === undefined) {
@@ -98,28 +148,6 @@ const ConvertPage = () => {
     );
   }
 
-  const totalWegld = checkedTokens.reduce((value, token) => {
-    return value.plus(new BigNumber(token.valueWegld));
-  }, new BigNumber(0));
-
-  const totalUsd = checkedTokens.reduce((value, token) => {
-    return value.plus(new BigNumber(token.valueUsd));
-  }, new BigNumber(0));
-
-  const totalWegldAfterFees = computeValueAfterFees(
-    totalWegld,
-    protocolFee,
-    slippage
-  );
-  const totalTokenAfterFees = new BigNumber(totalWegldAfterFees).dividedBy(
-    convertToken?.priceWEGLD ?? '1'
-  );
-  const totalUsdAfterFees = computeValueAfterFees(
-    totalUsd,
-    protocolFee,
-    slippage
-  );
-
   const handleSubmit = async (event: React.MouseEvent) => {
     event.preventDefault();
 
@@ -141,7 +169,7 @@ const ConvertPage = () => {
       <TokenTable
         tokens={tokens}
         convertToken={convertToken}
-        setCheckedTokens={setCheckedTokens}
+        setCheckedTokens={handleCheckedTokens}
       />
       {isLoggedIn && (
         <ConvertInfo
@@ -153,7 +181,7 @@ const ConvertPage = () => {
           totalWegld={totalWegldAfterFees}
           protocolFee={protocolFee}
           slippage={slippage}
-          setSlippage={setSlippage}
+          setSlippage={handleChangedSlippage}
         />
       )}
       <ConvertButton
