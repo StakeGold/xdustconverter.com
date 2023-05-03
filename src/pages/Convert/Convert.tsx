@@ -52,6 +52,8 @@ const ConvertPage = () => {
     ConvertToken | undefined
   >('xdc_token', undefined);
 
+  const [slippage, setSlippage] = useLocalStorage<number>('slippage', 0.01);
+
   useEffect(() => {
     if (convertTokens.length > 0 && convertToken === undefined) {
       setConvertToken(
@@ -107,7 +109,7 @@ const ConvertPage = () => {
   const totalWegldAfterFees = computeValueAfterFees(
     totalWegld,
     protocolFee,
-    dappConfig.slippage
+    slippage
   );
   const totalTokenAfterFees = new BigNumber(totalWegldAfterFees).dividedBy(
     convertToken?.priceWEGLD ?? '1'
@@ -115,7 +117,7 @@ const ConvertPage = () => {
   const totalUsdAfterFees = computeValueAfterFees(
     totalUsd,
     protocolFee,
-    dappConfig.slippage
+    slippage
   );
 
   const handleSubmit = async (event: React.MouseEvent) => {
@@ -150,7 +152,8 @@ const ConvertPage = () => {
           totalUsd={totalUsdAfterFees}
           totalWegld={totalWegldAfterFees}
           protocolFee={protocolFee}
-          slippage={dappConfig.slippage}
+          slippage={slippage}
+          setSlippage={setSlippage}
         />
       )}
       <ConvertButton

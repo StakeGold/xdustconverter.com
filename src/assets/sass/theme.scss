@@ -729,3 +729,14 @@ footer {
     outline: none;
   }
 }
+
+.btn-slippage {
+  color: #9ba5b4 !important;
+  background-color: #242526;
+  margin-left: 8px;
+
+  &.active {
+    color: #000 !important;
+    background-color: #ffc629;
+  }
+}

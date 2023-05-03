@@ -2,6 +2,8 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import Select from 'react-select';
 import { ValueWithTooltip } from 'components';
+import { SLIPPAGE } from 'config';
+import { InfoTooltip } from 'pages/Referral/components';
 import { ConvertToken } from 'types';
 import { accountTokensStyles } from './accountTokensStyles';
 import './AccountTokens.scss';
@@ -17,6 +19,7 @@ export interface ConvertInfoProps {
   totalWegld: BigNumber;
   protocolFee: number;
   slippage: number;
+  setSlippage: (value: number) => void;
 }
 
 export const ConvertInfo = ({
@@ -27,7 +30,8 @@ export const ConvertInfo = ({
   totalUsd,
   totalWegld,
   protocolFee,
-  slippage
+  slippage,
+  setSlippage
 }: ConvertInfoProps) => {
   const formattedTotalInToken = totalToken
     .decimalPlaces(6, BigNumber.ROUND_DOWN)
@@ -50,7 +54,7 @@ export const ConvertInfo = ({
 
   return (
     <div className='card card-info my-spacer'>
-      <div className='d-flex justify-content-between flex-wrap mb-2'>
+      <div className='d-flex justify-content-between align-items-center flex-wrap mb-2'>
         <div className='text-secondary mr-2'>Token</div>
         <span className='text-main'>
           <Select
@@ -98,9 +102,28 @@ export const ConvertInfo = ({
         <div className='text-secondary mr-2'>Protocol fee</div>
         <span className='text-main'>{protocolFee}%</span>
       </div>
-      <div className='d-flex justify-content-between flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>Slippage</div>
-        <span className='text-main'>{slippage * 100}%</span>
+      <div className='d-flex justify-content-between align-items-center flex-wrap mb-2'>
+        <div className='text-secondary mr-2'>
+          Slippage{' '}
+          <InfoTooltip>
+            <p>
+              Your transaction will revert if the price moves unfavorably more
+              than this percentage.
+            </p>
+          </InfoTooltip>
+        </div>
+        <span className='text-main'>
+          {SLIPPAGE.map((value) => (
+            <div
+              className={`btn btn-slippage ${
+                value === slippage ? 'active' : ''
+              }`}
+              onClick={() => setSlippage(value)}
+            >
+              {value * 100}%
+            </div>
+          ))}
+        </span>
       </div>
     </div>
   );
