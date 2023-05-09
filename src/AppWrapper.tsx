@@ -52,6 +52,9 @@ export const AppWrapper = () => {
       <Router>
         <DappProvider
           environment={dappConfig.environment}
+          dappConfig={{
+            shouldUseWebViewProvider: true
+          }}
           customNetworkConfig={{
             name: 'customConfig',
             apiTimeout: dappConfig.apiTimeout,
