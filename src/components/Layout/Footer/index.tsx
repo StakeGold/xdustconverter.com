@@ -15,7 +15,7 @@ export const Footer = () => {
         // href='https://buidly.com'
         rel='noreferrer'
       >
-        Made with <HeartIcon className='mx-1' /> by Buidly team.
+        Made with <HeartIcon className='mx-1' /> on MultiversX
       </a>
       <div className='social mb-2'>
         <a
