@@ -42,6 +42,11 @@ export const ConvertInfo = ({
   const formattedTotalInWegld = totalWegld
     .decimalPlaces(6, BigNumber.ROUND_DOWN)
     .toFixed();
+  const formattedConversionCost = new BigNumber(protocolFee)
+    .times(formattedTotalInUsd)
+    .div(100)
+    .decimalPlaces(4, BigNumber.ROUND_DOWN)
+    .toFixed();
 
   const formatAccountToken = (data: ConvertToken) => {
     return (
@@ -72,59 +77,63 @@ export const ConvertInfo = ({
           />
         </span>
       </div>
-      <div className='d-flex justify-content-between flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>Minimum converted</div>
-        <div className='d-flex flex-column'>
-          <span className='text-main'>
-            <ValueWithTooltip
-              formattedValue={formattedTotalInToken}
-              value={totalToken.toFixed()}
-            />{' '}
-            {token?.ticker}
-            {!token?.identifier?.includes(WEGLD_ID) && (
-              <>
-                {' '}
-                ≈{' '}
+      {totalToken.isGreaterThan(0) && (
+        <>
+          <div className='d-flex justify-content-between flex-wrap mb-2'>
+            <div className='text-secondary mr-2'>Minimum converted</div>
+            <div className='d-flex flex-column'>
+              <span className='text-main'>
                 <ValueWithTooltip
-                  formattedValue={formattedTotalInWegld}
-                  value={totalWegld.toFixed()}
+                  formattedValue={formattedTotalInToken}
+                  value={totalToken.toFixed()}
                 />{' '}
-                WEGLD
-              </>
-            )}
-          </span>
-          <small className='text-secondary text-right'>
-            ≈ ${formattedTotalInUsd}
-          </small>
-        </div>
-      </div>
-      <div className='d-flex justify-content-between flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>Protocol fee</div>
-        <span className='text-main'>{protocolFee}%</span>
-      </div>
-      <div className='d-flex justify-content-between align-items-center flex-wrap mb-2'>
-        <div className='text-secondary mr-2'>
-          Slippage{' '}
-          <InfoTooltip>
-            <p>
-              Your transaction will revert if the price moves unfavorably more
-              than this percentage.
-            </p>
-          </InfoTooltip>
-        </div>
-        <span className='text-main'>
-          {SLIPPAGE.map((value) => (
-            <div
-              className={`btn btn-slippage ${
-                value === slippage ? 'active' : ''
-              }`}
-              onClick={() => setSlippage(value)}
-            >
-              {value * 100}%
+                {token?.ticker}
+                {!token?.identifier?.includes(WEGLD_ID) && (
+                  <>
+                    {' '}
+                    ≈{' '}
+                    <ValueWithTooltip
+                      formattedValue={formattedTotalInWegld}
+                      value={totalWegld.toFixed()}
+                    />{' '}
+                    WEGLD
+                  </>
+                )}
+              </span>
+              <small className='text-secondary text-right'>
+                ≈ ${formattedTotalInUsd}
+              </small>
             </div>
-          ))}
-        </span>
-      </div>
+          </div>
+          <div className='d-flex justify-content-between flex-wrap mb-2'>
+            <div className='text-secondary mr-2'>Conversion cost</div>
+            <span className='text-main'>≈ ${formattedConversionCost}</span>
+          </div>
+          <div className='d-flex justify-content-between align-items-center flex-wrap mb-2'>
+            <div className='text-secondary mr-2'>
+              Slippage{' '}
+              <InfoTooltip>
+                <p>
+                  Your transaction will revert if the price moves unfavorably
+                  more than this percentage.
+                </p>
+              </InfoTooltip>
+            </div>
+            <span className='text-main'>
+              {SLIPPAGE.map((value) => (
+                <div
+                  className={`btn btn-slippage ${
+                    value === slippage ? 'active' : ''
+                  }`}
+                  onClick={() => setSlippage(value)}
+                >
+                  {value * 100}%
+                </div>
+              ))}
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 };
