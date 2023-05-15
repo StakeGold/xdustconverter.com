@@ -8,7 +8,7 @@ export const useUpgradeTier = () => {
     successMessage: 'Tier upgraded'
   };
 
-  const [mutateTier, loading] = useGetAndSendTransactions(
+  const [mutateTier, { loading }] = useGetAndSendTransactions(
     UPDATE_TIER,
     displayInfo
   );
