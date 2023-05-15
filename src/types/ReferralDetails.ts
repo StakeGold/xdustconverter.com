@@ -19,7 +19,10 @@ export class ReferralDetails {
       feePercentage: response.feePercentage,
       accumulatedVolume: new BigNumber(response.accumulatedVolume),
       currentTier: TierDetails.fromResponse(response.currentTier),
-      nextTier: TierDetails.fromResponse(response.nextTier),
+      nextTier:
+        response.nextTier != null
+          ? TierDetails.fromResponse(response.nextTier)
+          : undefined,
       referralRewards: response.referralRewards as ReferralRewards
     });
   }
