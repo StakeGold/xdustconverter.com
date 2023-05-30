@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { faSadTear } from '@fortawesome/free-solid-svg-icons';
 import { Loader, PageState } from '@multiversx/sdk-dapp/UI';
 import { useSearchParams } from 'react-router-dom';
-import logo from 'assets/img/xdustconverter.png';
+import logo from 'assets/img/logo.png';
 import { LinkWithQuery } from 'components';
 import { Welcome } from 'components/Welcome';
 import { useGetContractState } from 'pages/Convert/hooks';
@@ -61,7 +61,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                     <img src={logo} />
                   </h1>
                 </LinkWithQuery>
-                <h3 className='page-description font-weight-light text-secondary'>
+                <h3 className='page-description font-weight-light text-secondary d-none'>
                   Convert small token amounts
                 </h3>
               </div>
