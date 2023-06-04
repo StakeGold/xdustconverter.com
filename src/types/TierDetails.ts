@@ -13,7 +13,7 @@ export class TierDetails {
     return new TierDetails({
       name: response.name,
       minVolume: new BigNumber(response.minVolume),
-      feePercent: response.freePercent
+      feePercent: response.feePercent
     });
   }
 }
