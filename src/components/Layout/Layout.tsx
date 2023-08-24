@@ -13,8 +13,7 @@ import { Navbar } from './Navbar';
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const [searchParams] = useSearchParams();
   const referralTag = searchParams.get('referral');
-  // const contractState = useGetContractState();
-  const contractState = 'Inactive';
+  const contractState = useGetContractState();
 
   const notifications: JSX.Element[] = [
     // <NoFeeNotification key='no-fee' />,
