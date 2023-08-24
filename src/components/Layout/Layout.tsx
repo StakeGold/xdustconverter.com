@@ -13,7 +13,8 @@ import { Navbar } from './Navbar';
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const [searchParams] = useSearchParams();
   const referralTag = searchParams.get('referral');
-  const contractState = useGetContractState();
+  // const contractState = useGetContractState();
+  const contractState = 'Inactive';
 
   const notifications: JSX.Element[] = [
     // <NoFeeNotification key='no-fee' />,
@@ -42,6 +43,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           icon={faSadTear}
           className='text-muted'
           title='xDustConverter is under maintenance'
+          description='Estimate time to finish: 1 hour'
         />
       </div>
     );
