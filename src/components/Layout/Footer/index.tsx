@@ -28,7 +28,7 @@ export const Footer = () => {
         </a>
         <a
           target={'_blank'}
-          href='https://twitter.com/Buidly_dev'
+          href='https://twitter.com/Buidly_'
           rel='noreferrer'
         >
           <TwitterIcon />
