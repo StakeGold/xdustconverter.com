@@ -132,9 +132,9 @@ const ConvertPage = () => {
   }, [success]);
 
   const tokens = useMemo(() => {
-    return accountTokens?.filter(
-      (token) => token.identifier !== convertToken?.identifier
-    );
+    return accountTokens
+      ?.filter((token) => token.identifier !== convertToken?.identifier)
+      ?.filter((token) => token.identifier !== 'BUSD-40b57e');
   }, [accountTokens, convertToken]);
 
   if (isLoading || convertTokensLoading || configLoading) {
