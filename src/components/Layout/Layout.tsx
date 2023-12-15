@@ -42,6 +42,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           icon={faSadTear}
           className='text-muted'
           title='xDustConverter is under maintenance'
+          description='Estimate time to finish: 1 hour'
         />
       </div>
     );

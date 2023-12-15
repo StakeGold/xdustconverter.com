@@ -13,6 +13,14 @@ export const Welcome = () => {
     logout(window.location.href);
   };
 
+  const user = React.useMemo(() => {
+    if (!username) {
+      return address;
+    }
+
+    return username.replace('.elrond', '');
+  }, [address, username]);
+
   if (!isLoggedIn) {
     return <></>;
   }
@@ -21,11 +29,7 @@ export const Welcome = () => {
     <div className='card welcome-card mb-4'>
       <h3>
         Welcome, <br />
-        <ExplorerLink
-          page={`/accounts/${address}`}
-          text={username ?? address}
-        />
-        !
+        <ExplorerLink page={`/accounts/${address}`} text={user} />!
       </h3>
       <button className='btn btn-secondary btn-logout' onClick={handleLogout}>
         <FontAwesomeIcon icon={faPowerOff} />
