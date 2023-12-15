@@ -55,11 +55,7 @@ const ConnectModal = ({ show, onHide }: ConnectModalProps) => {
           loginButtonText='MultiversX Web Wallet'
           {...props}
         />
-        <LedgerLoginButton
-          loginButtonText='Ledger'
-          {...props}
-          disabled={true}
-        />
+        <LedgerLoginButton loginButtonText='Ledger' {...props} />
       </Modal.Body>
     </Modal>
   );
